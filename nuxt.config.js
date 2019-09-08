@@ -1,6 +1,6 @@
 const colors = require('vuetify/es5/util/colors').default
 
-module.exports = {
+export default {
   mode: 'spa',
   /*
    ** Headers of the page
@@ -36,7 +36,6 @@ module.exports = {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
     '@nuxt/typescript-build'
   ],
@@ -72,6 +71,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) { }
   }
 }
