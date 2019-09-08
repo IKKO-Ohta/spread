@@ -45,7 +45,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+      <span>© @samayotta</span>
     </v-footer>
   </v-app>
 </template>
@@ -72,7 +72,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'spread'
     }
   }
 }

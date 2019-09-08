@@ -23,14 +23,14 @@
         </v-col>
 
         <v-col cols="12" md="1">
-          <v-btn :color="iconWLColor" depressed @click="changeWinOrLose" class="sm-button">
+          <v-btn large :color="iconWLColor" depressed @click="changeWinOrLose" class="sm-button">
             <v-icon left>{{iconEmotion}}</v-icon>
             {{ win ? "WIN" : "LOSE"}}
           </v-btn>
         </v-col>
 
         <v-col cols="12" md="1">
-          <v-btn :color="iconBWColor" depressed @click="changeBlackOrWhite" class="sm-button">
+          <v-btn large :color="iconBWColor" depressed @click="changeBlackOrWhite" class="sm-button">
             <v-icon left>{{iconBW}}</v-icon>
             {{ black ? "先攻" : "後攻"}}
           </v-btn>
