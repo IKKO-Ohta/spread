@@ -8343,7 +8343,7 @@ vue-loader@^15.7.1:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-meta@^2.2.1:
+vue-meta@^2.2.1, vue-meta@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/vue-meta/-/vue-meta-2.2.2.tgz#ec6be76d75b7d6e4abb6d995d92245487081428b"
   dependencies:
