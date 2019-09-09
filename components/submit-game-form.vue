@@ -1,75 +1,119 @@
 <template>
-  <v-form v-model="valid">
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="2">
-          <v-select
-            v-model="select"
-            :items="decklist"
-            :rules="[v => !!v || '必須']"
-            label="Your Deck"
-            required
-          ></v-select>
-        </v-col>
+  <v-card class="form">
+    <v-card-title>ゲームレコードを登録</v-card-title>
+    <v-card-text>
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="2">
+              <v-select
+                v-model="game.myDeck"
+                :items="decklist"
+                :rules="[v => !!v || '必須']"
+                label="Your Deck"
+                required
+              ></v-select>
+            </v-col>
 
-        <v-col cols="12" md="2">
-          <v-select
-            v-model="select"
-            :items="decklist"
-            :rules="[v => !!v || '必須']"
-            label="Opponent's Deck"
-            required
-          ></v-select>
-        </v-col>
+            <v-col cols="12" md="2">
+              <v-select
+                v-model="game.oppDeck"
+                :items="decklist"
+                :rules="[v => !!v || '必須']"
+                label="Opponent's Deck"
+                required
+              ></v-select>
+            </v-col>
 
-        <v-col cols="12" md="1">
-          <v-btn large :color="iconWLColor" depressed @click="changeWinOrLose" class="sm-button">
-            <v-icon left>{{iconEmotion}}</v-icon>
-            {{ win ? "WIN" : "LOSE"}}
-          </v-btn>
-        </v-col>
+            <v-col cols="12" md="1">
+              <v-btn
+                large
+                :color="iconWLColor"
+                depressed
+                @click="changeWinOrLose"
+                class="sm-button"
+              >
+                <v-icon left>{{iconEmotion}}</v-icon>
+                {{ game.win }}
+              </v-btn>
+            </v-col>
 
-        <v-col cols="12" md="1">
-          <v-btn large :color="iconBWColor" depressed @click="changeBlackOrWhite" class="sm-button">
-            <v-icon left>{{iconBW}}</v-icon>
-            {{ black ? "先攻" : "後攻"}}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+            <v-col cols="12" md="1">
+              <v-btn
+                large
+                :color="iconBWColor"
+                depressed
+                @click="changeBlackOrWhite"
+                class="sm-button"
+              >
+                <v-icon left>{{iconBW}}</v-icon>
+                {{ game.black }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn depressed @click="emitSubmitGame">登録</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import format from 'date-fns/format'
+import ja from 'date-fns/locale/ja'
+import { Result, Bw } from '@/models/const/Enums'
+import Game from '../models/const/Game'
 
 @Component({})
 export default class submitGameForm extends Vue {
   @Prop({ required: true }) decklist!: string[]
+  @Emit() submit(game: Game) {}
 
-  win = true
-  black = true
+  game: Game = {
+    win: Result.win,
+    black: Bw.black,
+    myDeck: null,
+    oppDeck: null,
+    user: 'samayotta',
+    timestamp: this.timestamp,
+    describe: ''
+  }
 
+  emitSubmitGame() {
+    this.game.timestamp = this.timestamp
+    this.submit(this.game)
+  }
   changeBlackOrWhite() {
-    this.black = !this.black
+    this.game.black = this.game.black === Bw.black ? Bw.white : Bw.black
   }
   changeWinOrLose() {
-    this.win = !this.win
+    this.game.win = this.game.win === Result.win ? Result.lose : Result.win
   }
 
   get iconEmotion(): string {
-    return this.win ? 'mdi-emoticon-cool' : 'mdi-emoticon-cry'
+    return this.game.win === Result.win
+      ? 'mdi-emoticon-cool'
+      : 'mdi-emoticon-cry'
   }
   get iconBW(): string {
-    return this.black ? 'mdi-triangle' : 'mdi-triangle-outline'
+    return this.game.black === Bw.black
+      ? 'mdi-triangle'
+      : 'mdi-triangle-outline'
   }
 
   get iconWLColor(): string {
-    return this.win ? 'primary' : 'red'
+    return this.game.win === Result.win ? 'primary' : 'red'
   }
   get iconBWColor(): string {
-    return this.black ? 'black' : 'azure'
+    return this.game.black === Bw.white ? 'black' : 'azure'
+  }
+
+  get timestamp() {
+    return format(new Date(), 'yyyy/MM/dd HH:mm:ss', { locale: ja })
   }
 }
 </script>
