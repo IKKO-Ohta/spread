@@ -85,11 +85,13 @@ export default class submitGameForm extends Vue {
 
   async emitSubmitGame() {
     this.game.timestamp = this.timestamp
-    try {
-      await this.sendFireStore()
-      this.submit(this.game)
-    } catch (e) {
-      console.log('oops,', e)
+    if (this.canSubmit) {
+      try {
+        await this.sendFireStore()
+        this.submit(this.game)
+      } catch (e) {
+        console.log('oops,', e)
+      }
     }
   }
 
@@ -126,6 +128,10 @@ export default class submitGameForm extends Vue {
 
   get timestamp() {
     return format(new Date(), 'yyyy/MM/dd HH:mm:ss', { locale: ja })
+  }
+
+  get canSubmit() {
+    return this.game.myDeck !== null && this.game.oppDeck !== null
   }
 }
 </script>
