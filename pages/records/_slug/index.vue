@@ -9,7 +9,6 @@
 import { Vue, Component } from 'vue-property-decorator'
 import submitGameForm from '@/components/submit-game-form.vue'
 import recordHeader from '@/models/const/record-header'
-import spams from '@/models/const/spams'
 import archtypes from '@/models/const/archtypes'
 import { Result, Bw } from '@/models/const/Enums'
 import Game from '@/models/const/Game'
@@ -24,11 +23,29 @@ import Game from '@/models/const/Game'
 })
 export default class RecordPage extends Vue {
   headers = recordHeader()
-  games?: Game[] = spams()
+  games: Game[] = []
   decklist?: string[] = archtypes()
 
+  async created() {
+    await this.loadGames()
+  }
+
   addGame(game: Game) {
-    this.games!.push(game)
+    this.games.push(game)
+  }
+
+  async loadGames() {
+    try {
+      const result = await this.$firestore
+        .collection(`${this.$route.params.slug}`)
+        .get()
+
+      result.forEach((elem) => {
+        this.games.push(elem.data() as Game)
+      })
+    } catch (e) {
+      console.log('oops', e)
+    }
   }
 }
 </script>

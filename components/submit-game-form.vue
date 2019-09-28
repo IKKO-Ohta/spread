@@ -83,15 +83,27 @@ export default class submitGameForm extends Vue {
     describe: ''
   }
 
-  emitSubmitGame() {
+  async emitSubmitGame() {
     this.game.timestamp = this.timestamp
-    this.submit(this.game)
+    try {
+      await this.sendFireStore()
+      this.submit(this.game)
+    } catch (e) {
+      console.log('oops,', e)
+    }
   }
+
   changeBlackOrWhite() {
     this.game.black = this.game.black === Bw.black ? Bw.white : Bw.black
   }
   changeWinOrLose() {
     this.game.win = this.game.win === Result.win ? Result.lose : Result.win
+  }
+
+  async sendFireStore() {
+    return await this.$firestore
+      .collection(`${this.$route.params.slug}`)
+      .add(this.game)
   }
 
   get iconEmotion(): string {
