@@ -89,3 +89,16 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# firebase
+.firebase
+.firebaserc
+firebase.json
+firestore.*
+firebasekey.json
+
+# credentials
+credentials/*.*
+
+# vscode
+spread.code-workspace

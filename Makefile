@@ -1,5 +1,8 @@
 run:
-	npm run dev
+	yarn run dev
 
 build:
-	npm run build
+	yarn run build
+
+generate:
+	yarn run generate
