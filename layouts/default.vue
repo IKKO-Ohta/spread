@@ -65,8 +65,13 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Records',
-          to: '/records'
+          title: 'myRecord',
+          to: '/records/myrecord'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'secondRecord',
+          to: '/records/second_record'
         }
       ],
       miniVariant: false,
