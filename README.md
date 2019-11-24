@@ -21,6 +21,10 @@ $ yarn generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
+## Dependency
+
+Node.js 12.13.1
+
 ## Setup firebase
 
 This app depends on firebase cloud Firestore.
@@ -38,8 +42,11 @@ Please add `credentials/firebase.ts`.
 you can get your firebase credential data from the following page.
 https://console.firebase.google.com/project/{your-project-name}/settings/general/
 
+This app loads the object with export default.
+
 ```bash
 $ mkdir credentials
+$ cd credentials
 $ emacs firebasekey.ts
 
 example:
