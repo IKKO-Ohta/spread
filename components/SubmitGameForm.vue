@@ -69,7 +69,7 @@ import { Result, Bw } from '@/models/const/Enums'
 import Game from '../models/const/Game'
 
 @Component({})
-export default class submitGameForm extends Vue {
+export default class SubmitGameForm extends Vue {
   @Prop({ required: true }) decklist!: string[]
   @Emit() submit(game: Game) {}
 
