@@ -2,12 +2,16 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
       <v-card>
-        <v-card-title class="headline">Welcome to the Vuetify + Nuxt.js template</v-card-title>
+        <v-card-title class="headline">
+          Welcome to the Vuetify + Nuxt.js template
+        </v-card-title>
         <v-card-text>spread helps to record your battles.</v-card-text>
         <v-card-actions>
           <v-spacer />
-          <div id="firebaseui-auth-container" v-show="!isLogin"></div>
-          <v-btn text small @click="signOut" v-show="isLogin">signOut</v-btn>
+          <div v-show="!isLogin" id="firebaseui-auth-container" />
+          <v-btn v-show="isLogin" text small @click="signOut">
+            signOut
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
@@ -15,9 +19,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
-import firebase, { User, auth } from 'firebase/app'
+import firebase, { User } from 'firebase/app'
 import * as firebaseui from 'firebaseui'
 import 'firebaseui/dist/firebaseui.css'
 import PageMixin from '@/mixins/page-mixins'
@@ -40,8 +44,7 @@ export default class LoginPage extends Mixins<PageMixin>(PageMixin) {
           signInFlow: 'popup',
           signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
           callbacks: {
-            signInSuccessWithAuthResult: (authResult) => {
-              console.log(authResult)
+            signInSuccessWithAuthResult: (_authResult) => {
               return true
             }
           }
@@ -58,13 +61,11 @@ export default class LoginPage extends Mixins<PageMixin>(PageMixin) {
   }
 
   async signOut() {
-    console.log(this.isLogin)
     try {
       await firebase.auth().signOut()
       this.stores.user.CLEAR_USER()
-      console.log('byebye.')
     } catch (e) {
-      console.log(e)
+      // TODO: error handling
     }
   }
 }

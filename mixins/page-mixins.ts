@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import * as firebase from 'firebase/app'
 import { Mixin } from 'vue-mixin-decorator'
-import User from '@/store/user'
 import { getModule } from 'vuex-module-decorators'
+import User from '@/store/user'
 
 interface Stores {
   user: User
