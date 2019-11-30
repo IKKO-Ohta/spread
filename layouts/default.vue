@@ -72,39 +72,39 @@
   </v-app>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'myRecord',
-          to: '/records/myrecord'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'secondRecord',
-          to: '/records/second_record'
-        }
-      ],
-      createButton: {
-        text: 'create a new record',
-        icon: 'mdi-checkerboard-plus'
-      },
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'spread'
+<script lang="ts">
+import { Vue } from 'vue-property-decorator'
+
+export default class DefaultLayout extends Vue {
+  clipped = false
+  drawer = false
+  fixed = false
+  items = [
+    {
+      icon: 'mdi-apps',
+      title: 'Welcome',
+      to: '/'
+    },
+    {
+      icon: 'mdi-chart-bubble',
+      title: 'myRecord',
+      to: '/records/myrecord'
+    },
+    {
+      icon: 'mdi-chart-bubble',
+      title: 'secondRecord',
+      to: '/records/second_record'
     }
+  ]
+
+  createButton = {
+    text: 'create a new record',
+    icon: 'mdi-checkerboard-plus'
   }
+
+  miniVariant = false
+  right = true
+  rightDrawer = false
+  title = 'spread'
 }
 </script>
