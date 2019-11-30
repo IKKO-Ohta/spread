@@ -9,20 +9,20 @@
               <v-select
                 v-model="game.myDeck"
                 :items="decklist"
-                :rules="[v => !!v || '必須']"
+                :rules="[(v) => !!v || '必須']"
                 label="Your Deck"
                 required
-              ></v-select>
+              />
             </v-col>
 
             <v-col cols="12" md="2">
               <v-select
                 v-model="game.oppDeck"
                 :items="decklist"
-                :rules="[v => !!v || '必須']"
+                :rules="[(v) => !!v || '必須']"
                 label="Opponent's Deck"
                 required
-              ></v-select>
+              />
             </v-col>
 
             <v-col cols="12" md="1">
@@ -30,10 +30,12 @@
                 large
                 :color="iconWLColor"
                 depressed
-                @click="changeWinOrLose"
                 class="sm-button"
+                @click="changeWinOrLose"
               >
-                <v-icon left>{{iconEmotion}}</v-icon>
+                <v-icon left>
+                  {{ iconEmotion }}
+                </v-icon>
                 {{ game.win }}
               </v-btn>
             </v-col>
@@ -43,10 +45,12 @@
                 large
                 :color="iconBWColor"
                 depressed
-                @click="changeBlackOrWhite"
                 class="sm-button"
+                @click="changeBlackOrWhite"
               >
-                <v-icon left>{{iconBW}}</v-icon>
+                <v-icon left>
+                  {{ iconBW }}
+                </v-icon>
                 {{ game.black }}
               </v-btn>
             </v-col>
@@ -55,23 +59,24 @@
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-btn depressed @click="emitSubmitGame">登録</v-btn>
+      <v-btn depressed @click="emitSubmitGame">
+        登録
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
-
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import format from 'date-fns/format'
 import ja from 'date-fns/locale/ja'
-import { Result, Bw } from '@/models/const/Enums'
 import Game from '../models/const/Game'
+import { Result, Bw } from '@/models/const/Enums'
 
 @Component({})
 export default class SubmitGameForm extends Vue {
   @Prop({ required: true }) decklist!: string[]
-  @Emit() submit(game: Game) {}
+  @Emit() submit(_game: Game) {}
 
   game: Game = {
     win: Result.win,
@@ -90,6 +95,7 @@ export default class SubmitGameForm extends Vue {
         await this.sendFireStore()
         this.submit(this.game)
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log('oops,', e)
       }
     }
@@ -98,12 +104,13 @@ export default class SubmitGameForm extends Vue {
   changeBlackOrWhite() {
     this.game.black = this.game.black === Bw.black ? Bw.white : Bw.black
   }
+
   changeWinOrLose() {
     this.game.win = this.game.win === Result.win ? Result.lose : Result.win
   }
 
-  async sendFireStore() {
-    return await this.$firestore
+  sendFireStore() {
+    return this.$firestore
       .collection(`${this.$route.params.slug}`)
       .add(this.game)
   }
@@ -113,6 +120,7 @@ export default class SubmitGameForm extends Vue {
       ? 'mdi-emoticon-cool'
       : 'mdi-emoticon-cry'
   }
+
   get iconBW(): string {
     return this.game.black === Bw.black
       ? 'mdi-triangle'
@@ -122,6 +130,7 @@ export default class SubmitGameForm extends Vue {
   get iconWLColor(): string {
     return this.game.win === Result.win ? 'primary' : 'red'
   }
+
   get iconBWColor(): string {
     return this.game.black === Bw.white ? 'black' : 'azure'
   }

@@ -1,7 +1,12 @@
 <template>
   <div>
     <submit-game-form :decklist="decklist" @submit="addGame" />
-    <v-data-table :headers="headers" :items="games" :items-per-page="5" class="elevation-1 table"></v-data-table>
+    <v-data-table
+      :headers="headers"
+      :items="games"
+      :items-per-page="5"
+      class="elevation-1 table"
+    />
   </div>
 </template>
 
@@ -10,7 +15,6 @@ import { Vue, Component } from 'vue-property-decorator'
 import SubmitGameForm from '@/components/SubmitGameForm.vue'
 import recordHeader from '@/models/const/record-header'
 import archtypes from '@/models/const/archtypes'
-import { Result, Bw } from '@/models/const/Enums'
 import Game from '@/models/const/Game'
 
 @Component({
@@ -44,6 +48,7 @@ export default class RecordPage extends Vue {
         this.games.push(elem.data() as Game)
       })
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log('oops', e)
     }
   }
