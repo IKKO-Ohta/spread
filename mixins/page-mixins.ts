@@ -11,6 +11,7 @@ interface Stores {
 @Mixin
 export default class PageMixin extends Vue {
   mounted() {
+    // firebaseのログイン状況を監視する
     firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
       if (user !== null && this.stores.user.currentUserInfo === null) {
         this.stores.user.SET_USER({
