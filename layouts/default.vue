@@ -16,14 +16,7 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>{{ createButton.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="createButton.text" />
-          </v-list-item-content>
-        </v-list-item>
+        <v-list-item-create-record />
       </v-list>
     </v-navigation-drawer>
 
@@ -41,12 +34,23 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import VListItemCreateRecord from '~/components/VListItemCreateRecord.vue'
 
-@Component({})
+interface SidebarItems {
+  icon: string
+  title: string
+  to: string
+}
+
+@Component({
+  components: {
+    VListItemCreateRecord
+  }
+})
 export default class extends Vue {
   readonly title = 'spread'
   readonly isDrawerOpen = false
-  readonly items = [
+  readonly items: SidebarItems[] = [
     {
       icon: 'mdi-apps',
       title: 'Welcome',
@@ -63,10 +67,5 @@ export default class extends Vue {
       to: '/records/second_record'
     }
   ]
-
-  createButton = {
-    text: 'create a new record',
-    icon: 'mdi-checkerboard-plus'
-  }
 }
 </script>
