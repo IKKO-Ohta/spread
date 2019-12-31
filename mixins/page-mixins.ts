@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { Vue } from 'vue-property-decorator'
 import * as firebase from 'firebase/app'
 import { Mixin } from 'vue-mixin-decorator'
 import { getModule } from 'vuex-module-decorators'
