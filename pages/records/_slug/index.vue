@@ -41,7 +41,9 @@ export default class RecordPage extends Vue {
   async loadGames() {
     try {
       const result = await this.$firestore
-        .collection(`${this.$route.params.slug}`)
+        .collection('sheet')
+        .doc(`${this.$route.params.slug}`)
+        .collection('games')
         .get()
 
       result.forEach((elem) => {
@@ -49,7 +51,7 @@ export default class RecordPage extends Vue {
       })
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log('oops', e)
+      console.error('oops', e)
     }
   }
 }

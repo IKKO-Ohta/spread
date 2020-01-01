@@ -96,7 +96,7 @@ export default class SubmitGameForm extends Vue {
         this.submit(this.game)
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.log('oops,', e)
+        console.error('oops,', e)
       }
     }
   }
@@ -111,7 +111,9 @@ export default class SubmitGameForm extends Vue {
 
   sendFireStore() {
     return this.$firestore
-      .collection(`${this.$route.params.slug}`)
+      .collection('sheet')
+      .doc(`${this.$route.params.slug}`)
+      .collection('games')
       .add(this.game)
   }
 

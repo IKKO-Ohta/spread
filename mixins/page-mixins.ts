@@ -1,11 +1,13 @@
-import Vue from 'vue'
+import { Vue } from 'vue-property-decorator'
 import * as firebase from 'firebase/app'
 import { Mixin } from 'vue-mixin-decorator'
 import { getModule } from 'vuex-module-decorators'
 import User from '@/store/user'
+import Sheet from '@/store/sheet'
 
 interface Stores {
   user: User
+  sheet: Sheet
 }
 
 @Mixin
@@ -24,11 +26,16 @@ export default class PageMixin extends Vue {
 
   get stores(): Stores {
     return {
-      user: this._user
+      user: this._user,
+      sheet: this._sheet
     }
   }
 
   private get _user(): User {
     return getModule(User, this.$store)
+  }
+
+  private get _sheet(): Sheet {
+    return getModule(Sheet, this.$store)
   }
 }
