@@ -27,6 +27,7 @@ import PageMixin from '@/mixins/page-mixins'
 export default class LoginPage extends Mixins<PageMixin>(PageMixin) {
   mounted() {
     this.stores.user.LOGIN()
+    this.stores.sheet.FETCH_SHEET()
   }
 
   signOut() {

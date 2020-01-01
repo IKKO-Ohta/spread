@@ -56,11 +56,3 @@
     </v-flex>
   </v-layout>
 </template>
-
-<script lang="ts">
-import { Vue } from 'vue-property-decorator'
-
-export default {
-  components: {}
-}
-</script>
