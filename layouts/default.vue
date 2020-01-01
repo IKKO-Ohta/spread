@@ -67,7 +67,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
         this.items.push({
           icon: 'mdi-chart-bubble',
           title: sheet.sheetName,
-          to: `/record/${sheet.sheetName}`
+          to: `/records/${sheet.sheetName}`
         })
       })
     }

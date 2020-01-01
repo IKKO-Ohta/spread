@@ -41,7 +41,9 @@ export default class RecordPage extends Vue {
   async loadGames() {
     try {
       const result = await this.$firestore
-        .collection(`${this.$route.params.slug}`)
+        .collection('sheet')
+        .doc(`${this.$route.params.slug}`)
+        .collection('games')
         .get()
 
       result.forEach((elem) => {

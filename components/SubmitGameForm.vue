@@ -111,7 +111,9 @@ export default class SubmitGameForm extends Vue {
 
   sendFireStore() {
     return this.$firestore
-      .collection(`${this.$route.params.slug}`)
+      .collection('sheet')
+      .doc(`${this.$route.params.slug}`)
+      .collection('games')
       .add(this.game)
   }
 
