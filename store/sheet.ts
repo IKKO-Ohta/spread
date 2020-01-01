@@ -20,7 +20,10 @@ export default class Sheet extends VuexModule {
   @Action
   async FETCH_SHEET() {
     const db = firebase.firestore()
-    const querySnapshot = await db.collection('sheet').get()
+    const querySnapshot = await db
+      .collection('sheet')
+      .where('member', 'array-contains', 'samayotta@gmail.com')
+      .get()
     querySnapshot.forEach((doc) => {
       // eslint-disable-next-line no-console
       const data = doc.data()

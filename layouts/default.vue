@@ -58,7 +58,7 @@ export default class extends Vue {
     },
     {
       icon: 'mdi-chart-bubble',
-      title: 'myRecord',
+      title: 'first_sheet',
       to: '/records/myrecord'
     },
     {

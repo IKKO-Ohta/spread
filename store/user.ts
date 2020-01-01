@@ -9,7 +9,7 @@ interface UserInfo {
   displayName: string | null
 }
 
-@Module({ name: 'us per', namespaced: true, stateFactory: true })
+@Module({ name: 'user', namespaced: true, stateFactory: true })
 export default class User extends VuexModule {
   currentUserInfo: UserInfo | null = null
   isLogin: boolean = false

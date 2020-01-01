@@ -22,6 +22,7 @@
 import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
 import PageMixin from '@/mixins/page-mixins'
+import 'firebaseui/dist/firebaseui.css'
 
 @Component({})
 export default class LoginPage extends Mixins<PageMixin>(PageMixin) {
