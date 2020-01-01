@@ -49,7 +49,7 @@ export default class RecordPage extends Vue {
       })
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log('oops', e)
+      console.error('oops', e)
     }
   }
 }

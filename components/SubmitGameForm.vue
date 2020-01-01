@@ -96,7 +96,7 @@ export default class SubmitGameForm extends Vue {
         this.submit(this.game)
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.log('oops,', e)
+        console.error('oops,', e)
       }
     }
   }
