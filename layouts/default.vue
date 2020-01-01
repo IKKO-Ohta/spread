@@ -16,7 +16,7 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
-        <v-list-item-create-record />
+        <v-list-item-create-record @create-sheet="createSheet" />
       </v-list>
     </v-navigation-drawer>
 
@@ -35,8 +35,10 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
+import { GameTitle } from '../models/const/Enums'
 import PageMixin from '@/mixins/page-mixins'
 import VListItemCreateRecord from '~/components/VListItemCreateRecord.vue'
+import { SheetInfo } from '~/models/const/SheetInfo'
 
 interface SidebarItems {
   icon: string
@@ -51,26 +53,45 @@ interface SidebarItems {
 })
 export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
   readonly title = 'spread'
-  readonly isDrawerOpen = false
-  items: SidebarItems[] = [
-    {
-      icon: 'mdi-apps',
-      title: 'Welcome',
-      to: '/'
-    }
-  ]
+  readonly welcomeItem: SidebarItems = {
+    icon: 'mdi-apps',
+    title: 'Welcome',
+    to: '/'
+  }
+
+  isDrawerOpen = false
+  items: SidebarItems[] = [this.welcomeItem]
 
   async created(): Promise<void> {
     if (this.stores.sheet.currentSheetInfos.length === 0) {
-      await this.stores.sheet.FETCH_SHEET()
-      this.stores.sheet.currentSheetInfos.forEach((sheet) => {
-        this.items.push({
-          icon: 'mdi-chart-bubble',
-          title: sheet.sheetName,
-          to: `/records/${sheet.sheetName}`
-        })
-      })
+      await this.refreshSheetInfos()
     }
+  }
+
+  async refreshSheetInfos(): Promise<void> {
+    this.items = [this.welcomeItem]
+    this.isDrawerOpen = false
+
+    await this.stores.sheet.FETCH_SHEET()
+    this.stores.sheet.currentSheetInfos.forEach((sheet) => {
+      this.items.push({
+        icon: 'mdi-chart-bubble',
+        title: sheet.sheetName,
+        to: `/records/${sheet.sheetName}`
+      })
+    })
+  }
+
+  async createSheet(sheetName: string, gameTitle: GameTitle): Promise<void> {
+    const userMail = this.stores.user.currentUserInfo!.email
+    const sheetInfo: SheetInfo = {
+      member: [userMail],
+      sheetName,
+      gameTitle
+    }
+    await this.stores.sheet.CREATE_SHEET(sheetInfo)
+    await this.refreshSheetInfos()
+    this.$router.push(`/records/${sheetName}`)
   }
 }
 </script>
