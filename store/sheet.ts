@@ -17,15 +17,20 @@ export default class Sheet extends VuexModule {
     this.currentSheetInfos.push(sheetInfos)
   }
 
+  @Mutation
+  CLEAR_SHEET() {
+    this.currentSheetInfos = []
+  }
+
   @Action
   async FETCH_SHEET() {
+    this.CLEAR_SHEET()
     const db = firebase.firestore()
     const querySnapshot = await db
       .collection('sheet')
       .where('member', 'array-contains', 'samayotta@gmail.com')
       .get()
     querySnapshot.forEach((doc) => {
-      // eslint-disable-next-line no-console
       const data = doc.data()
       this.ADD_SHEET({
         member: data.member,

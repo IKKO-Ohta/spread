@@ -33,7 +33,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
+import { Mixins } from 'vue-mixin-decorator'
+import PageMixin from '@/mixins/page-mixins'
 import VListItemCreateRecord from '~/components/VListItemCreateRecord.vue'
 
 interface SidebarItems {
@@ -47,25 +49,28 @@ interface SidebarItems {
     VListItemCreateRecord
   }
 })
-export default class extends Vue {
+export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
   readonly title = 'spread'
   readonly isDrawerOpen = false
-  readonly items: SidebarItems[] = [
+  items: SidebarItems[] = [
     {
       icon: 'mdi-apps',
       title: 'Welcome',
       to: '/'
-    },
-    {
-      icon: 'mdi-chart-bubble',
-      title: 'first_sheet',
-      to: '/records/myrecord'
-    },
-    {
-      icon: 'mdi-chart-bubble',
-      title: 'secondRecord',
-      to: '/records/second_record'
     }
   ]
+
+  async created(): Promise<void> {
+    if (this.stores.sheet.currentSheetInfos.length === 0) {
+      await this.stores.sheet.FETCH_SHEET()
+      this.stores.sheet.currentSheetInfos.forEach((sheet) => {
+        this.items.push({
+          icon: 'mdi-chart-bubble',
+          title: sheet.sheetName,
+          to: `/record/${sheet.sheetName}`
+        })
+      })
+    }
+  }
 }
 </script>
