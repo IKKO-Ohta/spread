@@ -36,9 +36,7 @@ export default class User extends VuexModule {
       if (user) {
         this.SET_LOGIN()
       } else {
-        const ui =
-          firebaseui.auth.AuthUI.getInstance() ||
-          new firebaseui.auth.AuthUI(firebase.auth())
+        const ui = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(firebase.auth())
         ui.start('#firebaseui-auth-container', {
           signInSuccessUrl: '/login',
           signInFlow: 'popup',
