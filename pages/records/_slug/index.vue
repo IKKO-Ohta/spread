@@ -1,7 +1,7 @@
 <template>
   <section>
     <submit-game-form :decklist="decklist" @submit="addGame" />
-    <v-data-table :headers="headers" :items="games" :items-per-page="5" class="elevation-1 table" />
+    <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
 </template>
 
@@ -23,6 +23,10 @@ export default class RecordPage extends Vue {
   headers = recordHeader()
   games: Game[] = []
   decklist?: string[] = archtypes()
+  option = {
+    sortBy: ['timestamp'],
+    sortDesc: [true]
+  }
 
   async created() {
     this.sheetName = this.$route.params.slug
