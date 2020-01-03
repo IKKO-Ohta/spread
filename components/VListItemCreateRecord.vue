@@ -12,13 +12,8 @@
       <v-card class="form">
         <v-card-title> create a new record</v-card-title>
         <v-card-text>
-          <v-text-field v-model="sheetName" label="sheet name" required>
-          </v-text-field>
-          <v-select
-            v-model="selectedGameTitle"
-            label="Game"
-            :items="gameTitles"
-          />
+          <v-text-field v-model="sheetName" label="sheet name" required> </v-text-field>
+          <v-select v-model="selectedGameTitle" label="Game" :items="gameTitles" />
         </v-card-text>
         <v-card-actions>
           <v-btn depressed :disabled="!canSubmit" @click="submit">

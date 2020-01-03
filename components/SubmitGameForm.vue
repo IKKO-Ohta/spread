@@ -6,33 +6,15 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="2">
-              <v-select
-                v-model="game.myDeck"
-                :items="decklist"
-                :rules="[(v) => !!v || '必須']"
-                label="Your Deck"
-                required
-              />
+              <v-select v-model="game.myDeck" :items="decklist" :rules="[(v) => !!v || '必須']" label="Your Deck" required />
             </v-col>
 
             <v-col cols="12" md="2">
-              <v-select
-                v-model="game.oppDeck"
-                :items="decklist"
-                :rules="[(v) => !!v || '必須']"
-                label="Opponent's Deck"
-                required
-              />
+              <v-select v-model="game.oppDeck" :items="decklist" :rules="[(v) => !!v || '必須']" label="Opponent's Deck" required />
             </v-col>
 
             <v-col cols="12" md="1">
-              <v-btn
-                large
-                :color="iconWLColor"
-                depressed
-                class="sm-button"
-                @click="changeWinOrLose"
-              >
+              <v-btn large :color="iconWLColor" depressed class="sm-button" @click="changeWinOrLose">
                 <v-icon left>
                   {{ iconEmotion }}
                 </v-icon>
@@ -41,13 +23,7 @@
             </v-col>
 
             <v-col cols="12" md="1">
-              <v-btn
-                large
-                :color="iconBWColor"
-                depressed
-                class="sm-button"
-                @click="changeBlackOrWhite"
-              >
+              <v-btn large :color="iconBWColor" depressed class="sm-button" @click="changeBlackOrWhite">
                 <v-icon left>
                   {{ iconBW }}
                 </v-icon>
@@ -70,7 +46,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import format from 'date-fns/format'
 import ja from 'date-fns/locale/ja'
-import Game from '../models/const/Game'
+import Game from '@/models/const/Game'
 import { Result, Bw } from '@/models/const/Enums'
 
 @Component({})
@@ -118,15 +94,11 @@ export default class SubmitGameForm extends Vue {
   }
 
   get iconEmotion(): string {
-    return this.game.win === Result.win
-      ? 'mdi-emoticon-cool'
-      : 'mdi-emoticon-cry'
+    return this.game.win === Result.win ? 'mdi-emoticon-cool' : 'mdi-emoticon-cry'
   }
 
   get iconBW(): string {
-    return this.game.black === Bw.black
-      ? 'mdi-triangle'
-      : 'mdi-triangle-outline'
+    return this.game.black === Bw.black ? 'mdi-triangle' : 'mdi-triangle-outline'
   }
 
   get iconWLColor(): string {
