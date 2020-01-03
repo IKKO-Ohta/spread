@@ -1,12 +1,7 @@
 <template>
   <div>
     <submit-game-form :decklist="decklist" @submit="addGame" />
-    <v-data-table
-      :headers="headers"
-      :items="games"
-      :items-per-page="5"
-      class="elevation-1 table"
-    />
+    <v-data-table :headers="headers" :items="games" :items-per-page="5" class="elevation-1 table" />
   </div>
 </template>
 
@@ -45,7 +40,6 @@ export default class RecordPage extends Vue {
         .doc(`${this.$route.params.slug}`)
         .collection('games')
         .get()
-
       result.forEach((elem) => {
         this.games.push(elem.data() as Game)
       })
