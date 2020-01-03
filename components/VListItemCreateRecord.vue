@@ -21,7 +21,9 @@
           />
         </v-card-text>
         <v-card-actions>
-          <v-btn depressed @click="submit"> Create </v-btn>
+          <v-btn depressed :disabled="!canSubmit" @click="submit">
+            Create
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -29,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Emit } from 'vue-property-decorator'
 import { AllGameTitles, GameTitle } from '~/models/const/Enums'
 
 @Component({})
@@ -44,13 +46,21 @@ export default class VlistItemCreateRecord extends Vue {
   selectedGameTitle: GameTitle | '' = ''
   sheetName = ''
 
+  @Emit() createSheet(_sheetName: string, _gameTitle: GameTitle): void {}
+
   openDialog(): void {
     this.dialog = true
   }
 
   submit(): void {
-    // eslint-disable-next-line no-console
-    console.log(this.sheetName, this.selectedGameTitle)
+    if (this.canSubmit) {
+      this.createSheet(this.sheetName, this.selectedGameTitle as GameTitle)
+      this.dialog = false
+    }
+  }
+
+  get canSubmit(): boolean {
+    return this.sheetName !== '' && this.selectedGameTitle !== ''
   }
 }
 </script>

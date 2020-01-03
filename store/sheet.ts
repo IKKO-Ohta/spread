@@ -1,12 +1,7 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import firebase from 'firebase/app'
 import 'firebaseui/dist/firebaseui.css'
-
-interface SheetInfo {
-  member: string[]
-  sheetName: string
-  gameTitle: string
-}
+import { SheetInfo } from '~/models/const/SheetInfo'
 
 @Module({ name: 'sheet', namespaced: true, stateFactory: true })
 export default class Sheet extends VuexModule {
@@ -22,7 +17,7 @@ export default class Sheet extends VuexModule {
     this.currentSheetInfos = []
   }
 
-  @Action
+  @Action({ rawError: true })
   async FETCH_SHEET() {
     this.CLEAR_SHEET()
     const db = firebase.firestore()
@@ -38,5 +33,14 @@ export default class Sheet extends VuexModule {
         gameTitle: data.gameTitle
       })
     })
+  }
+
+  @Action({ rawError: true })
+  async CREATE_SHEET(sheetInfo: SheetInfo) {
+    const db = firebase.firestore()
+    await db
+      .collection('sheet')
+      .doc(sheetInfo.sheetName)
+      .set(sheetInfo)
   }
 }
