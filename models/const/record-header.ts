@@ -2,7 +2,7 @@ export default () => [
   {
     text: '使用デッキ',
     align: 'left',
-    sortable: false,
+    sortable: true,
     value: 'myDeck'
   },
   { text: '対戦デッキ', value: 'oppDeck' },

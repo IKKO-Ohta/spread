@@ -1,6 +1,7 @@
-const colors = require('vuetify/es5/util/colors').default
+import { Configuration } from '@nuxt/types'
 
-export default {
+const colors = require('vuetify/es5/util/colors').default
+const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
    ** Headers of the page
@@ -71,6 +72,11 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(_config, _ctx) {}
+    extend(_config, _ctx) {},
+    babel: {
+      plugins: [['@babel/plugin-proposal-decorators', { legacy: true }], ['@babel/plugin-proposal-class-properties', { loose: true }]]
+    }
   }
 }
+
+export default nuxtConfig
