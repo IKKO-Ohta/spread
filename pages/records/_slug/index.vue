@@ -11,7 +11,7 @@ import { NuxtConfigurationHead } from '@nuxt/types/config/head'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import recordHeader from '@/models/const/record-header'
 import archtypes from '@/models/const/archtypes'
-import { Game } from '@/models/const/game'
+import { Game } from '@/models/@types/game'
 
 @Component({
   components: {

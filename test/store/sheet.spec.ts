@@ -2,7 +2,7 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 import Sheet from '@/store/sheet'
-import { SheetInfo } from '~/models/const/sheet-info'
+import { SheetInfo } from '~/models/@types/sheet-info'
 import { GameTitle } from '~/models/const/enums'
 
 const localVue = createLocalVue()

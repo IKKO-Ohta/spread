@@ -47,7 +47,7 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import format from 'date-fns/format'
 import ja from 'date-fns/locale/ja'
 import { Result, Bw } from '@/models/const/enums'
-import { Game } from '@/models/const/game'
+import { Game } from '@/models/@types/game'
 
 @Component({})
 export default class SubmitGameForm extends Vue {
