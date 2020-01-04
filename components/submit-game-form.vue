@@ -60,12 +60,12 @@ export default class SubmitGameForm extends Vue {
     myDeck: null,
     oppDeck: null,
     user: 'samayotta',
-    timestamp: this.timestamp,
+    timestamp: this.timestamp(),
     describe: ''
   }
 
   async emitSubmitGame() {
-    this.game.timestamp = this.timestamp
+    this.game.timestamp = this.timestamp()
     if (this.canSubmit) {
       try {
         await this.sendFireStore()
@@ -93,6 +93,10 @@ export default class SubmitGameForm extends Vue {
       .add(this.game)
   }
 
+  timestamp() {
+    return format(new Date(), 'yyyy/MM/dd HH:mm:ss', { locale: ja })
+  }
+
   get iconEmotion(): string {
     return this.game.win === Result.win ? 'mdi-emoticon-cool' : 'mdi-emoticon-cry'
   }
@@ -107,10 +111,6 @@ export default class SubmitGameForm extends Vue {
 
   get iconBWColor(): string {
     return this.game.black === Bw.white ? 'black' : 'azure'
-  }
-
-  get timestamp() {
-    return format(new Date(), 'yyyy/MM/dd HH:mm:ss', { locale: ja })
   }
 
   get canSubmit() {
