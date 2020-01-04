@@ -1,6 +1,5 @@
 <template>
   <v-card class="form">
-    <v-card-title>ゲームレコードを登録</v-card-title>
     <v-card-text>
       <v-form>
         <v-container>
@@ -121,6 +120,6 @@ export default class SubmitGameForm extends Vue {
 
 <style lang="scss">
 .sm-button {
-  margin: 5px;
+  margin: 1rem;
 }
 </style>

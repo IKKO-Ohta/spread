@@ -1,5 +1,6 @@
 <template>
   <section>
+    <sheet-toolbar :sheet-name="sheetName" />
     <submit-game-form :decklist="decklist" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
@@ -9,13 +10,15 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { NuxtConfigurationHead } from '@nuxt/types/config/head'
 import SubmitGameForm from '@/components/submit-game-form.vue'
+import SheetToolbar from '@/components/sheet-toolbar.vue'
 import recordHeader from '@/models/const/record-header'
 import archtypes from '@/models/const/archtypes'
 import { Game } from '@/models/@types/game'
 
 @Component({
   components: {
-    SubmitGameForm
+    SubmitGameForm,
+    SheetToolbar
   }
 })
 export default class RecordPage extends Vue {
@@ -23,6 +26,8 @@ export default class RecordPage extends Vue {
   headers = recordHeader()
   games: Game[] = []
   decklist?: string[] = archtypes()
+  tabs = 0
+
   option = {
     sortBy: ['timestamp'],
     sortDesc: [true]

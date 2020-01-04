@@ -1,0 +1,47 @@
+<template>
+  <nav>
+    <v-toolbar flat>
+      <v-toolbar-title>{{ sheetName }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <ul-tooltip message="対戦記録">
+        <v-icon dark>mdi-checkerboard</v-icon>
+      </ul-tooltip>
+      <ul-tooltip message="分析">
+        <v-icon dark>mdi-chart-pie</v-icon>
+      </ul-tooltip>
+      <ul-tooltip message="デッキ管理">
+        <v-icon dark>mdi-account</v-icon>
+      </ul-tooltip>
+      <ul-tooltip message="メンバー管理">
+        <v-icon dark>mdi-account-group-outline</v-icon>
+      </ul-tooltip>
+      <ul-tooltip message="設定">
+        <v-icon dark @click="openDrawer">mdi-dots-vertical</v-icon>
+      </ul-tooltip>
+    </v-toolbar>
+
+    <aside>
+      <sub-navigation-drawer v-model="drawer" />
+    </aside>
+  </nav>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import UlTooltip from '@/components/ul-tooltip.vue'
+import SubNavigationDrawer from '@/components/sub-navigation-drawer.vue'
+
+@Component({
+  components: { UlTooltip, SubNavigationDrawer }
+})
+export default class SheetToolbar extends Vue {
+  @Prop({ required: true }) sheetName!: string
+  drawer = false
+
+  openDrawer(): void {
+    this.drawer = true
+  }
+}
+</script>
+
+<style lang="scss" scoped></style>
