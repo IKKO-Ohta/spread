@@ -1,13 +1,7 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import firebase from 'firebase/app'
 import * as firebaseui from 'firebaseui'
-import 'firebaseui/dist/firebaseui.css'
-
-interface UserInfo {
-  uid: string
-  email: string
-  displayName: string | null
-}
+import { UserInfo } from '@/models/@types/user-info'
 
 @Module({ name: 'user', namespaced: true, stateFactory: true })
 export default class User extends VuexModule {
