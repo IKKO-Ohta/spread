@@ -29,10 +29,10 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
-import { GameTitle } from '../models/const/Enums'
+import { GameTitle } from '@/models/const/enums'
 import PageMixin from '@/mixins/page-mixins'
-import VListItemCreateRecord from '~/components/VListItemCreateRecord.vue'
-import { SheetInfo } from '~/models/const/SheetInfo'
+import VListItemCreateRecord from '~/components/v-list-item-create-record.vue'
+import { SheetInfo } from '~/models/@types/sheet-info'
 
 interface SidebarItems {
   icon: string

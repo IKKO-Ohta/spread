@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VListItemCreateRecord snapshot 1`] = `
+<section>
+  <v-list-item-stub activeclass="" tag="div">
+    <v-list-item-action-stub>
+      <v-icon-stub>mdi-checkerboard-plus</v-icon-stub>
+    </v-list-item-action-stub>
+    <v-list-item-content-stub>
+      <v-list-item-title-stub></v-list-item-title-stub>
+    </v-list-item-content-stub>
+  </v-list-item-stub>
+  <v-dialog-stub opendelay="0" closedelay="0" contentclass="" maxwidth="600px" origin="center center" retainfocus="true" transition="dialog-transition" width="auto">
+    <v-card-stub loaderheight="4" tag="div" class="form">
+      <v-card-title-stub> create a new record</v-card-title-stub>
+      <v-card-text-stub>
+        <v-text-field-stub errorcount="1" errormessages="" messages="" rules="" successmessages="" value="" backgroundcolor="" label="sheet name" loaderheight="2" clearicon="$vuetify.icons.clear" type="text" required=""></v-text-field-stub>
+        <v-select-stub errorcount="1" errormessages="" messages="" rules="" successmessages="" value="" appendicon="$vuetify.icons.dropdown" backgroundcolor="" label="Game" loaderheight="2" clearicon="$vuetify.icons.clear" type="text" valuecomparator="function deepEqual(a, b) {
+  if (a === b) return true;
+
+  if (a instanceof Date &amp;&amp; b instanceof Date) {
+    // If the values are Date, they were convert to timestamp with getTime and compare it
+    if (a.getTime() !== b.getTime()) return false;
+  }
+
+  if (a !== Object(a) || b !== Object(b)) {
+    // If the values aren't objects, they were already checked for equality
+    return false;
+  }
+
+  var props = Object.keys(a);
+
+  if (props.length !== Object.keys(b).length) {
+    // Different number of props, don't bother to check
+    return false;
+  }
+
+  return props.every(function (p) {
+    return deepEqual(a[p], b[p]);
+  });
+}" nodatatext="$vuetify.noDataText" items="Magic: the Gathering,Weiss Schwaltz,Pokemon Card Game" itemcolor="primary" itemdisabled="disabled" itemtext="text" itemvalue="value" menuprops="[object Object]"></v-select-stub>
+      </v-card-text-stub>
+      <v-card-actions-stub>
+        <v-btn-stub tag="button" activeclass="" disabled="true" depressed="true" type="button">
+          Create
+        </v-btn-stub>
+      </v-card-actions-stub>
+    </v-card-stub>
+  </v-dialog-stub>
+</section>
+`;
