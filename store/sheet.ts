@@ -16,6 +16,11 @@ export default class Sheet extends VuexModule {
     this.currentSheetInfos = []
   }
 
+  @Action
+  CURRENT_SHEET(sheetName: string): SheetInfo | undefined {
+    return this.currentSheetInfos.find((elem) => elem.sheetName === sheetName)
+  }
+
   @Action({ rawError: true })
   async FETCH_SHEET() {
     this.CLEAR_SHEET()
@@ -27,7 +32,7 @@ export default class Sheet extends VuexModule {
     querySnapshot.forEach((doc) => {
       const data = doc.data()
       this.ADD_SHEET({
-        member: data.member,
+        members: data.member,
         sheetName: data.sheetName,
         gameTitle: data.gameTitle
       })

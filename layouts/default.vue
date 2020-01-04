@@ -79,7 +79,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
   async createSheet(sheetName: string, gameTitle: GameTitle): Promise<void> {
     const userMail = this.stores.user.currentUserInfo!.email
     const sheetInfo: SheetInfo = {
-      member: [userMail],
+      members: [userMail],
       sheetName,
       gameTitle
     }

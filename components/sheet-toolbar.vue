@@ -12,9 +12,8 @@
       <ul-tooltip message="デッキ管理">
         <v-icon dark>mdi-account</v-icon>
       </ul-tooltip>
-      <ul-tooltip message="メンバー管理">
-        <v-icon dark>mdi-account-group-outline</v-icon>
-      </ul-tooltip>
+      <setting-account-group />
+
       <ul-tooltip message="設定">
         <v-icon dark @click="openDrawer">mdi-dots-vertical</v-icon>
       </ul-tooltip>
@@ -30,9 +29,10 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import UlTooltip from '@/components/ul-tooltip.vue'
 import SubNavigationDrawer from '@/components/sub-navigation-drawer.vue'
+import SettingAccountGroup from '@/components/setting-account-group.vue'
 
 @Component({
-  components: { UlTooltip, SubNavigationDrawer }
+  components: { UlTooltip, SubNavigationDrawer, SettingAccountGroup }
 })
 export default class SheetToolbar extends Vue {
   @Prop({ required: true }) sheetName!: string
