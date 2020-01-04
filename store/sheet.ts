@@ -1,7 +1,7 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import firebase from 'firebase/app'
 import 'firebaseui/dist/firebaseui.css'
-import { SheetInfo } from '~/models/const/SheetInfo'
+import { SheetInfo } from '~/models/const/sheet-info'
 
 @Module({ name: 'sheet', namespaced: true, stateFactory: true })
 export default class Sheet extends VuexModule {

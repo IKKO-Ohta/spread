@@ -8,10 +8,10 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { NuxtConfigurationHead } from '@nuxt/types/config/head'
-import SubmitGameForm from '@/components/SubmitGameForm.vue'
+import SubmitGameForm from '@/components/submit-game-form.vue'
 import recordHeader from '@/models/const/record-header'
 import archtypes from '@/models/const/archtypes'
-import Game from '@/models/const/Game'
+import { Game } from '@/models/const/game'
 
 @Component({
   components: {

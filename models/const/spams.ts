@@ -1,4 +1,4 @@
-import { Result, Bw } from './Enums'
+import { Result, Bw } from './enums'
 
 export default () => [
   {

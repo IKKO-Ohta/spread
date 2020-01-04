@@ -1,4 +1,4 @@
-export default interface Game {
+export interface Game {
   win: string
   black: string
   myDeck: string | null

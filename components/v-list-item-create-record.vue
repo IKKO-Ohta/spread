@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { Vue, Component, Emit } from 'vue-property-decorator'
-import { AllGameTitles, GameTitle } from '~/models/const/Enums'
+import { AllGameTitles, GameTitle } from '~/models/const/enums'
 
 @Component({})
 export default class VlistItemCreateRecord extends Vue {
