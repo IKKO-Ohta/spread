@@ -28,21 +28,28 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator'
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
 import UlTooltip from '@/components/ul-tooltip.vue'
+import { SheetInfo } from '@/models/@types/sheet-info'
 
 @Component({
   components: { UlTooltip }
 })
 export default class SettingAccountGroup extends Vue {
+  @Prop({ required: true }) sheetName!: string
   @Emit() invite(): void {}
+  @Emit() getCurrentSheetInfoFromStore(): SheetInfo {
+    return {} as SheetInfo
+  }
 
+  members: string[] = []
   mailAdressToInvite = ''
   dialog = false
-  members = ['samayotta@gmail.com', 'samayotta@apple.com']
 
   openDialog(): void {
     this.dialog = true
+    const sheet = this.getCurrentSheetInfoFromStore()
+    this.members = sheet.members
   }
 
   submit(): void {

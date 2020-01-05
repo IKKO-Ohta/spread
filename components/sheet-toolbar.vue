@@ -12,7 +12,7 @@
       <ul-tooltip message="デッキ管理">
         <v-icon dark>mdi-account</v-icon>
       </ul-tooltip>
-      <setting-account-group />
+      <setting-account-group :sheet-name="sheetName" @get-current-sheet-info-from-store="getCurrentSheetInfoFromStore" />
 
       <ul-tooltip message="設定">
         <v-icon dark @click="openDrawer">mdi-dots-vertical</v-icon>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import UlTooltip from '@/components/ul-tooltip.vue'
 import SubNavigationDrawer from '@/components/sub-navigation-drawer.vue'
 import SettingAccountGroup from '@/components/setting-account-group.vue'
@@ -35,11 +35,16 @@ import SettingAccountGroup from '@/components/setting-account-group.vue'
   components: { UlTooltip, SubNavigationDrawer, SettingAccountGroup }
 })
 export default class SheetToolbar extends Vue {
-  @Prop({ required: true }) sheetName!: string
+  @Prop() sheetName!: string
+  @Emit() getSheetInfo() {}
   drawer = false
 
   openDrawer(): void {
     this.drawer = true
+  }
+
+  getCurrentSheetInfoFromStore() {
+    return this.getSheetInfo()
   }
 }
 </script>
