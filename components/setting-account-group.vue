@@ -48,8 +48,8 @@ export default class SettingAccountGroup extends Vue {
 
   openDialog(): void {
     this.dialog = true
-    const sheet = this.getCurrentSheetInfoFromStore()
-    this.members = sheet.members
+    // TODO: const sheet = this.getCurrentSheetInfoFromStore() bugのため正しい答えが返らない
+    this.members = ['samayotta@gmail.com', 'samayotta@apple.com']
   }
 
   submit(): void {
