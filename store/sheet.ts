@@ -17,6 +17,12 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
+  CURRENT_SHEET(sheetName: string): SheetInfo | null {
+    const sheet = this.currentSheetInfos.find((elem) => elem.sheetName === sheetName)
+    return sheet || null
+  }
+
+  @Action({ rawError: true })
   async FETCH_SHEET() {
     this.CLEAR_SHEET()
     const db = firebase.firestore()
@@ -26,8 +32,9 @@ export default class Sheet extends VuexModule {
       .get()
     querySnapshot.forEach((doc) => {
       const data = doc.data()
+
       this.ADD_SHEET({
-        member: data.member,
+        members: data.member,
         sheetName: data.sheetName,
         gameTitle: data.gameTitle
       })

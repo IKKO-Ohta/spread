@@ -1,28 +1,36 @@
 <template>
   <section>
+    <sheet-toolbar :sheet-name="sheetName" @get-sheet-info="getSheetInfo" />
     <submit-game-form :decklist="decklist" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Component } from 'nuxt-property-decorator'
+import { Mixins } from 'vue-mixin-decorator'
 import { NuxtConfigurationHead } from '@nuxt/types/config/head'
+import PageMixin from '@/mixins/page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
+import SheetToolbar from '@/components/sheet-toolbar.vue'
 import recordHeader from '@/models/const/record-header'
 import archtypes from '@/models/const/archtypes'
 import { Game } from '@/models/@types/game'
+import { SheetInfo } from '@/models/@types/sheet-info'
 
 @Component({
   components: {
-    SubmitGameForm
+    SubmitGameForm,
+    SheetToolbar
   }
 })
-export default class RecordPage extends Vue {
+export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   sheetName = ''
   headers = recordHeader()
   games: Game[] = []
   decklist?: string[] = archtypes()
+  tabs = 0
+
   option = {
     sortBy: ['timestamp'],
     sortDesc: [true]
@@ -31,6 +39,11 @@ export default class RecordPage extends Vue {
   async created() {
     this.sheetName = this.$route.params.slug
     await this.loadGames()
+  }
+
+  getSheetInfo(): SheetInfo | null {
+    // TODO: バグがある。返り値がランタイムにpromiseになってしまうのを解決する
+    return this.stores.sheet.CURRENT_SHEET(this.sheetName)
   }
 
   head(): NuxtConfigurationHead {
