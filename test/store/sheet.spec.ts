@@ -12,7 +12,7 @@ const sheetStore = getModule(Sheet, store)
 
 describe('store/sheet.ts', () => {
   const exampleSheet: SheetInfo = {
-    members: ['samayotta@gmail.com'],
+    member: ['samayotta@gmail.com'],
     sheetName: 'example-sheet',
     gameTitle: GameTitle.mtg
   }
