@@ -24,7 +24,6 @@ export default class Sheet extends VuexModule {
       .where('sheetName', '==', sheetName)
       .get()
     const data: SheetInfo[] = []
-    console.log('here?')
     querySnapshot.docs.forEach((elem) => {
       data.push(elem.data() as SheetInfo)
     })
@@ -57,5 +56,14 @@ export default class Sheet extends VuexModule {
       .collection('sheet')
       .doc(sheetInfo.sheetName)
       .set(sheetInfo)
+  }
+
+  @Action({ rawError: true })
+  UPDATE_SHEET(sheetInfo: SheetInfo) {
+    const db = firebase.firestore()
+    const sheetRef = db.collection('sheet').doc(sheetInfo.sheetName)
+    sheetRef.update({
+      sheetInfo
+    })
   }
 }

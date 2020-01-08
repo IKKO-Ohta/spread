@@ -49,8 +49,15 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
     }
   }
 
-  sendMail(mail: string) {
-    console.log('sent', mail)
+  sendMail(mail: string): void {
+    if (this.sheet === null) {
+      return
+    }
+    const newMemberList = [...this.sheet.member, mail]
+    this.stores.sheet.UPDATE_SHEET({
+      ...this.sheet,
+      member: newMemberList
+    })
   }
 
   addGame(game: Game) {
