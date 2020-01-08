@@ -17,9 +17,17 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  CURRENT_SHEET(sheetName: string): SheetInfo | null {
-    const sheet = this.currentSheetInfos.find((elem) => elem.sheetName === sheetName)
-    return sheet || null
+  async CURRENT_SHEET(sheetName: string): Promise<SheetInfo> {
+    const db = firebase.firestore()
+    const querySnapshot = await db
+      .collection('sheet')
+      .where('sheetName', '==', sheetName)
+      .get()
+    const data: SheetInfo[] = []
+    querySnapshot.docs.forEach((elem) => {
+      data.push(elem.data() as SheetInfo)
+    })
+    return data[0]
   }
 
   @Action({ rawError: true })
@@ -34,7 +42,7 @@ export default class Sheet extends VuexModule {
       const data = doc.data()
 
       this.ADD_SHEET({
-        members: data.member,
+        member: data.member,
         sheetName: data.sheetName,
         gameTitle: data.gameTitle
       })
@@ -48,5 +56,14 @@ export default class Sheet extends VuexModule {
       .collection('sheet')
       .doc(sheetInfo.sheetName)
       .set(sheetInfo)
+  }
+
+  @Action({ rawError: true })
+  UPDATE_SHEET(sheetInfo: SheetInfo) {
+    const db = firebase.firestore()
+    const sheetRef = db.collection('sheet').doc(sheetInfo.sheetName)
+    sheetRef.update({
+      sheetInfo
+    })
   }
 }

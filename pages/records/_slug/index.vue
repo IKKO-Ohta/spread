@@ -1,6 +1,6 @@
 <template>
   <section>
-    <sheet-toolbar :sheet-name="sheetName" @get-sheet-info="getSheetInfo" />
+    <sheet-toolbar :sheet="sheet" :sheet-name="sheetName" @send-mail="sendMail" />
     <submit-game-form :decklist="decklist" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
@@ -26,6 +26,7 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 })
 export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   sheetName = ''
+  sheet: SheetInfo | null = null
   headers = recordHeader()
   games: Game[] = []
   decklist?: string[] = archtypes()
@@ -39,17 +40,24 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   async created() {
     this.sheetName = this.$route.params.slug
     await this.loadGames()
-  }
-
-  getSheetInfo(): SheetInfo | null {
-    // TODO: バグがある。返り値がランタイムにpromiseになってしまうのを解決する
-    return this.stores.sheet.CURRENT_SHEET(this.sheetName)
+    this.sheet = await this.stores.sheet.CURRENT_SHEET(this.sheetName)
   }
 
   head(): NuxtConfigurationHead {
     return {
       title: this.sheetName
     }
+  }
+
+  sendMail(mail: string): void {
+    if (this.sheet === null) {
+      return
+    }
+    const newMemberList = [...this.sheet.member, mail]
+    this.stores.sheet.UPDATE_SHEET({
+      ...this.sheet,
+      member: newMemberList
+    })
   }
 
   addGame(game: Game) {

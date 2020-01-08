@@ -8,9 +8,9 @@
         <v-card-title>メンバー管理</v-card-title>
         <v-list>
           <v-subheader>現在参加しているメンバー</v-subheader>
-          <v-list-item v-for="(member, i) in members" :key="i">
+          <v-list-item v-for="(mem, i) in member" :key="i">
             <v-list-item-content>
-              <span> {{ member }}</span>
+              <span> {{ mem }}</span>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -36,25 +36,25 @@ import { SheetInfo } from '@/models/@types/sheet-info'
   components: { UlTooltip }
 })
 export default class SettingAccountGroup extends Vue {
-  @Prop({ required: true }) sheetName!: string
-  @Emit() invite(): void {}
-  @Emit() getCurrentSheetInfoFromStore(): SheetInfo {
-    return {} as SheetInfo
-  }
+  @Prop() sheetInfo!: SheetInfo | null
+  @Emit() invite(_mail: string): void {}
 
-  members: string[] = []
+  member: string[] = []
   mailAdressToInvite = ''
   dialog = false
 
-  openDialog(): void {
+  openDialog() {
+    this.member = this.getSheetMember()
     this.dialog = true
-    // TODO: const sheet = this.getCurrentSheetInfoFromStore() bugのため正しい答えが返らない
-    this.members = ['samayotta@gmail.com', 'samayotta@apple.com']
   }
 
   submit(): void {
     this.dialog = false
-    this.invite()
+    this.invite(this.mailAdressToInvite)
+  }
+
+  getSheetMember(): string[] {
+    return this.sheetInfo ? this.sheetInfo.member : []
   }
 
   get canSubmit(): boolean {
