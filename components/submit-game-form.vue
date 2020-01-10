@@ -7,11 +7,9 @@
             <v-col cols="12" md="2">
               <v-select v-model="game.myDeck" :items="decklist" :rules="[(v) => !!v || '必須']" label="Your Deck" required />
             </v-col>
-
             <v-col cols="12" md="2">
               <v-select v-model="game.oppDeck" :items="decklist" :rules="[(v) => !!v || '必須']" label="Opponent's Deck" required />
             </v-col>
-
             <v-col cols="12" md="1">
               <v-btn large :color="iconWLColor" depressed class="sm-button" @click="changeWinOrLose">
                 <v-icon left>
@@ -20,7 +18,6 @@
                 {{ game.win }}
               </v-btn>
             </v-col>
-
             <v-col cols="12" md="1">
               <v-btn large :color="iconBWColor" depressed class="sm-button" @click="changeBlackOrWhite">
                 <v-icon left>
@@ -43,8 +40,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import format from 'date-fns/format'
-import ja from 'date-fns/locale/ja'
 import { Result, Bw } from '@/models/const/enums'
 import { Game } from '@/models/@types/game'
 
@@ -58,22 +53,13 @@ export default class SubmitGameForm extends Vue {
     black: Bw.black,
     myDeck: null,
     oppDeck: null,
-    user: 'samayotta',
-    timestamp: this.timestamp(),
+    user: '',
+    timestamp: '',
     describe: ''
   }
 
-  async emitSubmitGame() {
-    this.game.timestamp = this.timestamp()
-    if (this.canSubmit) {
-      try {
-        await this.sendFireStore()
-        this.submit(this.game)
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('oops,', e)
-      }
-    }
+  emitSubmitGame() {
+    this.submit(this.game)
   }
 
   changeBlackOrWhite() {
@@ -82,18 +68,6 @@ export default class SubmitGameForm extends Vue {
 
   changeWinOrLose() {
     this.game.win = this.game.win === Result.win ? Result.lose : Result.win
-  }
-
-  sendFireStore() {
-    return this.$firestore
-      .collection('sheet')
-      .doc(`${this.$route.params.slug}`)
-      .collection('games')
-      .add(this.game)
-  }
-
-  timestamp() {
-    return format(new Date(), 'yyyy/MM/dd HH:mm:ss', { locale: ja })
   }
 
   get iconEmotion(): string {

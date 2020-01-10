@@ -17,6 +17,7 @@ import recordHeader from '@/models/const/record-header'
 import archtypes from '@/models/const/archtypes'
 import { Game } from '@/models/@types/game'
 import { SheetInfo } from '@/models/@types/sheet-info'
+import { TimeUtil } from '@/lib/time-util'
 
 @Component({
   components: {
@@ -37,47 +38,39 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
     sortDesc: [true]
   }
 
-  async created() {
-    this.sheetName = this.$route.params.slug
-    await this.loadGames()
-    this.sheet = await this.stores.sheet.CURRENT_SHEET(this.sheetName)
-  }
-
   head(): NuxtConfigurationHead {
     return {
       title: this.sheetName
     }
   }
 
-  sendMail(mail: string): void {
-    if (this.sheet === null) {
-      return
-    }
-    const newMemberList = [...this.sheet.member, mail]
-    this.stores.sheet.UPDATE_SHEET({
-      ...this.sheet,
+  created() {
+    this.load()
+  }
+
+  async load() {
+    this.sheetName = this.$route.params.slug
+    this.stores.sheet.SET_CURRENT_SHEET_NAME(this.sheetName)
+    this.sheet = this.stores.sheet.currentSheet
+    this.games = await this.stores.sheet.LOAD_GAMES()
+  }
+
+  async sendMail(mail: string): Promise<void> {
+    const newMemberList = [...this.sheet!.member, mail]
+    await this.stores.sheet.UPDATE_SHEET({
+      ...this.sheet!,
       member: newMemberList
     })
+    await this.load()
   }
 
-  addGame(game: Game) {
-    this.games.push(game)
-  }
-
-  async loadGames() {
-    try {
-      const result = await this.$firestore
-        .collection('sheet')
-        .doc(`${this.$route.params.slug}`)
-        .collection('games')
-        .get()
-      result.forEach((elem) => {
-        this.games.push(elem.data() as Game)
-      })
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('oops', e)
-    }
+  async addGame(game: Game) {
+    await this.stores.sheet.ADD_GAME({
+      ...game,
+      timestamp: TimeUtil.getNow(),
+      user: this.stores.user.currentUserInfo!.displayName!
+    })
+    await this.load()
   }
 }
 </script>
