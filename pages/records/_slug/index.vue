@@ -83,6 +83,6 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
 
 <style lang="scss">
 .form {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 </style>
