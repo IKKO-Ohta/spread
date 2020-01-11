@@ -8,7 +8,7 @@
         <v-card-title>メンバー管理</v-card-title>
         <v-list>
           <v-subheader>現在参加しているメンバー</v-subheader>
-          <v-list-item v-for="(mem, i) in member" :key="i">
+          <v-list-item v-for="(mem, i) in members" :key="i">
             <v-list-item-content>
               <span> {{ mem }}</span>
             </v-list-item-content>
@@ -39,12 +39,12 @@ export default class SettingAccountGroup extends Vue {
   @Prop() sheetInfo!: SheetInfo | null
   @Emit() invite(_mail: string): void {}
 
-  member: string[] = []
+  members: string[] = []
   mailAdressToInvite = ''
   dialog = false
 
   openDialog() {
-    this.member = this.getSheetMember()
+    this.members = this.getSheetMember()
     this.dialog = true
   }
 
@@ -54,7 +54,7 @@ export default class SettingAccountGroup extends Vue {
   }
 
   getSheetMember(): string[] {
-    return this.sheetInfo ? this.sheetInfo.member : []
+    return this.sheetInfo ? this.sheetInfo.members : []
   }
 
   get canSubmit(): boolean {

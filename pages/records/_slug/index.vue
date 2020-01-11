@@ -54,10 +54,10 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   }
 
   async sendMail(mail: string): Promise<void> {
-    const newMemberList = [...this.sheet!.member, mail]
+    const newMemberList = [...this.sheet!.members, mail]
     await this.stores.sheet.UPDATE_SHEET({
       ...this.sheet!,
-      member: newMemberList
+      members: newMemberList
     })
     await this.load()
   }

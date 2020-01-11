@@ -53,7 +53,7 @@ export default class Sheet extends VuexModule {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
         this.ADD_SHEET({
-          member: data.member,
+          members: data.member,
           sheetName: data.sheetName,
           gameTitle: data.gameTitle,
           decks: data.decks
