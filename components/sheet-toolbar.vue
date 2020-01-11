@@ -27,7 +27,6 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 })
 export default class SheetToolbar extends Vue {
   @Prop() sheet!: SheetInfo
-  @Prop() sheetName!: string
   @Emit() submitDeck(_deck: string): void {}
   @Emit() sendMail(_mail: string): void {}
 
@@ -41,6 +40,14 @@ export default class SheetToolbar extends Vue {
 
   get sheetInfo(): SheetInfo | null {
     return this.sheet || null
+  }
+
+  get sheetName(): string {
+    if (this.sheet) {
+      return this.sheet.sheetName
+    } else {
+      return ''
+    }
   }
 }
 </script>

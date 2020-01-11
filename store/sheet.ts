@@ -6,7 +6,7 @@ import { Game } from '@/models/@types/game'
 @Module({ name: 'sheet', namespaced: true, stateFactory: true })
 export default class Sheet extends VuexModule {
   currentSheetInfos: SheetInfo[] = []
-  currentSheetName: string = ''
+  currentSheetId: string = ''
 
   @Mutation
   ADD_SHEET(sheetInfos: SheetInfo) {
@@ -19,17 +19,17 @@ export default class Sheet extends VuexModule {
   }
 
   @Mutation
-  SET_CURRENT_SHEET_NAME(sheetName: string) {
-    this.currentSheetName = sheetName
+  SET_CURRENT_SHEET_ID(sheetId: string) {
+    this.currentSheetId = sheetId
   }
 
   @Action({ rawError: true })
-  async FETCH_ONLY_CURRENT_SHEET(sheetName: string): Promise<SheetInfo> {
+  async FETCH_ONLY_CURRENT_SHEET(sheetId: string): Promise<SheetInfo> {
     try {
       const db = firebase.firestore()
       const querySnapshot = await db
         .collection('sheet')
-        .where('sheetName', '==', sheetName)
+        .where('id', '==', sheetId)
         .get()
       const data: SheetInfo[] = []
       querySnapshot.docs.forEach((elem) => {
@@ -48,11 +48,12 @@ export default class Sheet extends VuexModule {
       const db = firebase.firestore()
       const querySnapshot = await db
         .collection('sheet')
-        .where('member', 'array-contains', email)
+        .where('members', 'array-contains', email)
         .get()
       querySnapshot.forEach((doc) => {
         const data = doc.data()
         this.ADD_SHEET({
+          id: data.id,
           members: data.member,
           sheetName: data.sheetName,
           gameTitle: data.gameTitle,
@@ -69,7 +70,7 @@ export default class Sheet extends VuexModule {
     const db = firebase.firestore()
     await db
       .collection('sheet')
-      .doc(`${this.currentSheetName}`)
+      .doc(`${this.currentSheetId}`)
       .collection('games')
       .add(game)
   }
@@ -81,7 +82,7 @@ export default class Sheet extends VuexModule {
       const db = firebase.firestore()
       const result = await db
         .collection('sheet')
-        .doc(`${this.currentSheetName}`)
+        .doc(`${this.currentSheetId}`)
         .collection('games')
         .get()
       result.forEach((elem) => {
@@ -99,7 +100,7 @@ export default class Sheet extends VuexModule {
       const db = firebase.firestore()
       await db
         .collection('sheet')
-        .doc(sheetInfo.sheetName)
+        .doc(sheetInfo.id)
         .set(sheetInfo)
     } catch {
       throw new Error('#CREATE_SHEET ERROR')
@@ -112,7 +113,7 @@ export default class Sheet extends VuexModule {
       const db = firebase.firestore()
       await db
         .collection('sheet')
-        .doc(sheetInfo.sheetName)
+        .doc(sheetInfo.id)
         .set(sheetInfo)
     } catch {
       throw new Error('#UPDATE_SHEET ERROR')
@@ -120,7 +121,7 @@ export default class Sheet extends VuexModule {
   }
 
   public get currentSheet(): SheetInfo | null {
-    const sheet = this.currentSheetInfos.find((sheet) => sheet.sheetName === this.currentSheetName)
+    const sheet = this.currentSheetInfos.find((sheet) => sheet.id === this.currentSheetId)
     return sheet || null
   }
 }

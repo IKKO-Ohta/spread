@@ -34,6 +34,7 @@ import PageMixin from '@/mixins/page-mixins'
 import VListItemCreateRecord from '@/components/v-list-item-create-record.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 import { DeckHelper } from '@/lib/deck-helper'
+import { FirestoreHelper } from '@/lib/firestore-helper'
 
 interface SidebarItems {
   icon: string
@@ -76,11 +77,11 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
     this.items = [this.welcomeItem]
     if (this.stores.user.currentUserInfo) {
       await this.stores.sheet.FETCH_SHEET(this.stores.user.currentUserInfo.email!)
-      this.stores.sheet.currentSheetInfos.forEach((sheet) => {
+      this.stores.sheet.currentSheetInfos.forEach((sheet: SheetInfo) => {
         this.items.push({
           icon: 'mdi-chart-bubble',
           title: sheet.sheetName,
-          to: `/records/${sheet.sheetName}`
+          to: `/records/${sheet.id}`
         })
       })
     }
@@ -88,7 +89,9 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
 
   async createSheet(sheetName: string, gameTitle: GameTitle): Promise<void> {
     const userMail = this.stores.user.currentUserInfo!.email
+    const id = FirestoreHelper.generateId()
     const sheetInfo: SheetInfo = {
+      id,
       members: [userMail],
       sheetName,
       gameTitle,
@@ -96,7 +99,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
     }
     await this.stores.sheet.CREATE_SHEET(sheetInfo)
     await this.refreshSheetInfos()
-    this.$router.push(`/records/${sheetName}`)
+    this.$router.push(`/records/${id}`)
   }
 }
 </script>
