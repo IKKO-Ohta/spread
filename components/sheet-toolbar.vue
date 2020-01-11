@@ -12,7 +12,7 @@
       <ul-tooltip message="デッキ管理">
         <v-icon dark>mdi-account</v-icon>
       </ul-tooltip>
-      <setting-account-group :sheet-info="sheetInfo" @invite="invite" />
+      <edit-account-group :sheet-info="sheetInfo" @invite="invite" />
     </v-toolbar>
   </nav>
 </template>
@@ -20,11 +20,11 @@
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import UlTooltip from '@/components/ul-tooltip.vue'
-import SettingAccountGroup from '@/components/setting-account-group.vue'
+import EditAccountGroup from '@/components/edit-account-group.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 
 @Component({
-  components: { UlTooltip, SettingAccountGroup }
+  components: { UlTooltip, EditAccountGroup }
 })
 export default class SheetToolbar extends Vue {
   @Prop() sheet!: SheetInfo

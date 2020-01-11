@@ -35,7 +35,7 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 @Component({
   components: { UlTooltip }
 })
-export default class SettingAccountGroup extends Vue {
+export default class EditAccountGroup extends Vue {
   @Prop() sheetInfo!: SheetInfo | null
   @Emit() invite(_mail: string): void {}
 
