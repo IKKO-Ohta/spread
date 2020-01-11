@@ -9,6 +9,7 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
+import { FirestoreHelper } from '@/lib/firestore-helper'
 import PageMixin from '@/mixins/page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
@@ -52,6 +53,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
       ...this.sheet!,
       members: newMemberList
     })
+    await FirestoreHelper.sendMail(mail, this.$route.fullPath)
     await this.load()
   }
 

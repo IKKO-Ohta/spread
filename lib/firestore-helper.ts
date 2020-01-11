@@ -1,3 +1,5 @@
+import functions from 'firebase'
+
 export class FirestoreHelper {
   static generateId(): string {
     const idLength = 8
@@ -8,5 +10,14 @@ export class FirestoreHelper {
       id += pool[Math.floor(Math.random() * pool.length)]
     }
     return id
+  }
+
+  static async sendMail(destination: string, url: string): Promise<void> {
+    const sendMail = functions.functions().httpsCallable('sendMail')
+    try {
+      await sendMail({ destination, url })
+    } catch (error) {
+      throw new Error('#sendMail ERROR')
+    }
   }
 }
