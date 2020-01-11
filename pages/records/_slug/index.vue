@@ -1,6 +1,6 @@
 <template>
   <section>
-    <sheet-toolbar :sheet="sheet" :sheet-name="sheetName" @send-mail="sendMail" />
+    <sheet-toolbar :sheet="sheet" :sheet-name="sheetName" @send-mail="sendMail" @submit-deck="submitDeck" />
     <submit-game-form :decklist="decklist" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
@@ -14,7 +14,6 @@ import PageMixin from '@/mixins/page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
 import recordHeader from '@/models/const/record-header'
-import archtypes from '@/models/const/archtypes'
 import { Game } from '@/models/@types/game'
 import { SheetInfo } from '@/models/@types/sheet-info'
 import { TimeUtil } from '@/lib/time-util'
@@ -30,7 +29,6 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   sheet: SheetInfo | null = null
   headers = recordHeader()
   games: Game[] = []
-  decklist?: string[] = archtypes()
   tabs = 0
 
   option = {
@@ -51,15 +49,24 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   async load() {
     this.sheetName = this.$route.params.slug
     this.stores.sheet.SET_CURRENT_SHEET_NAME(this.sheetName)
-    this.sheet = this.stores.sheet.currentSheet
+    this.sheet = await this.stores.sheet.FETCH_ONLY_CURRENT_SHEET(this.sheetName)
     this.games = await this.stores.sheet.LOAD_GAMES()
   }
 
   async sendMail(mail: string): Promise<void> {
-    const newMemberList = [...this.sheet!.member, mail]
+    const newMemberList = [...this.sheet!.members, mail]
     await this.stores.sheet.UPDATE_SHEET({
       ...this.sheet!,
-      member: newMemberList
+      members: newMemberList
+    })
+    await this.load()
+  }
+
+  async submitDeck(deck: string): Promise<void> {
+    const newDeckList = [...this.sheet!.decks, deck]
+    await this.stores.sheet.UPDATE_SHEET({
+      ...this.sheet!,
+      decks: newDeckList
     })
     await this.load()
   }
@@ -72,11 +79,19 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
     })
     await this.load()
   }
+
+  get decklist(): string[] {
+    if (this.sheet) {
+      return this.sheet.decks
+    } else {
+      return []
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .form {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 </style>

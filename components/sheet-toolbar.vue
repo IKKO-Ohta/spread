@@ -9,41 +9,30 @@
       <ul-tooltip message="分析">
         <v-icon dark>mdi-chart-pie</v-icon>
       </ul-tooltip>
-      <ul-tooltip message="デッキ管理">
-        <v-icon dark>mdi-account</v-icon>
-      </ul-tooltip>
-      <setting-account-group :sheet-info="sheetInfo" @invite="invite" />
-
-      <ul-tooltip message="設定">
-        <v-icon dark @click="openDrawer">mdi-dots-vertical</v-icon>
-      </ul-tooltip>
+      <edit-decks :sheet-info="sheetInfo" @submit="submit" />
+      <edit-account-group :sheet-info="sheetInfo" @invite="invite" />
     </v-toolbar>
-
-    <aside>
-      <sub-navigation-drawer v-model="drawer" />
-    </aside>
   </nav>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import UlTooltip from '@/components/ul-tooltip.vue'
-import SubNavigationDrawer from '@/components/sub-navigation-drawer.vue'
-import SettingAccountGroup from '@/components/setting-account-group.vue'
+import EditAccountGroup from '@/components/edit-account-group.vue'
+import EditDecks from '@/components/edit-decks.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 
 @Component({
-  components: { UlTooltip, SubNavigationDrawer, SettingAccountGroup }
+  components: { UlTooltip, EditAccountGroup, EditDecks }
 })
 export default class SheetToolbar extends Vue {
   @Prop() sheet!: SheetInfo
   @Prop() sheetName!: string
+  @Emit() submitDeck(_deck: string): void {}
   @Emit() sendMail(_mail: string): void {}
 
-  drawer = false
-
-  openDrawer(): void {
-    this.drawer = true
+  submit(deck: string) {
+    this.submitDeck(deck)
   }
 
   invite(mail: string): void {

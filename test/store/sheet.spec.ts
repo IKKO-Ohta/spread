@@ -4,6 +4,7 @@ import { getModule } from 'vuex-module-decorators'
 import Sheet from '@/store/sheet'
 import { SheetInfo } from '~/models/@types/sheet-info'
 import { GameTitle } from '~/models/const/enums'
+import { DeckHelper } from '~/lib/deck-helper'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -12,9 +13,10 @@ const sheetStore = getModule(Sheet, store)
 
 describe('store/sheet.ts', () => {
   const exampleSheet: SheetInfo = {
-    member: ['samayotta@gmail.com'],
+    members: ['samayotta@gmail.com'],
     sheetName: 'example-sheet',
-    gameTitle: GameTitle.mtg
+    gameTitle: GameTitle.mtg,
+    decks: DeckHelper.getDefaultDecks(GameTitle.mtg)
   }
 
   describe('#ADD_SHEET', () => {

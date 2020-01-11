@@ -1,7 +1,8 @@
 import { GameTitle } from '~/models/const/enums'
 
 export interface SheetInfo {
-  member: string[]
+  members: string[]
   sheetName: string
   gameTitle: GameTitle
+  decks: string[]
 }

@@ -24,7 +24,7 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async CURRENT_SHEET(sheetName: string): Promise<SheetInfo> {
+  async FETCH_ONLY_CURRENT_SHEET(sheetName: string): Promise<SheetInfo> {
     try {
       const db = firebase.firestore()
       const querySnapshot = await db
@@ -53,9 +53,10 @@ export default class Sheet extends VuexModule {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
         this.ADD_SHEET({
-          member: data.member,
+          members: data.member,
           sheetName: data.sheetName,
-          gameTitle: data.gameTitle
+          gameTitle: data.gameTitle,
+          decks: data.decks
         })
       })
     } catch {
@@ -106,13 +107,13 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  UPDATE_SHEET(sheetInfo: SheetInfo) {
+  async UPDATE_SHEET(sheetInfo: SheetInfo) {
     try {
       const db = firebase.firestore()
-      const sheetRef = db.collection('sheet').doc(sheetInfo.sheetName)
-      sheetRef.update({
-        sheetInfo
-      })
+      await db
+        .collection('sheet')
+        .doc(sheetInfo.sheetName)
+        .set(sheetInfo)
     } catch {
       throw new Error('#UPDATE_SHEET ERROR')
     }

@@ -15,7 +15,7 @@
     </v-navigation-drawer>
 
     <v-app-bar fixed app>
-      <v-app-bar-nav-icon @click.stop="isDrawerOpen = !isDrawerOpen" />
+      <v-app-bar-nav-icon @click.stop="handleDrawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
     <v-content>
@@ -31,8 +31,9 @@ import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
 import { GameTitle } from '@/models/const/enums'
 import PageMixin from '@/mixins/page-mixins'
-import VListItemCreateRecord from '~/components/v-list-item-create-record.vue'
-import { SheetInfo } from '~/models/@types/sheet-info'
+import VListItemCreateRecord from '@/components/v-list-item-create-record.vue'
+import { SheetInfo } from '@/models/@types/sheet-info'
+import { DeckHelper } from '@/lib/deck-helper'
 
 interface SidebarItems {
   icon: string
@@ -56,35 +57,42 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
   isDrawerOpen = false
   items: SidebarItems[] = [this.welcomeItem]
 
-  async mounted(): Promise<void> {
-    if (this.stores.sheet.currentSheetInfos.length === 0) {
-      await this.refreshSheetInfos()
-    }
+  mounted(): void {
+    this.refreshSheetInfos()
   }
 
-  async refreshSheetInfos(): Promise<void> {
+  refreshSheetInfos(): void {
     this.items = [this.welcomeItem]
     this.isDrawerOpen = false
+    this.loadItems()
+  }
 
+  handleDrawer(): void {
+    this.loadItems()
+    this.isDrawerOpen = !this.isDrawerOpen
+  }
+
+  async loadItems(): Promise<void> {
+    this.items = [this.welcomeItem]
     if (this.stores.user.currentUserInfo) {
       await this.stores.sheet.FETCH_SHEET(this.stores.user.currentUserInfo.email!)
-    }
-
-    this.stores.sheet.currentSheetInfos.forEach((sheet) => {
-      this.items.push({
-        icon: 'mdi-chart-bubble',
-        title: sheet.sheetName,
-        to: `/records/${sheet.sheetName}`
+      this.stores.sheet.currentSheetInfos.forEach((sheet) => {
+        this.items.push({
+          icon: 'mdi-chart-bubble',
+          title: sheet.sheetName,
+          to: `/records/${sheet.sheetName}`
+        })
       })
-    })
+    }
   }
 
   async createSheet(sheetName: string, gameTitle: GameTitle): Promise<void> {
     const userMail = this.stores.user.currentUserInfo!.email
     const sheetInfo: SheetInfo = {
-      member: [userMail],
+      members: [userMail],
       sheetName,
-      gameTitle
+      gameTitle,
+      decks: DeckHelper.getDefaultDecks(gameTitle)
     }
     await this.stores.sheet.CREATE_SHEET(sheetInfo)
     await this.refreshSheetInfos()

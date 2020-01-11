@@ -10,7 +10,13 @@ export enum Bw {
 
 export enum GameTitle {
   mtg = 'Magic: the Gathering',
+  pcg = 'Pokemon Card Game',
+  ocg = 'Yu-Gi-Oh! Official Card Game',
   ws = 'Weiss Schwaltz',
-  pcg = 'Pokemon Card Game'
+  hs = 'Harth Stone',
+  sv = 'Shadowverse',
+  otherBo1 = 'Other BO1',
+  otherBo3 = 'Other BO3'
 }
-export const AllGameTitles = [GameTitle.mtg, GameTitle.ws, GameTitle.pcg]
+
+export const AllGameTitles = [GameTitle.mtg, GameTitle.pcg, GameTitle.ocg, GameTitle.ws, GameTitle.hs, GameTitle.sv, GameTitle.otherBo1, GameTitle.otherBo3]
