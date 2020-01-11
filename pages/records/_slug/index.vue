@@ -1,6 +1,6 @@
 <template>
   <section>
-    <sheet-toolbar :sheet="sheet" :sheet-name="sheetName" @send-mail="sendMail" />
+    <sheet-toolbar :sheet="sheet" :sheet-name="sheetName" @send-mail="sendMail" @submit-deck="submitDeck" />
     <submit-game-form :decklist="decklist" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
@@ -58,6 +58,15 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
     await this.stores.sheet.UPDATE_SHEET({
       ...this.sheet!,
       members: newMemberList
+    })
+    await this.load()
+  }
+
+  async submitDeck(deck: string): Promise<void> {
+    const newDeckList = [...this.sheet!.decks, deck]
+    await this.stores.sheet.UPDATE_SHEET({
+      ...this.sheet!,
+      decks: newDeckList
     })
     await this.load()
   }

@@ -107,13 +107,13 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  UPDATE_SHEET(sheetInfo: SheetInfo) {
+  async UPDATE_SHEET(sheetInfo: SheetInfo) {
     try {
       const db = firebase.firestore()
-      const sheetRef = db.collection('sheet').doc(sheetInfo.sheetName)
-      sheetRef.update({
-        sheetInfo
-      })
+      await db
+        .collection('sheet')
+        .doc(sheetInfo.sheetName)
+        .set(sheetInfo)
     } catch {
       throw new Error('#UPDATE_SHEET ERROR')
     }

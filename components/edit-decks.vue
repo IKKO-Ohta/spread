@@ -1,25 +1,25 @@
 <template>
   <section>
     <ul-tooltip message="デッキ管理">
-      <v-icon dark @click="openDialog">mdi-account-group-outline</v-icon>
+      <v-icon dark @click="openDialog">mdi-cards-outline</v-icon>
     </ul-tooltip>
     <v-dialog v-model="dialog" max-width="600px">
       <v-card class="form">
         <v-card-title>デッキ管理</v-card-title>
         <v-list>
           <v-subheader>現在登録しているデッキ</v-subheader>
-          <v-list-item v-for="(archetype, i) in archetypes" :key="i">
+          <v-list-item v-for="(deck, i) in decks" :key="i">
             <v-list-item-content>
-              <span> {{ arc }}</span>
+              <span> {{ deck }}</span>
             </v-list-item-content>
           </v-list-item>
         </v-list>
         <v-card-text>
-          <v-text-field v-model="mailAdressToInvite" label="招待メールの送り先" required> </v-text-field>
+          <v-text-field v-model="newDeck" label="追加するデッキ名" required> </v-text-field>
         </v-card-text>
         <v-card-actions>
-          <v-btn depressed :disabled="!canSubmit" @click="submit">
-            招待メールを送る
+          <v-btn depressed :disabled="!canSubmit" @click="submitDeck">
+            デッキを追加する
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -35,30 +35,30 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 @Component({
   components: { UlTooltip }
 })
-export default class EditAccountGroup extends Vue {
+export default class EditDecks extends Vue {
   @Prop() sheetInfo!: SheetInfo | null
-  @Emit() invite(_mail: string): void {}
+  @Emit() submit(_deck: string): void {}
 
-  member: string[] = []
-  mailAdressToInvite = ''
+  decks: string[] = []
+  newDeck = ''
   dialog = false
 
   openDialog() {
-    this.member = this.getSheetMember()
+    this.decks = this.getDecks()
     this.dialog = true
   }
 
-  submit(): void {
+  submitDeck(): void {
     this.dialog = false
-    this.invite(this.mailAdressToInvite)
+    this.submit(this.newDeck)
   }
 
-  getSheetMember(): string[] {
-    return this.sheetInfo ? this.sheetInfo.members : []
+  getDecks(): string[] {
+    return this.sheetInfo ? this.sheetInfo.decks : []
   }
 
   get canSubmit(): boolean {
-    return this.mailAdressToInvite !== ''
+    return this.newDeck !== ''
   }
 }
 </script>
