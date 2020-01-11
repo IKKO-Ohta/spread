@@ -24,7 +24,7 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async CURRENT_SHEET(sheetName: string): Promise<SheetInfo> {
+  async FETCH_ONLY_CURRENT_SHEET(sheetName: string): Promise<SheetInfo> {
     try {
       const db = firebase.firestore()
       const querySnapshot = await db

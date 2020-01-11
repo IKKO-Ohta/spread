@@ -14,7 +14,6 @@ import PageMixin from '@/mixins/page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
 import recordHeader from '@/models/const/record-header'
-import archtypes from '@/models/const/archtypes'
 import { Game } from '@/models/@types/game'
 import { SheetInfo } from '@/models/@types/sheet-info'
 import { TimeUtil } from '@/lib/time-util'
@@ -30,7 +29,6 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   sheet: SheetInfo | null = null
   headers = recordHeader()
   games: Game[] = []
-  decklist?: string[] = archtypes()
   tabs = 0
 
   option = {
@@ -51,7 +49,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
   async load() {
     this.sheetName = this.$route.params.slug
     this.stores.sheet.SET_CURRENT_SHEET_NAME(this.sheetName)
-    this.sheet = this.stores.sheet.currentSheet
+    this.sheet = await this.stores.sheet.FETCH_ONLY_CURRENT_SHEET(this.sheetName)
     this.games = await this.stores.sheet.LOAD_GAMES()
   }
 
@@ -71,6 +69,14 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
       user: this.stores.user.currentUserInfo!.displayName!
     })
     await this.load()
+  }
+
+  get decklist(): string[] {
+    if (this.sheet) {
+      return this.sheet.archType
+    } else {
+      return []
+    }
   }
 }
 </script>

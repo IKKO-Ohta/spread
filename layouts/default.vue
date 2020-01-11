@@ -15,7 +15,7 @@
     </v-navigation-drawer>
 
     <v-app-bar fixed app>
-      <v-app-bar-nav-icon @click.stop="isDrawerOpen = !isDrawerOpen" />
+      <v-app-bar-nav-icon @click.stop="handleDrawer" />
       <v-toolbar-title v-text="title" />
     </v-app-bar>
     <v-content>
@@ -57,27 +57,33 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
   isDrawerOpen = false
   items: SidebarItems[] = [this.welcomeItem]
 
-  async mounted(): Promise<void> {
-    if (this.stores.sheet.currentSheetInfos.length === 0) {
-      await this.refreshSheetInfos()
-    }
+  mounted(): void {
+    this.refreshSheetInfos()
   }
 
-  async refreshSheetInfos(): Promise<void> {
+  refreshSheetInfos(): void {
     this.items = [this.welcomeItem]
     this.isDrawerOpen = false
+    this.loadItems()
+  }
 
+  handleDrawer(): void {
+    this.loadItems()
+    this.isDrawerOpen = !this.isDrawerOpen
+  }
+
+  async loadItems(): Promise<void> {
+    this.items = [this.welcomeItem]
     if (this.stores.user.currentUserInfo) {
       await this.stores.sheet.FETCH_SHEET(this.stores.user.currentUserInfo.email!)
-    }
-
-    this.stores.sheet.currentSheetInfos.forEach((sheet) => {
-      this.items.push({
-        icon: 'mdi-chart-bubble',
-        title: sheet.sheetName,
-        to: `/records/${sheet.sheetName}`
+      this.stores.sheet.currentSheetInfos.forEach((sheet) => {
+        this.items.push({
+          icon: 'mdi-chart-bubble',
+          title: sheet.sheetName,
+          to: `/records/${sheet.sheetName}`
+        })
       })
-    })
+    }
   }
 
   async createSheet(sheetName: string, gameTitle: GameTitle): Promise<void> {

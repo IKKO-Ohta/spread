@@ -13,38 +13,23 @@
         <v-icon dark>mdi-account</v-icon>
       </ul-tooltip>
       <setting-account-group :sheet-info="sheetInfo" @invite="invite" />
-
-      <ul-tooltip message="設定">
-        <v-icon dark @click="openDrawer">mdi-dots-vertical</v-icon>
-      </ul-tooltip>
     </v-toolbar>
-
-    <aside>
-      <sub-navigation-drawer v-model="drawer" />
-    </aside>
   </nav>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import UlTooltip from '@/components/ul-tooltip.vue'
-import SubNavigationDrawer from '@/components/sub-navigation-drawer.vue'
 import SettingAccountGroup from '@/components/setting-account-group.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 
 @Component({
-  components: { UlTooltip, SubNavigationDrawer, SettingAccountGroup }
+  components: { UlTooltip, SettingAccountGroup }
 })
 export default class SheetToolbar extends Vue {
   @Prop() sheet!: SheetInfo
   @Prop() sheetName!: string
   @Emit() sendMail(_mail: string): void {}
-
-  drawer = false
-
-  openDrawer(): void {
-    this.drawer = true
-  }
 
   invite(mail: string): void {
     this.sendMail(mail)
