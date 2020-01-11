@@ -1,6 +1,6 @@
 <template>
   <section>
-    <sheet-toolbar :sheet="sheet" :sheet-name="sheetName" @send-mail="sendMail" @submit-deck="submitDeck" />
+    <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
     <submit-game-form :decklist="decklist" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
@@ -9,7 +9,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
-import { NuxtConfigurationHead } from '@nuxt/types/config/head'
 import PageMixin from '@/mixins/page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
@@ -25,7 +24,7 @@ import { TimeUtil } from '@/lib/time-util'
   }
 })
 export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
-  sheetName = ''
+  sheetId = ''
   sheet: SheetInfo | null = null
   headers = recordHeader()
   games: Game[] = []
@@ -36,20 +35,14 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
     sortDesc: [true]
   }
 
-  head(): NuxtConfigurationHead {
-    return {
-      title: this.sheetName
-    }
-  }
-
   created() {
     this.load()
   }
 
   async load() {
-    this.sheetName = this.$route.params.slug
-    this.stores.sheet.SET_CURRENT_SHEET_NAME(this.sheetName)
-    this.sheet = await this.stores.sheet.FETCH_ONLY_CURRENT_SHEET(this.sheetName)
+    this.sheetId = this.$route.params.slug
+    this.stores.sheet.SET_CURRENT_SHEET_ID(this.sheetId)
+    this.sheet = await this.stores.sheet.FETCH_ONLY_CURRENT_SHEET(this.sheetId)
     this.games = await this.stores.sheet.LOAD_GAMES()
   }
 
