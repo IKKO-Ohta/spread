@@ -4,4 +4,5 @@ export interface SheetInfo {
   member: string[]
   sheetName: string
   gameTitle: GameTitle
+  archType: string[]
 }
