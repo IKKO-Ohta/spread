@@ -9,7 +9,6 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
-// import { NuxtConfigurationHead } from '@nuxt/types/config/head'
 import PageMixin from '@/mixins/page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
