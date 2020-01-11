@@ -1,8 +1,8 @@
 import defaultList from '@/./default-archtype-list'
 import { GameTitle } from '@/models/const/enums'
 
-export class ArchtypeHelper {
-  static getDefaultArchType(gameTitle: GameTitle): string[] {
+export class DeckHelper {
+  static getDefaultDecks(gameTitle: GameTitle): string[] {
     switch (gameTitle) {
       case GameTitle.mtg:
         return defaultList.mtg

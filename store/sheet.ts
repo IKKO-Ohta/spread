@@ -56,7 +56,7 @@ export default class Sheet extends VuexModule {
           member: data.member,
           sheetName: data.sheetName,
           gameTitle: data.gameTitle,
-          archType: data.archType
+          decks: data.decks
         })
       })
     } catch {

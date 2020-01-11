@@ -73,7 +73,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
 
   get decklist(): string[] {
     if (this.sheet) {
-      return this.sheet.archType
+      return this.sheet.decks
     } else {
       return []
     }

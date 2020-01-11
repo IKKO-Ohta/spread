@@ -33,7 +33,7 @@ import { GameTitle } from '@/models/const/enums'
 import PageMixin from '@/mixins/page-mixins'
 import VListItemCreateRecord from '@/components/v-list-item-create-record.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
-import { ArchtypeHelper } from '@/lib/archtype-helper'
+import { DeckHelper } from '@/lib/deck-helper'
 
 interface SidebarItems {
   icon: string
@@ -92,7 +92,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
       member: [userMail],
       sheetName,
       gameTitle,
-      archType: ArchtypeHelper.getDefaultArchType(gameTitle)
+      decks: DeckHelper.getDefaultDecks(gameTitle)
     }
     await this.stores.sheet.CREATE_SHEET(sheetInfo)
     await this.refreshSheetInfos()

@@ -4,7 +4,7 @@ import { getModule } from 'vuex-module-decorators'
 import Sheet from '@/store/sheet'
 import { SheetInfo } from '~/models/@types/sheet-info'
 import { GameTitle } from '~/models/const/enums'
-import { ArchtypeHelper } from '@/lib/archtype-helper'
+import { DeckHelper } from '~/lib/deck-helper'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -16,7 +16,7 @@ describe('store/sheet.ts', () => {
     member: ['samayotta@gmail.com'],
     sheetName: 'example-sheet',
     gameTitle: GameTitle.mtg,
-    archType: ArchtypeHelper.getDefaultArchType(GameTitle.mtg)
+    decks: DeckHelper.getDefaultDecks(GameTitle.mtg)
   }
 
   describe('#ADD_SHEET', () => {
