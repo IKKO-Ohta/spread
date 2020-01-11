@@ -42,13 +42,13 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async FETCH_SHEET() {
+  async FETCH_SHEET(email: string) {
     try {
       this.CLEAR_SHEET()
       const db = firebase.firestore()
       const querySnapshot = await db
         .collection('sheet')
-        .where('member', 'array-contains', 'samayotta@gmail.com')
+        .where('member', 'array-contains', email)
         .get()
       querySnapshot.forEach((doc) => {
         const data = doc.data()
@@ -118,12 +118,8 @@ export default class Sheet extends VuexModule {
     }
   }
 
-  public get currentSheet(): SheetInfo {
+  public get currentSheet(): SheetInfo | null {
     const sheet = this.currentSheetInfos.find((sheet) => sheet.sheetName === this.currentSheetName)
-    if (sheet) {
-      return sheet
-    } else {
-      throw new Error('NOT FOUND: CURRENT SHEET')
-    }
+    return sheet || null
   }
 }

@@ -23,18 +23,10 @@ describe('store/sheet.ts', () => {
     })
   })
 
-  describe('#SET_LOGIN', () => {
-    test('isLogin should be true ', () => {
-      UserStore.SET_LOGIN()
-      expect(UserStore.isLogin).toBeTruthy()
-    })
-  })
-
   describe('#CLEAR_USER', () => {
     test('currentUserInfo should be clear ', () => {
       UserStore.CLEAR_USER()
       expect(UserStore.currentUserInfo).toBeNull()
-      expect(UserStore.isLogin).toBeFalsy()
     })
   })
 

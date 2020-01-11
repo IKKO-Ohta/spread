@@ -56,7 +56,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
   isDrawerOpen = false
   items: SidebarItems[] = [this.welcomeItem]
 
-  async created(): Promise<void> {
+  async mounted(): Promise<void> {
     if (this.stores.sheet.currentSheetInfos.length === 0) {
       await this.refreshSheetInfos()
     }
@@ -66,7 +66,10 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
     this.items = [this.welcomeItem]
     this.isDrawerOpen = false
 
-    await this.stores.sheet.FETCH_SHEET()
+    if (this.stores.user.currentUserInfo) {
+      await this.stores.sheet.FETCH_SHEET(this.stores.user.currentUserInfo.email!)
+    }
+
     this.stores.sheet.currentSheetInfos.forEach((sheet) => {
       this.items.push({
         icon: 'mdi-chart-bubble',

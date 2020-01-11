@@ -28,7 +28,6 @@ import 'firebaseui/dist/firebaseui.css'
 export default class IndexPage extends Mixins<PageMixin>(PageMixin) {
   mounted() {
     this.stores.user.LOGIN()
-    this.stores.sheet.FETCH_SHEET()
   }
 
   signOut() {
@@ -36,7 +35,7 @@ export default class IndexPage extends Mixins<PageMixin>(PageMixin) {
   }
 
   get isLoggedIn(): boolean {
-    return this.stores.user.isLogin
+    return this.stores.user.currentUserInfo !== null
   }
 
   get hello(): string {
