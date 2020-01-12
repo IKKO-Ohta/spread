@@ -23,6 +23,7 @@
         <nuxt />
       </v-container>
     </v-content>
+    <ul-snackbar />
   </v-app>
 </template>
 
@@ -32,6 +33,7 @@ import { Mixins } from 'vue-mixin-decorator'
 import { GameTitle } from '@/models/const/enums'
 import PageMixin from '@/mixins/page-mixins'
 import VListItemCreateRecord from '@/components/v-list-item-create-record.vue'
+import UlSnackbar from '@/components/ul-snackbar.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 import { DeckHelper } from '@/lib/deck-helper'
 import { FirestoreHelper } from '@/lib/firestore-helper'
@@ -44,7 +46,8 @@ interface SidebarItems {
 
 @Component({
   components: {
-    VListItemCreateRecord
+    VListItemCreateRecord,
+    UlSnackbar
   }
 })
 export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
