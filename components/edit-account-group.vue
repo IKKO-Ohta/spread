@@ -21,6 +21,9 @@
           <v-btn depressed :disabled="!canSubmit" @click="submit">
             招待メールを送る
           </v-btn>
+          <v-btn depressed @click="closeDialog">
+            閉じる
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -48,9 +51,15 @@ export default class SettingAccountGroup extends Vue {
     this.dialog = true
   }
 
+  closeDialog() {
+    this.dialog = false
+    this.mailAdressToInvite = ''
+  }
+
   submit(): void {
     this.dialog = false
     this.invite(this.mailAdressToInvite)
+    this.mailAdressToInvite = ''
   }
 
   getSheetMember(): string[] {

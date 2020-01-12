@@ -5,10 +5,10 @@
         <v-container>
           <v-row>
             <v-col cols="12" md="2">
-              <v-select v-model="game.myDeck" :items="decklist" :rules="[(v) => !!v || '必須']" label="Your Deck" required />
+              <v-select v-model="game.myDeck" :items="decklist" label="あなたのデッキ" />
             </v-col>
             <v-col cols="12" md="2">
-              <v-select v-model="game.oppDeck" :items="decklist" :rules="[(v) => !!v || '必須']" label="Opponent's Deck" required />
+              <v-select v-model="game.oppDeck" :items="decklist" label="対戦相手のデッキ" />
             </v-col>
             <v-col cols="12" md="1">
               <v-btn large :color="iconWLColor" depressed class="sm-button" @click="changeWinOrLose">
@@ -31,7 +31,7 @@
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-btn depressed @click="emitSubmitGame">
+      <v-btn depressed :disabled="!canSubmit" @click="emitSubmitGame">
         登録
       </v-btn>
     </v-card-actions>
@@ -59,7 +59,10 @@ export default class SubmitGameForm extends Vue {
   }
 
   emitSubmitGame() {
-    this.submit(this.game)
+    if (this.canSubmit) {
+      this.submit(this.game)
+      this.game.oppDeck = null
+    }
   }
 
   changeBlackOrWhite() {

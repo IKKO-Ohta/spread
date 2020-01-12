@@ -21,6 +21,9 @@
           <v-btn depressed :disabled="!canSubmit" @click="submitDeck">
             デッキを追加する
           </v-btn>
+          <v-btn depressed @click="closeDialog">
+            閉じる
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -48,9 +51,15 @@ export default class EditDecks extends Vue {
     this.dialog = true
   }
 
+  closeDialog() {
+    this.dialog = false
+    this.newDeck = ''
+  }
+
   submitDeck(): void {
     this.dialog = false
     this.submit(this.newDeck)
+    this.newDeck = ''
   }
 
   getDecks(): string[] {
