@@ -7,7 +7,7 @@
         <v-icon dark>mdi-checkerboard</v-icon>
       </ul-tooltip>
       <ul-tooltip message="分析">
-        <v-icon dark>mdi-chart-pie</v-icon>
+        <v-icon dark @click="goToAnalyticsPage">mdi-chart-pie</v-icon>
       </ul-tooltip>
       <edit-decks :sheet-info="sheetInfo" @submit="submit" />
       <edit-account-group :sheet-info="sheetInfo" @invite="invite" />
@@ -36,6 +36,10 @@ export default class SheetToolbar extends Vue {
 
   invite(mail: string): void {
     this.sendMail(mail)
+  }
+
+  goToAnalyticsPage(): void {
+    this.$router.push(`/records/${this.$route.params.slug}/analytics`)
   }
 
   get sheetInfo(): SheetInfo | null {
