@@ -54,6 +54,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
       members: newMemberList
     })
     await FirestoreHelper.sendMail(mail, window.location.href)
+    this.stores.snackbar.SET_MESSAGE('招待メールを送りました。')
     await this.load()
   }
 
@@ -63,6 +64,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
       ...this.sheet!,
       decks: newDeckList
     })
+    this.stores.snackbar.SET_MESSAGE('デッキを追加しました。')
     await this.load()
   }
 
@@ -72,6 +74,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
       timestamp: TimeUtil.getNow(),
       user: this.stores.user.currentUserInfo!.displayName!
     })
+    this.stores.snackbar.SET_MESSAGE('対戦を記録しました。')
     await this.load()
   }
 
