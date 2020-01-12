@@ -53,7 +53,7 @@ export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
       ...this.sheet!,
       members: newMemberList
     })
-    await FirestoreHelper.sendMail(mail, this.$route.fullPath)
+    await FirestoreHelper.sendMail(mail, window.location.href)
     await this.load()
   }
 
