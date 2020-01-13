@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md6>
       <v-card>
         <v-card-title class="headline">
-          Improve your battle!
+          spread
         </v-card-title>
         <v-card-text> {{ hello }}</v-card-text>
         <v-card-actions>
