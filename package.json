@@ -20,10 +20,10 @@
     "firebase": "^7.0.0",
     "firebaseui": "^4.2.0",
     "firebaseui-ja": "^1.0.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "2.10.2",
     "nuxt-property-decorator": "^2.5.0",
     "ts-node": "^8.3.0",
-    "vue-meta": "^2.2.2",
+    "vue-meta": "^2.3.2",
     "vue-mixin-decorator": "^1.2.0",
     "vuex": "^3.1.1",
     "vuex-module-decorators": "^0.10.1"
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@nuxt/typescript-build": "^0.2.6",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
-    "@nuxtjs/vuetify": "^1.0.0",
+    "@nuxtjs/vuetify": "^1.9.0",
     "@types/jest": "^24.0.25",
     "@typescript-eslint/parser": "^2.9.0",
     "@vue/test-utils": "^1.0.0-beta.27",
