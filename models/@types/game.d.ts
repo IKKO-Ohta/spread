@@ -1,6 +1,8 @@
+import { Result, Bw } from '@/models/const/enums'
+
 export interface Game {
-  win: string
-  black: string
+  win: Result
+  black: Bw
   myDeck: string | null
   oppDeck: string | null
   timestamp: string

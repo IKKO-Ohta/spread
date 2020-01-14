@@ -6,14 +6,16 @@
     <v-dialog v-model="dialog" max-width="600px">
       <v-card class="form">
         <v-card-title>デッキ管理</v-card-title>
-        <v-list>
-          <v-subheader>現在登録しているデッキ</v-subheader>
-          <v-list-item v-for="(deck, i) in decks" :key="i">
-            <v-list-item-content>
-              <span> {{ deck }}</span>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+        <v-card-text>
+          <v-list>
+            <v-subheader>現在登録しているデッキ</v-subheader>
+            <v-list-item v-for="(deck, i) in decks" :key="i">
+              <v-list-item-content>
+                <span> {{ deck }}</span>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card-text>
         <v-card-text>
           <v-text-field v-model="newDeck" label="追加するデッキ名" required> </v-text-field>
         </v-card-text>

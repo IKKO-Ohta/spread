@@ -1,6 +1,7 @@
 export enum Result {
   win = '勝利',
-  lose = '敗北'
+  lose = '敗北',
+  draw = '引き分け'
 }
 
 export enum Bw {

@@ -1,35 +1,21 @@
 <template>
   <v-card class="form">
-    <v-card-text>
-      <v-form>
-        <v-container>
-          <v-row>
-            <v-col cols="12" md="2">
-              <v-select v-model="game.myDeck" :items="decklist" label="あなたのデッキ" />
-            </v-col>
-            <v-col cols="12" md="2">
-              <v-select v-model="game.oppDeck" :items="decklist" label="対戦相手のデッキ" />
-            </v-col>
-            <v-col cols="12" md="1">
-              <v-btn large :color="iconWLColor" depressed class="sm-button" @click="changeWinOrLose">
-                <v-icon left>
-                  {{ iconEmotion }}
-                </v-icon>
-                {{ game.win }}
-              </v-btn>
-            </v-col>
-            <v-col cols="12" md="1">
-              <v-btn large :color="iconBWColor" depressed class="sm-button" @click="changeBlackOrWhite">
-                <v-icon left>
-                  {{ iconBW }}
-                </v-icon>
-                {{ game.black }}
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
-    </v-card-text>
+    <v-form>
+      <v-card-text>
+        <v-select v-model="game.myDeck" :items="decklist" label="あなたのデッキ" />
+        <v-select v-model="game.oppDeck" :items="decklist" label="対戦相手のデッキ" />
+      </v-card-text>
+      <v-card-text>
+        <v-btn large :color="iconWLColor" depressed class="sm-button" @click="changeWinOrLose">
+          <v-icon left>{{ iconEmotion }}</v-icon>
+          {{ game.win }}
+        </v-btn>
+        <v-btn large :color="iconBWColor" depressed class="sm-button" @click="changeBlackOrWhite">
+          <v-icon left> {{ iconBW }} </v-icon>
+          {{ game.black }}
+        </v-btn>
+      </v-card-text>
+    </v-form>
     <v-card-actions>
       <v-btn depressed :disabled="!canSubmit" @click="emitSubmitGame">
         登録

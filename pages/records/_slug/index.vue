@@ -9,13 +9,10 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
-import { FirestoreHelper } from '@/lib/firestore-helper'
-import PageMixin from '@/mixins/page-mixins'
+import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
-import recordHeader from '@/models/const/record-header'
 import { Game } from '@/models/@types/game'
-import { SheetInfo } from '@/models/@types/sheet-info'
 import { TimeUtil } from '@/lib/time-util'
 
 @Component({
@@ -24,48 +21,10 @@ import { TimeUtil } from '@/lib/time-util'
     SheetToolbar
   }
 })
-export default class RecordPage extends Mixins<PageMixin>(PageMixin) {
-  sheetId = ''
-  sheet: SheetInfo | null = null
-  headers = recordHeader()
-  games: Game[] = []
-  tabs = 0
-
+export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
   option = {
     sortBy: ['timestamp'],
     sortDesc: [true]
-  }
-
-  created() {
-    this.load()
-  }
-
-  async load() {
-    this.sheetId = this.$route.params.slug
-    this.stores.sheet.SET_CURRENT_SHEET_ID(this.sheetId)
-    this.sheet = await this.stores.sheet.FETCH_ONLY_CURRENT_SHEET(this.sheetId)
-    this.games = await this.stores.sheet.LOAD_GAMES()
-  }
-
-  async sendMail(mail: string): Promise<void> {
-    const newMemberList = [...this.sheet!.members, mail]
-    await this.stores.sheet.UPDATE_SHEET({
-      ...this.sheet!,
-      members: newMemberList
-    })
-    await FirestoreHelper.sendMail(mail, window.location.href)
-    this.stores.snackbar.SET_MESSAGE('招待メールを送りました。')
-    await this.load()
-  }
-
-  async submitDeck(deck: string): Promise<void> {
-    const newDeckList = [...this.sheet!.decks, deck]
-    await this.stores.sheet.UPDATE_SHEET({
-      ...this.sheet!,
-      decks: newDeckList
-    })
-    this.stores.snackbar.SET_MESSAGE('デッキを追加しました。')
-    await this.load()
   }
 
   async addGame(game: Game) {
