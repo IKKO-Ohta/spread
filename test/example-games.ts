@@ -3,11 +3,11 @@ import { Game } from '@/models/@types/game'
 import { Matrix, VTableRow } from '@/models/@types/matrix'
 
 export const exampleGames: Game[] = [
-  { myDeck: 'A', oppDeck: 'B', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '' },
-  { myDeck: 'B', oppDeck: 'C', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '' },
-  { myDeck: 'A', oppDeck: 'C', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '' },
-  { myDeck: 'C', oppDeck: 'A', win: Result.lose, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '' },
-  { myDeck: 'A', oppDeck: 'A', win: Result.lose, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '' }
+  { myDeck: 'A', oppDeck: 'B', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },
+  { myDeck: 'B', oppDeck: 'C', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },
+  { myDeck: 'A', oppDeck: 'C', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },
+  { myDeck: 'C', oppDeck: 'A', win: Result.lose, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },
+  { myDeck: 'A', oppDeck: 'A', win: Result.lose, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' }
 ]
 
 export const examplePerfomanceMatrix: Matrix = [

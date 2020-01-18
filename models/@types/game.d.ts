@@ -1,6 +1,7 @@
 import { Result, Bw } from '@/models/const/enums'
 
 export interface Game {
+  id: string
   win: Result
   black: Bw
   myDeck: string | null

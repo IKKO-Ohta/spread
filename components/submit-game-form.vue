@@ -83,7 +83,8 @@ export default class SubmitGameForm extends Vue {
     oppDeck: null,
     user: '',
     timestamp: '',
-    describe: ''
+    describe: '',
+    id: ''
   }
 
   match: Match = {

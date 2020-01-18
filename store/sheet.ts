@@ -67,13 +67,14 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async ADD_GAME(game: Game) {
+  async SET_GAME(game: Game) {
     const db = firebase.firestore()
     await db
       .collection('sheet')
       .doc(`${this.currentSheetId}`)
       .collection('games')
-      .add(game)
+      .doc(game.id)
+      .set(game)
   }
 
   @Action({ rawError: true })
@@ -96,7 +97,7 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async CREATE_SHEET(sheetInfo: SheetInfo) {
+  async SET_SHEET(sheetInfo: SheetInfo) {
     try {
       const db = firebase.firestore()
       await db
@@ -104,20 +105,7 @@ export default class Sheet extends VuexModule {
         .doc(sheetInfo.id)
         .set(sheetInfo)
     } catch {
-      throw new Error('#CREATE_SHEET ERROR')
-    }
-  }
-
-  @Action({ rawError: true })
-  async UPDATE_SHEET(sheetInfo: SheetInfo) {
-    try {
-      const db = firebase.firestore()
-      await db
-        .collection('sheet')
-        .doc(sheetInfo.id)
-        .set(sheetInfo)
-    } catch {
-      throw new Error('#UPDATE_SHEET ERROR')
+      throw new Error('#SET_SHEET ERROR')
     }
   }
 
