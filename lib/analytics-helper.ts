@@ -1,15 +1,7 @@
 /* eslint-disable dot-notation */
 import { Game } from '@/models/@types/game'
 import { Result } from '@/models/const/enums'
-import { Matrix, Header } from '@/models/@types/matrix'
-
-export interface VTabledPerformanceElem {
-  name: string
-  deckA: number
-  deckB: number
-  // hogehoge...
-  total: number
-}
+import { Matrix, Header, VTableRow, MatrixElem } from '@/models/@types/matrix'
 
 export class AnalyticsHelper {
   static createMatrix(length: number): Matrix {
@@ -84,6 +76,39 @@ export class AnalyticsHelper {
       })
     })
     return newMatrix
+  }
+
+  static transformMatrixIntoVDataset(matrix: Matrix, decklist: string[]): VTableRow[] {
+    return matrix.map((row, index, _arr) => this.transformRowIntoVRow(row, decklist, index))
+  }
+
+  static transformRowIntoVRow(row: MatrixElem[], decklist: string[], deckIndex: number): VTableRow {
+    const data: VTableRow = { name: decklist[deckIndex], total: this.sumPerformance(row) }
+    for (let i = 0; i < decklist.length; i++) {
+      const accessor = decklist[i]
+      data[accessor] = this.convertMatrixElemToString(row[i])
+    }
+    return data
+  }
+
+  static convertMatrixElemToString(elem: MatrixElem): string {
+    // NOTE: This method hides draw. Modify me if you need
+    // return `${win}-${lose}-${draw}`
+    return `${elem.win}-${elem.lose}`
+  }
+
+  static sumPerformance(row: MatrixElem[]): string {
+    let win = 0
+    let lose = 0
+    // let draw = 0
+    for (const elem of row) {
+      win += elem.win
+      lose += elem.lose
+      // draw += elem.draw
+    }
+    return `${win}-${lose}`
+    // NOTE: This method hides draw. Modify me if you need
+    // return `${win}-${lose}-${draw}`
   }
 
   static extractHeader(games: Game[]): Header[] {

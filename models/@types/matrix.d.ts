@@ -12,3 +12,14 @@ export interface Header {
   align?: string
   sortable: false
 }
+
+export interface VTableRow {
+  name: string
+  total: string
+  [key: string]: string
+}
+
+export enum ShowDraw {
+  show = 1,
+  hidden = 2
+}
