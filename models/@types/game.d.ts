@@ -8,4 +8,23 @@ export interface Game {
   timestamp: string
   user: string
   describe: string
+  wins?: Result[]
+  blacks?: Bw[]
 }
+
+export interface Match {
+  game1: {
+    win: Result
+    bw: Bw
+  }
+  game2: {
+    win: Result
+    bw: Bw
+  }
+  game3?: {
+    win: Result
+    bw: Bw
+  }
+}
+
+export type GameNumber = 'game1' | 'game2' | 'game3'

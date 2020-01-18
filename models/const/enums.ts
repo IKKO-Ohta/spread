@@ -8,6 +8,11 @@ export enum Bw {
   white = '後手'
 }
 
+export enum BestOf {
+  Bo3 = 'BO3',
+  Bo1 = 'BO1'
+}
+
 export enum GameTitle {
   mtg = 'Magic: the Gathering',
   pcg = 'Pokemon Card Game',

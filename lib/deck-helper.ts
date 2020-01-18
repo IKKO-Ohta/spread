@@ -1,5 +1,5 @@
 import defaultList from '@/./default-archtype-list'
-import { GameTitle } from '@/models/const/enums'
+import { GameTitle } from '~/models/const/enums'
 
 export class DeckHelper {
   static getDefaultDecks(gameTitle: GameTitle): string[] {
