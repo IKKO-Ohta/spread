@@ -2,7 +2,7 @@ import functions from 'firebase'
 
 export class FirestoreHelper {
   static generateId(): string {
-    const idLength = 8
+    const idLength = 12
     const pool = 'abcdefghijklmnopqrstuvwxyz0123456789'
     let id = ''
 

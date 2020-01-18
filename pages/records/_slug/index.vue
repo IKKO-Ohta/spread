@@ -2,15 +2,17 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
     <submit-game-form :decklist="decklist" :best-of="bestOf" @submit="addGame" />
-    <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
+    <game-table :headers="headers" :items="games" @update-game="update" />
   </section>
 </template>
 
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
+import { FirestoreHelper } from '../../../lib/firestore-helper'
 import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
+import GameTable from '@/components/game-table.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
 import { Game } from '@/models/@types/game'
 import { TimeUtil } from '@/lib/time-util'
@@ -19,7 +21,8 @@ import { BestOf } from '@/models/const/enums'
 @Component({
   components: {
     SubmitGameForm,
-    SheetToolbar
+    SheetToolbar,
+    GameTable
   }
 })
 export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
@@ -29,13 +32,18 @@ export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
   }
 
   async addGame(game: Game) {
-    await this.stores.sheet.ADD_GAME({
+    await this.stores.sheet.SET_GAME({
       ...game,
       timestamp: TimeUtil.getNow(),
-      user: this.stores.user.currentUserInfo!.displayName!
+      user: this.stores.user.currentUserInfo!.displayName!,
+      id: FirestoreHelper.generateId()
     })
     this.stores.snackbar.SET_MESSAGE('対戦を記録しました。')
     await this.load()
+  }
+
+  async update(game: Game) {
+    await this.stores.sheet.SET_GAME(game)
   }
 
   get decklist(): string[] {

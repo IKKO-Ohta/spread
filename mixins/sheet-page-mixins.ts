@@ -27,7 +27,7 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
 
   async sendMail(mail: string): Promise<void> {
     const newMemberList = [...this.sheet!.members, mail]
-    await this.stores.sheet.UPDATE_SHEET({
+    await this.stores.sheet.SET_SHEET({
       ...this.sheet!,
       members: newMemberList
     })
@@ -38,7 +38,7 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
 
   async submitDeck(deck: string): Promise<void> {
     const newDeckList = [...this.sheet!.decks, deck]
-    await this.stores.sheet.UPDATE_SHEET({
+    await this.stores.sheet.SET_SHEET({
       ...this.sheet!,
       decks: newDeckList
     })

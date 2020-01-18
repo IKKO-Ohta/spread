@@ -102,7 +102,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
       decks: DeckHelper.getDefaultDecks(gameTitle),
       bestOf: SheetHelper.getDBestOf(gameTitle)
     }
-    await this.stores.sheet.CREATE_SHEET(sheetInfo)
+    await this.stores.sheet.SET_SHEET(sheetInfo)
     await this.refreshSheetInfos()
     this.$router.push(`/records/${id}`)
   }
