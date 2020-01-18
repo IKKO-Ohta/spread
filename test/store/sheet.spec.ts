@@ -2,9 +2,9 @@ import { createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 import Sheet from '@/store/sheet'
-import { SheetInfo } from '~/models/@types/sheet-info'
-import { GameTitle, BestOf } from '~/models/const/enums'
-import { DeckHelper } from '~/lib/deck-helper'
+import { SheetInfo } from '@/models/@types/sheet-info'
+import { GameTitle, BestOf } from '@/models/const/enums'
+import { DeckHelper } from '@/lib/deck-helper'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
