@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 import { Game } from '@/models/@types/game'
-import { Result } from '@/models/const/enums'
+import { Result } from '~/models/const/enums'
 import { Matrix, Header, VTableRow, MatrixElem } from '@/models/@types/matrix'
 
 export class AnalyticsHelper {

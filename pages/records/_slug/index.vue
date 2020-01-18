@@ -1,7 +1,7 @@
 <template>
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
-    <submit-game-form :decklist="decklist" @submit="addGame" />
+    <submit-game-form :decklist="decklist" :best-of="bestOf" @submit="addGame" />
     <v-data-table :headers="headers" :options.sync="option" :items="games" :items-per-page="5" class="elevation-1 table" />
   </section>
 </template>
@@ -39,19 +39,11 @@ export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
   }
 
   get decklist(): string[] {
-    if (this.sheet) {
-      return this.sheet.decks
-    } else {
-      return []
-    }
+    return this.sheet ? this.sheet.decks : []
   }
 
   get bestOf(): BestOf {
-    if (this.sheet) {
-      return this.sheet.bestOf
-    } else {
-      return BestOf.Bo1
-    }
+    return this.sheet ? this.sheet.bestOf : BestOf.Bo1
   }
 }
 </script>
