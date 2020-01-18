@@ -1,5 +1,5 @@
 import { AnalyticsHelper } from '@/lib/analytics-helper'
-import { exampleGames, examplePerfomanceMatrix, AppliedOnce } from '@/test/example-games.ts'
+import { exampleGames, examplePerfomanceMatrix, AppliedOnce, miniAppliedOnce, miniVDataset, exampleVDataset } from '@/test/example-games.ts'
 
 describe('AnalyticsHelper', () => {
   describe('#createMatrix', () => {
@@ -10,8 +10,7 @@ describe('AnalyticsHelper', () => {
       expect(receivedMatrix[0].length).toBe(3)
       expect(receivedMatrix[2][2]).toEqual({
         win: 0,
-        lose: 0,
-        draw: 0
+        lose: 0
       })
     })
   })
@@ -62,7 +61,7 @@ describe('AnalyticsHelper', () => {
         const matrix = examplePerfomanceMatrix
         const modifiedMatrix = applyLose(0, 1, matrix)
         expect(modifiedMatrix[0][0].lose).toBe(1)
-        expect(modifiedMatrix[0][1].lose).toBe(1) // added
+        expect(modifiedMatrix[0][1].lose).toBe(1) // lose
         expect(modifiedMatrix[0][2].lose).toBe(0)
         expect(modifiedMatrix[1][0].lose).toBe(1)
         expect(modifiedMatrix[1][1].lose).toBe(0)
@@ -90,6 +89,15 @@ describe('AnalyticsHelper', () => {
       const expectedMatrix = examplePerfomanceMatrix
       const receivedMatrix = AnalyticsHelper.extractData(games)
       expect(receivedMatrix).toEqual(expectedMatrix)
+    })
+  })
+
+  describe('#transformMatrixIntoVdataset', () => {
+    test('should return dataset with v-table data format', () => {
+      const receivedMiniDataset = AnalyticsHelper.transformMatrixIntoVDataset(miniAppliedOnce, ['A', 'B'])
+      expect(receivedMiniDataset).toEqual(miniVDataset)
+      const receivedMatrix = AnalyticsHelper.transformMatrixIntoVDataset(examplePerfomanceMatrix, ['A', 'B', 'C'])
+      expect(receivedMatrix).toEqual(exampleVDataset)
     })
   })
 })

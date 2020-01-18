@@ -4,7 +4,7 @@
       <v-toolbar-title>{{ sheetName }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <ul-tooltip message="対戦記録">
-        <v-icon dark>mdi-checkerboard</v-icon>
+        <v-icon dark @click="goToSheetPage">mdi-checkerboard</v-icon>
       </ul-tooltip>
       <ul-tooltip message="分析">
         <v-icon dark @click="goToAnalyticsPage">mdi-chart-pie</v-icon>
@@ -40,6 +40,10 @@ export default class SheetToolbar extends Vue {
 
   goToAnalyticsPage(): void {
     this.$router.push(`/records/${this.$route.params.slug}/analytics`)
+  }
+
+  goToSheetPage(): void {
+    this.$router.push(`/records/${this.$route.params.slug}/`)
   }
 
   get sheetInfo(): SheetInfo | null {
