@@ -103,8 +103,24 @@ export default class SubmitGameForm extends Vue {
 
   emitSubmitGame() {
     if (this.canSubmit) {
-      this.submit(this.game)
-      this.game.oppDeck = null
+      if (!this.isBestOf3) {
+        this.submit(this.game)
+        this.game.oppDeck = null
+      } else {
+        const wins = [this.match.game1.win, this.match.game2.win]
+        const blacks = [this.match.game1.bw, this.match.game2.bw]
+        if (this.match.game1.win !== this.match.game2.win) {
+          wins.push(this.match.game3!.win)
+          blacks.push(this.match.game3!.bw)
+        }
+        this.submit({
+          ...this.game,
+          win: this.didYouWin(wins),
+          wins,
+          blacks
+        })
+        this.game.oppDeck = null
+      }
     }
   }
 
@@ -202,6 +218,16 @@ export default class SubmitGameForm extends Vue {
 
   get game3BwColor(): string {
     return this.match.game3 ? this.getIconBWColor(this.match.game3!.bw) : ''
+  }
+
+  private didYouWin(wins: Result[]): Result {
+    let i = 0
+    for (const res of wins) {
+      if (res === Result.win) {
+        i = i + 1
+      }
+    }
+    return i >= 2 ? Result.win : Result.lose
   }
 }
 </script>

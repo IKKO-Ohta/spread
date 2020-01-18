@@ -8,6 +8,8 @@ export interface Game {
   timestamp: string
   user: string
   describe: string
+  wins?: Result[]
+  blacks?: Bw[]
 }
 
 export interface Match {
