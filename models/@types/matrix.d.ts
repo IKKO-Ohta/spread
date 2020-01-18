@@ -1,7 +1,6 @@
 export interface MatrixElem {
   win: number
   lose: number
-  draw: number
 }
 
 export type Matrix = MatrixElem[][]

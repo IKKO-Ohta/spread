@@ -8,8 +8,7 @@ export class AnalyticsHelper {
     return Array(length).fill(
       Array(length).fill({
         win: 0,
-        lose: 0,
-        draw: 0
+        lose: 0
       })
     )
   }
@@ -91,24 +90,18 @@ export class AnalyticsHelper {
     return data
   }
 
-  static convertMatrixElemToString(elem: MatrixElem): string {
-    // NOTE: This method hides draw. Modify me if you need
-    // return `${win}-${lose}-${draw}`
+  private static convertMatrixElemToString(elem: MatrixElem): string {
     return `${elem.win}-${elem.lose}`
   }
 
-  static sumPerformance(row: MatrixElem[]): string {
+  private static sumPerformance(row: MatrixElem[]): string {
     let win = 0
     let lose = 0
-    // let draw = 0
     for (const elem of row) {
       win += elem.win
       lose += elem.lose
-      // draw += elem.draw
     }
     return `${win}-${lose}`
-    // NOTE: This method hides draw. Modify me if you need
-    // return `${win}-${lose}-${draw}`
   }
 
   static extractHeader(games: Game[]): Header[] {

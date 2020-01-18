@@ -10,8 +10,7 @@ describe('AnalyticsHelper', () => {
       expect(receivedMatrix[0].length).toBe(3)
       expect(receivedMatrix[2][2]).toEqual({
         win: 0,
-        lose: 0,
-        draw: 0
+        lose: 0
       })
     })
   })

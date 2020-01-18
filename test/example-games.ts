@@ -11,9 +11,9 @@ export const exampleGames: Game[] = [
 ]
 
 export const examplePerfomanceMatrix: Matrix = [
-  [{ win: 1, lose: 1, draw: 0 }, { win: 1, lose: 0, draw: 0 }, { win: 2, lose: 0, draw: 0 }],
-  [{ win: 0, lose: 1, draw: 0 }, { win: 0, lose: 0, draw: 0 }, { win: 1, lose: 0, draw: 0 }],
-  [{ win: 0, lose: 2, draw: 0 }, { win: 0, lose: 1, draw: 0 }, { win: 0, lose: 0, draw: 0 }]
+  [{ win: 1, lose: 1 }, { win: 1, lose: 0 }, { win: 2, lose: 0 }],
+  [{ win: 0, lose: 1 }, { win: 0, lose: 0 }, { win: 1, lose: 0 }],
+  [{ win: 0, lose: 2 }, { win: 0, lose: 1 }, { win: 0, lose: 0 }]
 ]
 
 export const exampleVDataset: VTableRow[] = [
@@ -41,12 +41,12 @@ export const exampleVDataset: VTableRow[] = [
 ]
 
 export const AppliedOnce: Matrix = [
-  [{ win: 0, lose: 0, draw: 0 }, { win: 1, lose: 0, draw: 0 }, { win: 0, lose: 0, draw: 0 }],
-  [{ win: 0, lose: 1, draw: 0 }, { win: 0, lose: 0, draw: 0 }, { win: 0, lose: 0, draw: 0 }],
-  [{ win: 0, lose: 0, draw: 0 }, { win: 0, lose: 0, draw: 0 }, { win: 0, lose: 0, draw: 0 }]
+  [{ win: 0, lose: 0 }, { win: 1, lose: 0 }, { win: 0, lose: 0 }],
+  [{ win: 0, lose: 1 }, { win: 0, lose: 0 }, { win: 0, lose: 0 }],
+  [{ win: 0, lose: 0 }, { win: 0, lose: 0 }, { win: 0, lose: 0 }]
 ]
 
-export const miniAppliedOnce: Matrix = [[{ win: 0, lose: 0, draw: 0 }, { win: 1, lose: 0, draw: 0 }], [{ win: 0, lose: 1, draw: 0 }, { win: 0, lose: 0, draw: 0 }]]
+export const miniAppliedOnce: Matrix = [[{ win: 0, lose: 0 }, { win: 1, lose: 0 }], [{ win: 0, lose: 1 }, { win: 0, lose: 0 }]]
 
 export const miniVDataset: VTableRow[] = [
   {
