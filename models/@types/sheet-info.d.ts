@@ -1,4 +1,4 @@
-import { GameTitle } from '~/models/const/enums'
+import { GameTitle, BestOf } from '~/models/const/enums'
 
 export interface SheetInfo {
   id: string
@@ -6,4 +6,5 @@ export interface SheetInfo {
   sheetName: string
   gameTitle: GameTitle
   decks: string[]
+  bestOf: BestOf
 }

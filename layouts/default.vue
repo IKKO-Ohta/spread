@@ -37,6 +37,7 @@ import UlSnackbar from '@/components/ul-snackbar.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 import { DeckHelper } from '@/lib/deck-helper'
 import { FirestoreHelper } from '@/lib/firestore-helper'
+import { SheetHelper } from '@/lib/sheet-helper'
 
 interface SidebarItems {
   icon: string
@@ -98,7 +99,8 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
       members: [userMail],
       sheetName,
       gameTitle,
-      decks: DeckHelper.getDefaultDecks(gameTitle)
+      decks: DeckHelper.getDefaultDecks(gameTitle),
+      bestOf: SheetHelper.getDBestOf(gameTitle)
     }
     await this.stores.sheet.CREATE_SHEET(sheetInfo)
     await this.refreshSheetInfos()

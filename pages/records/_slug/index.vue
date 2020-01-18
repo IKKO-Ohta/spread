@@ -14,6 +14,7 @@ import SubmitGameForm from '@/components/submit-game-form.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
 import { Game } from '@/models/@types/game'
 import { TimeUtil } from '@/lib/time-util'
+import { BestOf } from '@/models/const/enums'
 
 @Component({
   components: {
@@ -42,6 +43,14 @@ export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
       return this.sheet.decks
     } else {
       return []
+    }
+  }
+
+  get bestOf(): BestOf {
+    if (this.sheet) {
+      return this.sheet.bestOf
+    } else {
+      return BestOf.Bo1
     }
   }
 }
