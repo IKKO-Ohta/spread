@@ -6,21 +6,19 @@
         <v-select v-model="game.oppDeck" :items="decklist" label="対戦相手のデッキ" />
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
-      <v-card-title>対戦結果</v-card-title>
-
       <section v-if="isBestOf3">
         <v-card-subtitle>先後</v-card-subtitle>
         <v-card-text>
           <v-chip-group class="ma-2" column>
-            <v-chip :color="game1BwColor" @click="handleMatchBw('game1')">
+            <v-chip @click="handleMatchBw('game1')">
               <v-icon left> {{ getIconBW(match.game1.bw) }} </v-icon>
               {{ match.game1.bw }}
             </v-chip>
-            <v-chip :color="game2BwColor" @click="handleMatchBw('game2')">
+            <v-chip @click="handleMatchBw('game2')">
               <v-icon left> {{ getIconBW(match.game2.bw) }} </v-icon>
               {{ match.game2.bw }}
             </v-chip>
-            <v-chip v-if="isGame3" :color="game3BwColor" @click="handleMatchBw('game3')">
+            <v-chip v-if="isGame3" @click="handleMatchBw('game3')">
               <v-icon left> {{ getIconBW(match.game3.bw) }} </v-icon>
               {{ match.game3.bw }}
             </v-chip>
@@ -29,15 +27,15 @@
         <v-card-subtitle>勝敗</v-card-subtitle>
         <v-card-text>
           <v-chip-group class="ma-2" column>
-            <v-chip :color="game1WlColor" @click="handleMatchWin('game1')">
+            <v-chip @click="handleMatchWin('game1')">
               <v-icon left>{{ getIconEmotion(match.game1.win) }}</v-icon>
               {{ match.game1.win }}
             </v-chip>
-            <v-chip :color="game2WlColor" @click="handleMatchWin('game2')">
+            <v-chip @click="handleMatchWin('game2')">
               <v-icon left>{{ getIconEmotion(match.game2.win) }}</v-icon>
               {{ match.game2.win }}
             </v-chip>
-            <v-chip v-if="isGame3" :color="game3WlColor" @click="handleMatchWin('game3')">
+            <v-chip v-if="isGame3" @click="handleMatchWin('game3')">
               <v-icon left>{{ getIconEmotion(match.game3.win) }}</v-icon>
               {{ match.game3.win }}
             </v-chip>
@@ -46,14 +44,20 @@
       </section>
       <section v-else>
         <v-card-text>
-          <v-btn large :color="getIconWLColor(game.win)" depressed class="sm-button" @click="changeWinOrLose">
+          <v-btn large depressed class="sm-button" @click="changeWinOrLose">
             <v-icon left>{{ getIconEmotion(game.win) }}</v-icon>
             {{ game.win }}
           </v-btn>
-          <v-btn large :color="getIconBWColor(game.black)" depressed class="sm-button" @click="changeBlackOrWhite">
+          <v-btn large depressed class="sm-button" @click="changeBlackOrWhite">
             <v-icon left> {{ getIconBW(game.black) }} </v-icon>
             {{ game.black }}
           </v-btn>
+        </v-card-text>
+      </section>
+      <section>
+        <v-card-subtitle> 記入 </v-card-subtitle>
+        <v-card-text>
+          <v-textarea v-model="game.describe" auto-grow rows="3" outlined :placeholder="placeholderText"></v-textarea>
         </v-card-text>
       </section>
     </v-form>
@@ -177,14 +181,6 @@ export default class SubmitGameForm extends Vue {
     return bw === Bw.black ? 'mdi-triangle' : 'mdi-triangle-outline'
   }
 
-  getIconWLColor(result: Result): string {
-    return result === Result.win ? 'primary' : 'red'
-  }
-
-  getIconBWColor(bw: Bw): string {
-    return bw === Bw.black ? 'black' : 'gray'
-  }
-
   get isBestOf3(): boolean {
     return this.bestOf === BestOf.Bo3
   }
@@ -197,28 +193,8 @@ export default class SubmitGameForm extends Vue {
     return this.game.myDeck !== null && this.game.oppDeck !== null
   }
 
-  get game1WlColor(): string {
-    return this.getIconWLColor(this.match.game1.win)
-  }
-
-  get game2WlColor(): string {
-    return this.getIconWLColor(this.match.game2.win)
-  }
-
-  get game3WlColor(): string {
-    return this.match.game3 ? this.getIconWLColor(this.match.game3!.win) : ''
-  }
-
-  get game1BwColor(): string {
-    return this.getIconBWColor(this.match.game1.bw)
-  }
-
-  get game2BwColor(): string {
-    return this.getIconBWColor(this.match.game2.bw)
-  }
-
-  get game3BwColor(): string {
-    return this.match.game3 ? this.getIconBWColor(this.match.game3!.bw) : ''
+  get placeholderText(): string {
+    return 'ex. サイド ボーディング、勝因、洞察...'
   }
 
   private didYouWin(wins: Result[]): Result {
