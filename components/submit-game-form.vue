@@ -6,8 +6,6 @@
         <v-select v-model="game.oppDeck" :items="decklist" label="対戦相手のデッキ" />
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
-      <v-card-title>対戦結果</v-card-title>
-
       <section v-if="isBestOf3">
         <v-card-subtitle>先後</v-card-subtitle>
         <v-card-text>
@@ -46,14 +44,20 @@
       </section>
       <section v-else>
         <v-card-text>
-          <v-btn large :color="getIconWLColor(game.win)" depressed class="sm-button" @click="changeWinOrLose">
+          <v-btn large depressed class="sm-button" @click="changeWinOrLose">
             <v-icon left>{{ getIconEmotion(game.win) }}</v-icon>
             {{ game.win }}
           </v-btn>
-          <v-btn large :color="getIconBWColor(game.black)" depressed class="sm-button" @click="changeBlackOrWhite">
+          <v-btn large depressed class="sm-button" @click="changeBlackOrWhite">
             <v-icon left> {{ getIconBW(game.black) }} </v-icon>
             {{ game.black }}
           </v-btn>
+        </v-card-text>
+      </section>
+      <section>
+        <v-card-subtitle> 記入 </v-card-subtitle>
+        <v-card-text>
+          <v-textarea v-model="game.describe" auto-grow rows="3" outlined :placeholder="placeholderText"></v-textarea>
         </v-card-text>
       </section>
     </v-form>
@@ -187,6 +191,10 @@ export default class SubmitGameForm extends Vue {
 
   get canSubmit() {
     return this.game.myDeck !== null && this.game.oppDeck !== null
+  }
+
+  get placeholderText(): string {
+    return 'ex. サイド ボーディング、勝因、洞察...'
   }
 
   private didYouWin(wins: Result[]): Result {
