@@ -17,3 +17,9 @@ export default class UlTooltip extends Vue {
   @Prop({ required: true }) message!: string
 }
 </script>
+
+<style lang="scss">
+.v-small-dialog__activator {
+  height: 0;
+}
+</style>
