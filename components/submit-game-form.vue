@@ -80,7 +80,7 @@ export default class SubmitGameForm extends Vue {
   @Prop() bestOf!: BestOf
   @Emit() submit(_game: Game) {}
 
-  game: Game = {
+  readonly baseObjGame: Game = {
     win: Result.win,
     black: Bw.black,
     myDeck: null,
@@ -91,7 +91,9 @@ export default class SubmitGameForm extends Vue {
     id: ''
   }
 
-  match: Match = {
+  game: Game = { ...this.baseObjGame }
+
+  readonly baseObjMatch: Match = {
     game1: {
       win: Result.win,
       bw: Bw.black
@@ -105,6 +107,8 @@ export default class SubmitGameForm extends Vue {
       bw: Bw.black
     }
   }
+
+  match: Match = { ...this.baseObjMatch }
 
   emitSubmitGame() {
     if (this.canSubmit) {
@@ -124,7 +128,13 @@ export default class SubmitGameForm extends Vue {
           wins,
           blacks
         })
-        this.game.oppDeck = null
+        this.game = {
+          myDeck: this.game.myDeck,
+          ...this.baseObjGame
+        }
+        this.match = {
+          ...this.baseObjMatch
+        }
       }
     }
   }

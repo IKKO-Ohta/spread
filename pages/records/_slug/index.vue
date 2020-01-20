@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
-import { FirestoreHelper } from '../../../lib/firestore-helper'
+import { FirestoreHelper } from '@/lib/firestore-helper'
 import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import GameTable from '@/components/game-table.vue'
