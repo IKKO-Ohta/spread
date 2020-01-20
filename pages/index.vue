@@ -40,9 +40,9 @@ export default class IndexPage extends Mixins<PageMixin>(PageMixin) {
 
   get hello(): string {
     if (this.stores.user.currentUserInfo !== null) {
-      return `Hi ${this.stores.user.currentUserInfo.displayName} !`
+      return `こんにちは ${this.stores.user.currentUserInfo.displayName} !`
     } else {
-      return `Hello!`
+      return `Spreadへようこそ！ 使用するにはまずGMailでログインしてください。`
     }
   }
 }
