@@ -1,6 +1,6 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import firebase from 'firebase/app'
-import * as firebaseui from 'firebaseui'
+import * as firebaseui from 'firebaseui-ja'
 import { UserInfo } from '@/models/@types/user-info'
 
 @Module({ name: 'user', namespaced: true, stateFactory: true })

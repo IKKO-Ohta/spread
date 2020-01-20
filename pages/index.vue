@@ -22,7 +22,7 @@
 import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
 import PageMixin from '@/mixins/page-mixins'
-import 'firebaseui/dist/firebaseui.css'
+import 'firebaseui-ja/dist/firebaseui.css'
 
 @Component({})
 export default class IndexPage extends Mixins<PageMixin>(PageMixin) {
@@ -40,9 +40,9 @@ export default class IndexPage extends Mixins<PageMixin>(PageMixin) {
 
   get hello(): string {
     if (this.stores.user.currentUserInfo !== null) {
-      return `Hi ${this.stores.user.currentUserInfo.displayName} !`
+      return `こんにちは ${this.stores.user.currentUserInfo.displayName} !`
     } else {
-      return `Hello!`
+      return `Spreadへようこそ！ 使用するにはまずGMailでログインしてください。`
     }
   }
 }
