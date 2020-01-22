@@ -99,7 +99,3 @@ firebasekey.json
 
 # credentials
 credentials/*.*
-
-# vscode
-spread.code-workspace
-.vscode/settings.json
