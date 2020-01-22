@@ -2,7 +2,7 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
     <submit-game-form :decklist="decklist" :best-of="bestOf" @submit="addGame" />
-    <game-table :headers="headers" :items="games" @update-game="update" />
+    <game-table :headers="headers" :items="games" :decklist="decklist" @update-game="update" />
   </section>
 </template>
 

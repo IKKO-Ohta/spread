@@ -16,6 +16,7 @@
           <v-select v-model="selectedGameTitle" label="Game" :items="gameTitles" />
         </v-card-text>
         <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn depressed :disabled="!canSubmit" @click="submit">
             Create
           </v-btn>

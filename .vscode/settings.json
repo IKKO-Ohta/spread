@@ -1,0 +1,20 @@
+{
+    "eslint.enable": true,
+    "eslint.lintTask.enable": true,
+    "eslint.validate": ["vue","javascript","typescript"],
+    "[vue]": {
+      "editor.defaultFormatter": null,
+      "editor.formatOnSave": false,
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": null,
+      "editor.formatOnSave": false,
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": null,
+      "editor.formatOnSave": false,
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  }

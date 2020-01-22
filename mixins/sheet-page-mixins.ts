@@ -2,7 +2,7 @@ import { Mixins, Mixin } from 'vue-mixin-decorator'
 import { AnalyticsHelper } from '@/lib/analytics-helper'
 import PageMixin from '@/mixins/page-mixins'
 import { FirestoreHelper } from '@/lib/firestore-helper'
-import recordHeader from '@/models/const/record-header'
+import { recordHeader } from '@/models/const/record-header'
 import { Game } from '@/models/@types/game'
 import { SheetInfo } from '@/models/@types/sheet-info'
 
@@ -10,7 +10,7 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
   sheetId = ''
   sheet: SheetInfo | null = null
-  headers = recordHeader()
+  headers = recordHeader
   games: Game[] = []
 
   created() {

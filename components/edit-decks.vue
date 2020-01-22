@@ -3,6 +3,7 @@
     <ul-tooltip message="デッキ管理">
       <v-icon dark @click="openDialog">mdi-cards-outline</v-icon>
     </ul-tooltip>
+    <!-- TODO: dialogを上に移し、v-modelで管理するようにし、ステートを減らす -->
     <v-dialog v-model="dialog" max-width="600px">
       <v-card class="form">
         <v-card-title>デッキ管理</v-card-title>
@@ -20,6 +21,7 @@
           <v-text-field v-model="newDeck" label="追加するデッキ名" required> </v-text-field>
         </v-card-text>
         <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn depressed :disabled="!canSubmit" @click="submitDeck">
             デッキを追加する
           </v-btn>
