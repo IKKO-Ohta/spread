@@ -62,6 +62,7 @@
       </section>
     </v-form>
     <v-card-actions>
+      <v-spacer></v-spacer>
       <v-btn depressed :disabled="!canSubmit" @click="emitSubmitGame">
         登録
       </v-btn>
@@ -73,6 +74,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { Result, Bw, BestOf } from '@/models/const/enums'
 import { Game, Match, GameNumber } from '@/models/@types/game'
+import { baseGameObj, baseMatchObj } from '@/models/const/base-game-object'
 
 @Component({})
 export default class SubmitGameForm extends Vue {
@@ -80,35 +82,8 @@ export default class SubmitGameForm extends Vue {
   @Prop() bestOf!: BestOf
   @Emit() submit(_game: Game) {}
 
-  readonly baseObjGame: Game = {
-    win: Result.win,
-    black: Bw.black,
-    myDeck: null,
-    oppDeck: null,
-    user: '',
-    timestamp: '',
-    describe: '',
-    id: ''
-  }
-
-  game: Game = { ...this.baseObjGame }
-
-  readonly baseObjMatch: Match = {
-    game1: {
-      win: Result.win,
-      bw: Bw.black
-    },
-    game2: {
-      win: Result.lose,
-      bw: Bw.white
-    },
-    game3: {
-      win: Result.win,
-      bw: Bw.black
-    }
-  }
-
-  match: Match = { ...this.baseObjMatch }
+  game: Game = { ...baseGameObj }
+  match: Match = { ...baseMatchObj }
 
   emitSubmitGame() {
     if (this.canSubmit) {
@@ -130,10 +105,10 @@ export default class SubmitGameForm extends Vue {
         })
         this.game = {
           myDeck: this.game.myDeck,
-          ...this.baseObjGame
+          ...baseGameObj
         }
         this.match = {
-          ...this.baseObjMatch
+          ...baseMatchObj
         }
       }
     }

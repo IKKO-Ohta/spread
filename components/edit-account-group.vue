@@ -3,6 +3,7 @@
     <ul-tooltip message="メンバー管理">
       <v-icon dark @click="openDialog">mdi-account-group-outline</v-icon>
     </ul-tooltip>
+    <!-- TODO: dialogを上に移し、v-modelで管理するようにし、ステートを減らす -->
     <v-dialog v-model="dialog" max-width="600px">
       <v-card class="form">
         <v-card-title>メンバー管理</v-card-title>
@@ -20,6 +21,7 @@
           <v-text-field v-model="mailAdressToInvite" label="招待メールの送り先" required> </v-text-field>
         </v-card-text>
         <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn depressed :disabled="!canSubmit" @click="submit">
             招待メールを送る
           </v-btn>
