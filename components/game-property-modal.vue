@@ -20,13 +20,13 @@
 
 <script lang="ts">
 import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 
 @Component
 export default class EditDecks extends Vue {
-  @Prop() game!: Game | null
+  @Prop() game!: GameInfo | null
   @Prop({ default: false }) value!: boolean
-  @Emit() update(_game: Game): void {}
+  @Emit() update(_game: GameInfo): void {}
   @Emit() input(_newVal: boolean): void {}
 
   get isOpenModal() {
