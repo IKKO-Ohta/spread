@@ -3,7 +3,7 @@ import { AnalyticsHelper } from '@/lib/analytics-helper'
 import PageMixin from '@/mixins/page-mixins'
 import { FirestoreHelper } from '@/lib/firestore-helper'
 import { recordHeader } from '@/models/const/record-header'
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 import { SheetInfo } from '@/models/@types/sheet-info'
 
 @Mixin
@@ -11,7 +11,7 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
   sheetId = ''
   sheet: SheetInfo | null = null
   headers = recordHeader
-  games: Game[] = []
+  games: GameInfo[] = []
 
   created() {
     this.load()

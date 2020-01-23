@@ -1,7 +1,7 @@
-import { Game, Match } from '@/models/@types/game'
+import { GameInfo, Match } from '@/models/@types/game'
 import { Result, Bw } from '@/models/const/enums'
 
-export const baseGameObj: Game = {
+export const baseGameObj: GameInfo = {
   win: Result.win,
   black: Bw.black,
   myDeck: null,

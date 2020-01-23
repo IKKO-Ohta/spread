@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 import { Result } from '~/models/const/enums'
 import { Matrix, Header, VTableRow, MatrixElem } from '@/models/@types/matrix'
 
@@ -13,7 +13,7 @@ export class AnalyticsHelper {
     )
   }
 
-  static extractData(games: Game[]): Matrix {
+  static extractData(games: GameInfo[]): Matrix {
     const allDecks = this.getAllDecks(games)
     let matrix: Matrix = this.createMatrix(allDecks.length)
 
@@ -23,7 +23,7 @@ export class AnalyticsHelper {
     return matrix
   }
 
-  static applyGame(matrix: Matrix, game: Game, decklist: string[]): Matrix {
+  static applyGame(matrix: Matrix, game: GameInfo, decklist: string[]): Matrix {
     const myDeckIndex = decklist.indexOf(game.myDeck!)
     const oppDeckIndex = decklist.indexOf(game.oppDeck!)
     const winSideIndex = game.win === Result.win ? myDeckIndex : oppDeckIndex
@@ -104,7 +104,7 @@ export class AnalyticsHelper {
     return `${win}-${lose}`
   }
 
-  static extractHeader(games: Game[]): Header[] {
+  static extractHeader(games: GameInfo[]): Header[] {
     const ans: Header[] = []
     const headerTitle: Header = {
       text: 'デッキ',
@@ -136,7 +136,7 @@ export class AnalyticsHelper {
     return ans
   }
 
-  static getAllDecks(games: Game[]): string[] {
+  static getAllDecks(games: GameInfo[]): string[] {
     const allDecks: string[] = []
     games.forEach((game) => {
       allDecks.push(game.myDeck!)
