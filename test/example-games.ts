@@ -1,8 +1,8 @@
 import { Result, Bw } from '@/models/const/enums'
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 import { Matrix, VTableRow } from '@/models/@types/matrix'
 
-export const exampleGames: Game[] = [
+export const exampleGames: GameInfo[] = [
   { myDeck: 'A', oppDeck: 'B', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },
   { myDeck: 'B', oppDeck: 'C', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },
   { myDeck: 'A', oppDeck: 'C', win: Result.win, black: Bw.black, timestamp: 'xxx', user: 'who', describe: '', id: 'A' },

@@ -1,7 +1,7 @@
 import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import firebase from 'firebase/app'
 import { SheetInfo } from '~/models/@types/sheet-info'
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 
 @Module({ name: 'sheet', namespaced: true, stateFactory: true })
 export default class Sheet extends VuexModule {
@@ -67,7 +67,7 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async SET_GAME(game: Game) {
+  async SET_GAME(game: GameInfo) {
     const db = firebase.firestore()
     await db
       .collection('sheet')
@@ -78,9 +78,9 @@ export default class Sheet extends VuexModule {
   }
 
   @Action({ rawError: true })
-  async LOAD_GAMES(): Promise<Game[]> {
+  async LOAD_GAMES(): Promise<GameInfo[]> {
     try {
-      const games: Game[] = []
+      const games: GameInfo[] = []
       const db = firebase.firestore()
       const result = await db
         .collection('sheet')
@@ -88,7 +88,7 @@ export default class Sheet extends VuexModule {
         .collection('games')
         .get()
       result.forEach((elem) => {
-        games.push(elem.data() as Game)
+        games.push(elem.data() as GameInfo)
       })
       return games
     } catch {
