@@ -34,7 +34,7 @@ https://firebase.google.com/docs/web/setup
 $ yarn global add firebase-tools
 $ firebase login
 $ firebase init
-  ... services => firestore, hosting(recommend)
+  ... services => firestore, hosting, functions
   ... public directory => dist
 ```
 
@@ -67,6 +67,6 @@ example:
 ## Deploy
 
 ```bash
-$ yarn run generate
+$ yarn generate
 $ firebase deploy
 ```
