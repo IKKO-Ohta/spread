@@ -166,7 +166,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /sheet/{sheetName} {
-      allow read;
+      allow read;      
       allow write: if request.auth.token.email != null
     }
     match /sheet/{sheetName}/games/{game} {
@@ -180,6 +180,105 @@ service cloud.firestore {
 
 #### REST API: Firebase Cloud Functions
 
+Firebase FunctionsはバックエンドコードをHTTPSリクエストに応じて実行するサービスです。これを用いると、REST API風の仕事をサーバなしに実行できます。
 
+例えば次のようにコードをデプロイします：
+```javascript
+exports.ping = functions.https.onCall((data, context) => {
+  return {text:'pong'}
+});
+```
+
+クライアント側からはこのようにHttpsリクエストを行います(専用のAPIクライアントが付属しています):
+```javascript
+const sendMail = functions.functions().httpsCallable('ping')
+try {
+  const res = await sendMail()
+  console.log(res.data.text) // => pong
+} catch (error) {
+  throw new Error('#ping ERROR')
+}
+```
+実際にはデータベースの更新やGoogle Analyticsの結果など、Httpsリクエスト以外のトリガーを用いて関数を実行し、値を返却させることができます。Functionsからはデータベースや認証など一通りの情報を参照できるため、サーバレスアプリにおけるサーバの役割をこれでまかなえます。
+
+spreadでは招待メールの送信にのみこれを用いていますが、例えば新しくゲームがプッシュされたときにslackに通知する機能や、データに対するバッチ処理を定期的に実行する機能などを追加できると考えられます。
 
 ## my spreadのデプロイ手順
+
+デプロイは次の手順で行います。
+
+1. Node.jsおよびYarnを取得します。
+2. フロントエンドのコードを利用可能にします。
+3. Firebaseに登録します。さらにFirebase CLIを用いて、spreadにFirebaseを追加します。
+4. 初期設定の設定ファイルを変更したらデプロイします。
+
+
+### 1. Node.jsおよびYarnを取得
+Node.jsのサポートバージョンは、2020年1月24日現在の安定版（LTS）である`12.14.1`です。`nvm`などのNode.js バージョン管理システムをお好みで使用いただくと便利かと思います。
+
+```
+$ brew install yarn --ignore-dependencies
+```
+
+- `--igonore-dependencies` オプションなしだと、brewがNode.js `12.14.1`以外のバージョンを合わせてグローバルインストールすることがあります。注意してください。
+
+### 2. フロントエンドのコードを利用可能にする
+
+上記の準備ができたら、さっそくspreadをクローンしましょう。
+```
+$ git clone https://github.com/IKKO-Ohta/spread
+```
+
+まずは依存ライブラリをインストールします。
+```
+$ cd spread
+$ yarn install
+```
+
+この時点でテストの実行は可能になるはずです。
+```
+$ yarn test
+```
+
+### 3. Firebaseに登録
+
+今度はブラウザを開き、あなたのGmailアカウントにFirebaseを追加します。
+[Googleの公式サイト](https://firebase.google.com/)にアクセスし、「コンソールに移動」をクリック。「プロジェクトを作成」で新しくFirebaseプロジェクトを作成します。名前はなんでも良いですが、ここでは仮に`my-spread`としましょう。
+
+再びコンソールに戻り、Fibase CLIをダウンロードします。
+```
+$ yarn add global firebase-tools
+```
+
+Firebaseをspreadに設定します。個人情報の収集ほか、Firebaseの設定についていくつかの質問がおこなわれます。重要なのはproject, services, public directoryの３つで、以下のように回答してください。
+
+```
+$ firebase login
+$ firebase init
+  ... project => `my-spread` // プロジェクト名
+  ... services => firestore, hosting, functions
+  ... public directory => dist
+```
+
+### 4. 初期設定ファイルの変更
+
+**セキュリティルールの設定** およびfunctionsの設定を行います。
+`README_about_firestore_settings.md`を見ながら、生成されたファイル`firestore.rules`および`functions/src/index.ts`を設定します。こちらには上記のセキュリティルールとメール送信のためのコードが記載されています。
+
+- `firestore.rules`の設定はセキュリティ上重要です。必ず確認してください。
+- `functions/src/index.ts` に、メール送信用のGmailアカウントの内容を書き込んでください。このアカウントにはセキュリティアラートが表示されるので、新しくアカウントを作り直すことをお勧めします。また、お好みでデプロイ時に環境設定から読み出すようにしてもよいでしょう。
+
+
+```
+$ yarn generate
+$ firebase deploy
+```
+
+正常に終了したらデプロイ終了です。ホスティング先のURLが表示されます。今後はdevelopment環境で実行することもでき、
+```
+$ yarn dev
+```
+が利用可能になります。
+
+お疲れ様でした。
+
