@@ -11,13 +11,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 import { Header, VTableRow } from '@/models/@types/matrix'
 import { AnalyticsHelper } from '@/lib/analytics-helper'
 
 @Component({})
 export default class PerformanceMatrix extends Vue {
-  @Prop({ required: true }) games!: Game[]
+  @Prop({ required: true }) games!: GameInfo[]
   isHiddenDraw = true
 
   get items(): VTableRow[] {
