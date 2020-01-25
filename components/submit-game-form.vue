@@ -9,37 +9,11 @@
       <section v-if="isBestOf3">
         <v-card-subtitle>先後</v-card-subtitle>
         <v-card-text>
-          <v-chip-group class="ma-2" column>
-            <v-chip @click="handleMatchBw('game1')">
-              <v-icon left> {{ getIconBW(match.game1.bw) }} </v-icon>
-              {{ match.game1.bw }}
-            </v-chip>
-            <v-chip @click="handleMatchBw('game2')">
-              <v-icon left> {{ getIconBW(match.game2.bw) }} </v-icon>
-              {{ match.game2.bw }}
-            </v-chip>
-            <v-chip v-if="isGame3" @click="handleMatchBw('game3')">
-              <v-icon left> {{ getIconBW(match.game3.bw) }} </v-icon>
-              {{ match.game3.bw }}
-            </v-chip>
-          </v-chip-group>
+          <v-chips-bws :match="match" @handle-bw="handleMatchBw" />
         </v-card-text>
         <v-card-subtitle>勝敗</v-card-subtitle>
         <v-card-text>
-          <v-chip-group class="ma-2" column>
-            <v-chip @click="handleMatchWin('game1')">
-              <v-icon left>{{ getIconEmotion(match.game1.win) }}</v-icon>
-              {{ match.game1.win }}
-            </v-chip>
-            <v-chip @click="handleMatchWin('game2')">
-              <v-icon left>{{ getIconEmotion(match.game2.win) }}</v-icon>
-              {{ match.game2.win }}
-            </v-chip>
-            <v-chip v-if="isGame3" @click="handleMatchWin('game3')">
-              <v-icon left>{{ getIconEmotion(match.game3.win) }}</v-icon>
-              {{ match.game3.win }}
-            </v-chip>
-          </v-chip-group>
+          <v-chips-wins :match="match" @handle-win="handleMatchWin" />
         </v-card-text>
       </section>
       <section v-else>
@@ -72,17 +46,19 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import VChipsWins from '@/components/v-chips-wins.vue'
+import VChipsBws from '@/components/v-chips-bws.vue'
 import { Result, Bw, BestOf } from '@/models/const/enums'
-import { Game, Match, GameNumber } from '@/models/@types/game'
+import { GameInfo, Match, GameNumber } from '@/models/@types/game'
 import { baseGameObj, baseMatchObj } from '@/models/const/base-game-object'
 
-@Component({})
+@Component({ components: { VChipsWins, VChipsBws } })
 export default class SubmitGameForm extends Vue {
   @Prop({ required: true }) decklist!: string[]
   @Prop() bestOf!: BestOf
-  @Emit() submit(_game: Game) {}
+  @Emit() submit(_game: GameInfo) {}
 
-  game: Game = { ...baseGameObj }
+  game: GameInfo = { ...baseGameObj }
   match: Match = { ...baseMatchObj }
 
   emitSubmitGame() {

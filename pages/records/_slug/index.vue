@@ -14,7 +14,7 @@ import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import SubmitGameForm from '@/components/submit-game-form.vue'
 import GameTable from '@/components/game-table.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
-import { Game } from '@/models/@types/game'
+import { GameInfo } from '@/models/@types/game'
 import { TimeUtil } from '@/lib/time-util'
 import { BestOf } from '@/models/const/enums'
 
@@ -31,7 +31,7 @@ export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
     sortDesc: [true]
   }
 
-  async addGame(game: Game) {
+  async addGame(game: GameInfo) {
     await this.stores.sheet.SET_GAME({
       ...game,
       timestamp: TimeUtil.getNow(),
@@ -42,8 +42,10 @@ export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
     await this.load()
   }
 
-  async update(game: Game) {
+  async update(game: GameInfo) {
     await this.stores.sheet.SET_GAME(game)
+    this.stores.snackbar.SET_MESSAGE('記録を変更しました。')
+    await this.load()
   }
 
   get decklist(): string[] {
