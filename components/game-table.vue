@@ -54,9 +54,7 @@
       </ul-tooltip>
     </template>
     <template v-slot:item.property="props">
-      <ul-tooltip message="詳細を見る">
-        <v-icon dark @click="openEditDialog(props.item)"> mdi-dots-vertical </v-icon>
-      </ul-tooltip>
+      <v-icon dark @click="openEditDialog(props.item)"> mdi-dots-vertical </v-icon>
     </template>
     <v-data-footer />
   </v-data-table>
