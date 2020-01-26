@@ -1,8 +1,48 @@
+# Setup firebase
+
+### install firebase cli
+This app depends on firebase cloud Firestore.
+https://firebase.google.com/docs/web/setup
+
+```
+$ yarn global add firebase-tools
+$ firebase login
+$ firebase init
+  ... services => firestore, hosting, functions
+  ... public directory => dist
+```
+
+Please add `credentials/firebase.ts`.  
+You can get your firebase credential data from the following page.
+https://console.firebase.google.com/project/{your-project-name}/settings/general/
+
+This app loads the object with export default.
+
+```bash
+$ mkdir credentials
+$ cd credentials
+$ emacs firebasekey.ts
+
+example:
+
+# export default {
+#  apiKey: *** ,
+#  authDomain: ***,
+#  databaseURL: ***,
+#  projectId: ***,
+#  storageBucket: ***,
+#  messagingSenderId: ***,
+#  appId: ***,
+#  measurementId: ***
+# }
+
+```
+
 ## setting firebase cloudstore rules
 Here is the recomended rule. copy and paste it in your `firestore.rules`.  `firebase deploy` command applies the file to your firebase database rules.
 
 
-## firestore.rules
+### firestore.rules
 ```
 rules_version = '2';
 service cloud.firestore {
@@ -18,7 +58,7 @@ service cloud.firestore {
 }
 ```
 
-## setting firebase functions 
+### setting firebase functions 
 This application use Firebase Functions.
 
 1. write `index.ts` as follows.
@@ -63,4 +103,11 @@ exports.sendMail = functions.https.onCall((data, _context): void => {
 })
 
 
+```
+
+### Deploy
+
+```bash
+$ yarn generate
+$ firebase deploy
 ```
