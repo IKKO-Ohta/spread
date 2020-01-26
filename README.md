@@ -1,7 +1,8 @@
 # spread
 
-> helps to gamerecords
+![banner](static/banner.png)
 
+`spread` improves your TCG/DCG team's performance.
 ## Build Setup
 
 ```bash
