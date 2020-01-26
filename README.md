@@ -3,8 +3,30 @@
 ![banner](static/banner.png)
 
 `spread` improves your TCG/DCG team's performance.
+
+## screen shot
+<details>
+<summary> open (Japanese version) </summary>
+
+### screen shot
+![sheet-page](https://user-images.githubusercontent.com/27924055/73136728-20ed9500-4094-11ea-9e28-ad1a8c561bf8.png)
+
+
+![perfomance-matrix-page](https://user-images.githubusercontent.com/27924055/73136727-20ed9500-4094-11ea-918c-44d4e8a0bbb0.png)
+
+### gif
+![spread-demo-jp](https://user-images.githubusercontent.com/27924055/73136932-72971f00-4096-11ea-8967-4cfe8f17a994.gif)
+
+</details>
+
+English vesion is under development!
+
 ## Build Setup
 
+### Firebase Setup
+*See* [README_about_firestore_setting.md](./README_about_firestore_settings.md)
+
+### Nuxt commands
 ```bash
 # install dependencies
 $ yarn install
@@ -12,62 +34,14 @@ $ yarn install
 # serve with hot reload at localhost:3000
 $ yarn dev
 
-# build for production and launch server
-$ yarn build
-$ yarn start
-
 # generate static project
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 ## Dependency
 
 Node.js 12.13.1
 
-## Setup firebase
-
-This app depends on firebase cloud Firestore.
-https://firebase.google.com/docs/web/setup
-
-```
-$ yarn global add firebase-tools
-$ firebase login
-$ firebase init
-  ... services => firestore, hosting, functions
-  ... public directory => dist
-```
-
-Please add `credentials/firebase.ts`.
-you can get your firebase credential data from the following page.
-https://console.firebase.google.com/project/{your-project-name}/settings/general/
-
-This app loads the object with export default.
-
-```bash
-$ mkdir credentials
-$ cd credentials
-$ emacs firebasekey.ts
-
-example:
-
-# export default {
-#  apiKey: *** ,
-#  authDomain: ***,
-#  databaseURL: ***,
-#  projectId: ***,
-#  storageBucket: ***,
-#  messagingSenderId: ***,
-#  appId: ***,
-#  measurementId: ***
-# }
-
-```
-
-## Deploy
-
-```bash
-$ yarn generate
-$ firebase deploy
-```
+## License
+MIT
