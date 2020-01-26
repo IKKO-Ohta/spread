@@ -18,7 +18,13 @@ const nuxtConfig: Configuration = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', sizes: '16x16', type: 'image/png', href: '/favicon-16.png' },
+      { rel: 'icon', sizes: '32x32', type: 'image/png', href: '/favicon-32.png' },
+      { rel: 'icon', sizes: '48x48', type: 'image/png', href: '/favicon-48.png' },
+      { rel: 'icon', sizes: '62x62', type: 'image/png', href: '/favicon-62.png' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }
+    ]
   },
   /*
    ** Customize the progress-bar color
