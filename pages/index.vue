@@ -2,7 +2,7 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
       <v-card>
-        <v-img class="white--text align-end" height="400px" src="banner_transparent.png">
+        <v-img class="white--text align-end" height="400px" src="banner.png">
           <v-card-title class="headline">
             spread
           </v-card-title>
