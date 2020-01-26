@@ -1,8 +1,10 @@
 import { TestHelper } from '@/lib/test-helper'
+import { PerfomanceColor } from '@/models/const/color'
+
 describe('Test-Helper', () => {
   describe('#execTest', () => {
     test('should return red', () => {
-      expect(TestHelper.execTest(6, 20)).toBe('red darken-4')
+      expect(TestHelper.execTest(6, 20)).toBe(PerfomanceColor.MINUS_HIGH_COLOR)
     })
   })
 
@@ -19,39 +21,44 @@ describe('Test-Helper', () => {
   })
 
   describe('#_getResult', () => {
-    test('should return green darken-4 ', () => {
+    test('should return PerfomanceColor.HIGH_COLOR ', () => {
       const res = TestHelper._getZ(22, 33, 0.5)
-      expect(TestHelper._getResult(res)).toBe('green darken-4')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.HIGH_COLOR)
     })
 
-    test('should return green ', () => {
+    test('should return PerfomanceColor.MID_COLOR ', () => {
       const res = TestHelper._getZ(29, 49, 0.5)
-      expect(TestHelper._getResult(res)).toBe('green')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.MID_COLOR)
     })
 
-    test('should return green lighten-3 ', () => {
+    test('should return green PerfomanceColor.LOW_COLOR', () => {
       const res = TestHelper._getZ(11, 17, 0.5)
-      expect(TestHelper._getResult(res)).toBe('green lighten-3')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.LOW_COLOR)
     })
 
-    test('should return empty ', () => {
+    test('should return PerfomanceColor.NOT_REJECT_COLOR', () => {
       const res = TestHelper._getZ(14, 25, 0.5)
-      expect(TestHelper._getResult(res)).toBe('')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.NOT_REJECT_COLOR)
     })
 
-    test('should return red lighten-3 ', () => {
+    test('should return PerfomanceColor.NOT_REJECT_COLOR', () => {
+      const res = TestHelper._getZ(0, 0, 0.5)
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.NOT_REJECT_COLOR)
+    })
+
+    test('should return red PerfomanceColor.MINUS_LOW_COLOR', () => {
       const res = TestHelper._getZ(6, 17, 0.5)
-      expect(TestHelper._getResult(res)).toBe('red lighten-3')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.MINUS_LOW_COLOR)
     })
 
-    test('should return red ', () => {
+    test('should return perfomanceColor.MINUS_MID_COLOR', () => {
       const res = TestHelper._getZ(1, 6, 0.5)
-      expect(TestHelper._getResult(res)).toBe('red')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.MINUS_MID_COLOR)
     })
 
-    test('should return red darken-4 ', () => {
+    test('should return PerfomanceColor.MINUS_HIGH_COLOR', () => {
       const res = TestHelper._getZ(2, 9, 0.5)
-      expect(TestHelper._getResult(res)).toBe('red darken-4')
+      expect(TestHelper._getResult(res)).toBe(PerfomanceColor.MINUS_HIGH_COLOR)
     })
   })
 })
