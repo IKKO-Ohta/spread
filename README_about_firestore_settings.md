@@ -1,6 +1,6 @@
 # Setup firebase
 
-### install firebase cli
+## install firebase cli
 This app depends on firebase cloud Firestore.
 https://firebase.google.com/docs/web/setup
 
