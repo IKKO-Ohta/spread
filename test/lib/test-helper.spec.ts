@@ -2,7 +2,7 @@ import { TestHelper } from '@/lib/test-helper'
 describe('Test-Helper', () => {
   describe('#execTest', () => {
     test('should return red', () => {
-      expect(TestHelper.execTest(6, 20)).toBe('deep red')
+      expect(TestHelper.execTest(6, 20)).toBe('red darken-4')
     })
   })
 
@@ -19,9 +19,9 @@ describe('Test-Helper', () => {
   })
 
   describe('#_getResult', () => {
-    test('should return deep green ', () => {
+    test('should return green darken-4 ', () => {
       const res = TestHelper._getZ(22, 33, 0.5)
-      expect(TestHelper._getResult(res)).toBe('deep green')
+      expect(TestHelper._getResult(res)).toBe('green darken-4')
     })
 
     test('should return green ', () => {
@@ -29,9 +29,9 @@ describe('Test-Helper', () => {
       expect(TestHelper._getResult(res)).toBe('green')
     })
 
-    test('should return light green ', () => {
+    test('should return green lighten-3 ', () => {
       const res = TestHelper._getZ(11, 17, 0.5)
-      expect(TestHelper._getResult(res)).toBe('light green')
+      expect(TestHelper._getResult(res)).toBe('green lighten-3')
     })
 
     test('should return empty ', () => {
@@ -39,9 +39,9 @@ describe('Test-Helper', () => {
       expect(TestHelper._getResult(res)).toBe('')
     })
 
-    test('should return light red ', () => {
+    test('should return red lighten-3 ', () => {
       const res = TestHelper._getZ(6, 17, 0.5)
-      expect(TestHelper._getResult(res)).toBe('light red')
+      expect(TestHelper._getResult(res)).toBe('red lighten-3')
     })
 
     test('should return red ', () => {
@@ -49,9 +49,9 @@ describe('Test-Helper', () => {
       expect(TestHelper._getResult(res)).toBe('red')
     })
 
-    test('should return deep red ', () => {
+    test('should return red darken-4 ', () => {
       const res = TestHelper._getZ(2, 9, 0.5)
-      expect(TestHelper._getResult(res)).toBe('deep red')
+      expect(TestHelper._getResult(res)).toBe('red darken-4')
     })
   })
 })

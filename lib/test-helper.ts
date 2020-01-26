@@ -10,19 +10,19 @@ export class TestHelper {
 
   static _getResult(z: number): string {
     if (z > this.HIGH) {
-      return 'deep green'
+      return 'green darken-4'
     } else if (z > this.MED) {
       return 'green'
     } else if (z > this.LOW) {
-      return 'light green'
+      return 'green lighten-3'
     } else if (-this.LOW < z && z < this.LOW) {
       return ''
     } else if (-this.MED < z && z < -this.LOW) {
-      return 'light red'
+      return 'red lighten-3'
     } else if (-this.HIGH < z && z < -this.MED) {
       return 'red'
     } else {
-      return 'deep red'
+      return 'red darken-4'
     }
   }
 
