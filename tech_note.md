@@ -332,16 +332,20 @@ Firestoreはネイティブ モードを想定しています。DataStoreモー�
 firebase functions:config:set gmail.email="you@gmail.com" gmail.password="your-password"
 ```
 
+いよいよデプロイです。
 ```
 $ yarn generate
 $ firebase deploy
 ```
 
-正常に終了したらデプロイ終了です。ホスティング先のURLが表示されます。今後はdevelopment環境で実行することもでき、
+正常に終了したらデプロイ終了です。ホスティング先のURLが表示されます。
+
+
+今後はdevelopment環境で実行することもできます。
 ```
 $ yarn dev
 ```
-が利用可能になります。
 
-お疲れ様でした。
+お疲れ様でした！  
+コミットしてくれる方が増えると嬉しく思います。よろしくお願いします。
 
