@@ -1,7 +1,6 @@
 {
   "name": "functions",
   "scripts": {
-    "lint": "tslint --project tsconfig.json",
     "build": "tsc",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
@@ -19,9 +18,8 @@
     "nodemailer": "^6.4.2"
   },
   "devDependencies": {
-    "firebase-functions-test": "^0.1.6",
-    "tslint": "^5.12.0",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "firebase-functions-test": "^0.1.6"
   },
   "private": true
 }

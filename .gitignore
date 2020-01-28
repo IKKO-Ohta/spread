@@ -90,6 +90,9 @@ sw.*
 # Vim swap files
 *.swp
 
+# vscode
+*.code-workspace
+
 # firebase
 .firebase
 .firebaserc

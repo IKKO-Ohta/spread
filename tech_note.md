@@ -242,32 +242,95 @@ $ yarn test
 
 ### 3. Firebaseに登録
 
-今度はブラウザを開き、あなたのGmailアカウントにFirebaseを追加します。
-[Googleの公式サイト](https://firebase.google.com/)にアクセスし、「コンソールに移動」をクリック。「プロジェクトを作成」で新しくFirebaseプロジェクトを作成します。名前はなんでも良いですが、ここでは仮に`my-spread`としましょう。
 
+#### ブラウザ側操作 
+今度はブラウザを開き、あなたのGmailアカウントにFirebaseを追加します。
+
+ 1. [Googleの公式サイト](https://firebase.google.com/)にアクセスし、「コンソールに移動」をクリック。「プロジェクトを作成」で新しくFirebaseプロジェクトを作成します。名前はなんでも良いですが、ここでは仮に`my-spread`としましょう。利用規約に同意したらプロジェクトが作成されます。下はコンソールトップ画面です。
+![Firebaseの初期画面](https://user-images.githubusercontent.com/27924055/73252152-9d4fb780-41fd-11ea-8b5e-8741a60b61e6.png)
+
+ 2. GCP リソースロケーションを設定します。左ペインの歯車マークからセッティング画面に移動し、上のカードから自分の好きなリージョンを設定しましょう。
+[img]
+
+ 3. アプリを追加します。コンソールトップ画面に戻り、中央から「ウェブ」を選びます。
+アプリのニックネームも何でも良いです。`my-spread`と仮にしておきます。hostingはのちに設定しますが今は通り過ぎることとします。
+
+「アプリを追加」をクリックすると、このアプリを利用するためのクレデンシャル情報が表示されます。  
+少しエディタに戻り、`credentials`ディレクトリを作成します。  
+`credentials/firebasekey.ts`というファイル名で、次のように書きます。  
+
+```typescript
+export default {
+  apiKey: *** ,
+  authDomain: ***,
+  databaseURL: ***,
+  projectId: ***,
+  storageBucket: ***,
+  messagingSenderId: ***,
+  appId: ***,
+ measurementId: ***
+}
+```
+
+もちろん`export default {...}`の中身の部分はさきほどブラウザに表示されたクレデンシャル情報です。
+`var firebaseConfig`に代入されているオブジェクトを`export default`するようにします。
+全部終わったら「コンソール画面に進む」を押して一旦ブラウザ操作は終了です。
+
+#### コンソール側操作
 再びコンソールに戻り、Fibase CLIをダウンロードします。
 ```
-$ yarn add global firebase-tools
+$ yarn global add firebase-tools
 ```
 
-Firebaseをspreadに設定します。個人情報の収集ほか、Firebaseの設定についていくつかの質問がおこなわれます。重要なのはproject, services, public directoryの３つで、以下のように回答してください。
+Firebaseをspreadに設定します。個人情報の収集ほか、Firebaseの設定についていくつかの質問がおこなわれます。　
+重要なのはproject, services, public directoryの３つで、以下のように回答してください。
 
 ```
 $ firebase login
 $ firebase init
-  ... project => `my-spread` // プロジェクト名
-  ... services => firestore, hosting, functions
-  ... public directory => dist
+  
+  ... services
+  => firestore, hosting, functions 
+  
+  ... Project Setup
+  => Use an existing project => `my-spread` // プロジェクト名
+  
+  ... Firestore Setup 
+  => // Enterでデフォルト名 `firestore.rulesを用いる
+  =>　firestore.rules を上書きしない
+  
+  ... Functions Setup
+  => TypeScript
+  => TSLintを使用しない // このリポジトリはESlintによって管理されているため
+  => いろいろなファイルの上書きについて質問されるが、全部上書きしない
+  => Y // 依存関係のインストール
+
+  ... Hosting Setup
+  => dist // public directoryはデフォルトにせず、nuxtのgenerate先に合わせる
+  => Yes // シングルページアプリケーションとして設定するか？
 ```
 
-### 4. 初期設定ファイルの変更
+```
+Firebase initialization complete!
+```
+と表示されたら完了です。お疲れ様でした。
 
+- `Error: Error fetching Firestore indexes`
+Firestoreはネイティブ モードを想定しています。DataStoreモードに設定されている場合は、GCP経由でネイティブモードに切り替える必要があります。FirestoreのページからGCPにアクセスして変更しましょう。
+
+- 上書きを間違えた場合
+リポジトリの`README_about_firestore_setting.md`にコードが乗っていますので、参考にしてください。
+　
+### 4. 初期設定ファイルの変更
+ 
 **セキュリティルールの設定** およびfunctionsの設定を行います。
-`README_about_firestore_settings.md`を見ながら、生成されたファイル`firestore.rules`および`functions/src/index.ts`を設定します。こちらには上記のセキュリティルールとメール送信のためのコードが記載されています。
+`README_about_firestore_settings.md`を見ながら、生成されたファイル`firestore.rules`および`functions/src/index.ts`を確認します。
 
 - `firestore.rules`の設定はセキュリティ上重要です。必ず確認してください。
-- `functions/src/index.ts` に、メール送信用のGmailアカウントの内容を書き込んでください。このアカウントにはセキュリティアラートが表示されるので、新しくアカウントを作り直すことをお勧めします。また、お好みでデプロイ時に環境設定から読み出すようにしてもよいでしょう。
-
+- `functions/src/index.ts` は招待メールを送信するための処理です。招待メールの送信元アカウントを設定します。次のようなコマンドで設定できます。
+```
+firebase functions:config:set gmail.email="you@gmail.com" gmail.password="your-password"
+```
 
 ```
 $ yarn generate
