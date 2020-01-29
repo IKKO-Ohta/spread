@@ -33,11 +33,27 @@ This app depends on firebase cloud Firestore.
 https://firebase.google.com/docs/web/setup
 
 ```
-$ yarn global add firebase-tools
 $ firebase login
 $ firebase init
-  ... services => firestore, hosting, functions
-  ... public directory => dist
+  
+  ... services
+  => firestore, hosting, functions 
+  
+  ... Project Setup
+  => Use an existing project => `your project name` 
+  
+  ... Firestore Setup 
+  => use default rule filename `firestore.rules`
+  => do not overwrite firestore.rules
+  
+  ... Functions Setup
+  => TypeScript
+  => do not use TSLint // eslint is already installed
+  => do not overwrite any files
+
+  ... Hosting Setup
+  => pulic directory: dist 
+  => setting as SPA
 ```
 
 
