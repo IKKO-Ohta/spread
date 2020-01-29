@@ -1,5 +1,5 @@
 import { AnalyticsHelper } from '@/lib/analytics-helper'
-import { exampleGames, examplePerfomanceMatrix, AppliedOnce, miniAppliedOnce, miniVDataset, exampleVDataset } from '@/test/example-games.ts'
+import { exampleGames, examplePerfomanceMatrix, AppliedOnce, miniAppliedOnce, miniVDataset, exampleVDataset } from '@/models/const/example-games'
 
 describe('AnalyticsHelper', () => {
   describe('#createMatrix', () => {
