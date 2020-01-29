@@ -3,7 +3,6 @@
 // thank you.
 
 import * as functions from 'firebase-functions'
-// tslint:disable-next-line: no-implicit-dependencies
 const nodemailer = require('nodemailer')
 const gmailEmail = functions.config().gmail.email
 const gmailPassword = functions.config().gmail.password
