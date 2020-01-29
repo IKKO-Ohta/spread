@@ -1,18 +1,8 @@
 # Setup firebase
 
-## install firebase cli
-This app depends on firebase cloud Firestore.
-https://firebase.google.com/docs/web/setup
+## credentials
 
-```
-$ yarn global add firebase-tools
-$ firebase login
-$ firebase init
-  ... services => firestore, hosting, functions
-  ... public directory => dist
-```
-
-Please add `credentials/firebase.ts`.  
+Please add `credentials/firebasekey.ts`.  
 You can get your firebase credential data from the following page.
 https://console.firebase.google.com/project/{your-project-name}/settings/general/
 
@@ -37,6 +27,20 @@ example:
 # }
 
 ```
+
+## install firebase cli
+This app depends on firebase cloud Firestore.
+https://firebase.google.com/docs/web/setup
+
+```
+$ yarn global add firebase-tools
+$ firebase login
+$ firebase init
+  ... services => firestore, hosting, functions
+  ... public directory => dist
+```
+
+
 
 ## setting firebase cloudstore rules
 Here is the recomended rule. copy and paste it in your `firestore.rules`.  `firebase deploy` command applies the file to your firebase database rules.
