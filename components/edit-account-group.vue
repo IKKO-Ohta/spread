@@ -18,7 +18,7 @@
           </v-list>
         </v-card-text>
         <v-card-text>
-          <v-text-field v-model="mailAdressToInvite" label="招待メールの送り先" required> </v-text-field>
+          <v-text-field v-model="mailAdressToInvite" label="招待を送るGmailアカウント" required> </v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -61,6 +61,10 @@ export default class SettingAccountGroup extends Vue {
   }
 
   submit(): void {
+    if (!this.canSubmit) {
+      return
+    }
+
     this.dialog = false
     this.invite(this.mailAdressToInvite)
     this.mailAdressToInvite = ''
@@ -71,7 +75,7 @@ export default class SettingAccountGroup extends Vue {
   }
 
   get canSubmit(): boolean {
-    return this.mailAdressToInvite !== ''
+    return this.mailAdressToInvite.includes('@gmail.com')
   }
 }
 </script>

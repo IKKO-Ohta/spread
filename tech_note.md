@@ -338,9 +338,10 @@ Firestoreはネイティブ モードを想定しています。DataStoreモー�
 `README_about_firestore_settings.md`を見ながら、生成されたファイル`firestore.rules`および`functions/src/index.ts`を確認します。
 
 - `firestore.rules`の設定はセキュリティ上重要です。必ず確認してください。
-- `functions/src/index.ts` は招待メールを送信するための処理です。招待メールの送信元アカウントを設定します。次のようなコマンドで設定できます。
+- `functions/src/index.ts` は招待メールを送信するための処理です。招待メールの送信元アカウントを設定します。次のようなコマンドで設定できます。しかし、これはあなたのspreadからアカウントにログインするので、「重大なセキュリティ通知」メールをGoogleから受け取るでしょう。メールにしたがいアクセスを許可する設定をしてください。この設定はアカウントの信頼性を損なうため、このためだけの新しいアカウントを作り直すことを強くお勧めします。
+
 ```
-firebase functions:config:set gmail.email="you@gmail.com" gmail.password="your-password"
+firebase functions:config:set gmail.email="your-2nd@gmail.com" gmail.password="your-password"
 ```
 
 いよいよデプロイです。
