@@ -22,7 +22,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { GameInfo } from '@/models/@types/game'
 import { Header, VTableRow } from '@/models/@types/matrix'
-import { AnalyticsHelper } from '@/lib/analytics-helper'
+import { PerformanceMatrixHelper } from '@/lib/performance-matrix-helper'
 import { TestHelper } from '@/lib/test-helper'
 
 @Component({})
@@ -31,13 +31,13 @@ export default class PerformanceMatrix extends Vue {
   isHiddenDraw = true
 
   get items(): VTableRow[] {
-    const matrix = AnalyticsHelper.extractData(this.games)
-    const decklist = AnalyticsHelper.getAllDecks(this.games)
-    return AnalyticsHelper.transformMatrixIntoVDataset(matrix, decklist)
+    const matrix = PerformanceMatrixHelper.extractData(this.games)
+    const decklist = PerformanceMatrixHelper.getAllDecks(this.games)
+    return PerformanceMatrixHelper.transformMatrixIntoVDataset(matrix, decklist)
   }
 
   get headers(): Header[] {
-    return AnalyticsHelper.extractHeader(this.games)
+    return PerformanceMatrixHelper.extractHeader(this.games)
   }
 
   getPerformanceColor(item: string): string {
