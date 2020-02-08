@@ -88,10 +88,10 @@ export const appliedOnce: VTableRow[] = [
     name: 'B',
     winByMain: '0-1',
     winByMainBlack: '0-0',
-    winByMainWhite: '0-0',
+    winByMainWhite: '0-1',
     winBySided: '0-1',
-    winBySidedBlack: '0-0',
-    winBySidedWhite: '0-1',
+    winBySidedBlack: '0-1',
+    winBySidedWhite: '0-0',
     mirror: '0',
     total: '0-1'
   }

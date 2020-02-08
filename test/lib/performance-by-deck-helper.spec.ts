@@ -4,7 +4,7 @@ describe('PerformanceByDeck', () => {
   describe('#applyGame', () => {
     test('should return v-data-table-items', () => {
       const received = PerformanceByDeckHelpr.applyGame(initialState, miniBo3Game[0])
-      expect(received).toBe(appliedOnce)
+      expect(received).toEqual(appliedOnce)
     })
   })
 })
