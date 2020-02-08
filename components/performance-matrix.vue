@@ -13,6 +13,7 @@
             </tr>
           </template>
           <template v-else v-slot:body="props">
+            <thread></thread>
             <tbody>
               <tr v-for="(item, i) in props.items" :key="i" class="v-data-table__mobile-table-row">
                 <td v-for="(header, j) in headers" :key="j" class="v-data-table__mobile-row">

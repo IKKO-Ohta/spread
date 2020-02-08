@@ -110,13 +110,13 @@ export class PerformanceMatrixHelper {
       text: 'デッキ',
       align: 'left',
       value: 'name',
-      sortable: false
+      sortable: true
     }
     const headerTail: Header = {
       text: '合計',
       align: 'left',
       value: 'total',
-      sortable: false
+      sortable: true
     }
 
     // get an extinct deck list
