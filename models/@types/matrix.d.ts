@@ -8,12 +8,15 @@ export type Matrix = MatrixElem[][]
 export interface Header {
   text: string
   value: string
+  class?: string
   align?: string
-  sortable: boolean
+  divider?: boolean
+  sortable?: boolean
 }
 
 export interface VTableRow {
   name: string
+  totalWithoutMirror: string
   total: string
   [key: string]: string
 }

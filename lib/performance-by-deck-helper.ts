@@ -19,7 +19,7 @@ export class PerformanceByDeckHelper {
         winBySided: '0-0',
         winBySidedBlack: '0-0',
         winBySidedWhite: '0-0',
-        mirror: '0',
+        totalWithoutMirror: '0-0',
         total: '0-0'
       }
     })
@@ -42,7 +42,8 @@ export class PerformanceByDeckHelper {
     if (game.myDeck === game.oppDeck) {
       resultState = resultState.map((row) => {
         if (row.name === game.myDeck) {
-          return { ...row, mirror: (parseInt(row.mirror) + 1).toString() }
+          const [totalWin, totalLose] = row.total.split('-').map((elem) => parseInt(elem))
+          return { ...row, total: `${totalWin + 1}-${totalLose + 1}` }
         } else {
           return row
         }
@@ -55,9 +56,9 @@ export class PerformanceByDeckHelper {
     const loseSide = game.win === Result.win ? game.oppDeck : game.myDeck
     resultState = resultState.map((row) => {
       if (row.name === winSide) {
-        return { ...row, total: this.applyWinOrLose(row.total, Result.win) }
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.win), total: this.applyWinOrLose(row.total, Result.win) }
       } else if (row.name === loseSide) {
-        return { ...row, total: this.applyWinOrLose(row.total, Result.lose) }
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.lose), total: this.applyWinOrLose(row.total, Result.lose) }
       } else {
         return row
       }

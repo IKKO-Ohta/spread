@@ -56,7 +56,7 @@ export const initialState: VTableRow[] = [
     winBySided: '0-0',
     winBySidedBlack: '0-0',
     winBySidedWhite: '0-0',
-    mirror: '0',
+    totalWithoutMirror: '0-0',
     total: '0-0'
   },
   {
@@ -67,7 +67,7 @@ export const initialState: VTableRow[] = [
     winBySided: '0-0',
     winBySidedBlack: '0-0',
     winBySidedWhite: '0-0',
-    mirror: '0',
+    totalWithoutMirror: '0-0',
     total: '0-0'
   }
 ]
@@ -81,7 +81,7 @@ export const appliedOnce: VTableRow[] = [
     winBySided: '1-0',
     winBySidedBlack: '0-0',
     winBySidedWhite: '1-0',
-    mirror: '0',
+    totalWithoutMirror: '1-0',
     total: '1-0'
   },
   {
@@ -92,7 +92,7 @@ export const appliedOnce: VTableRow[] = [
     winBySided: '0-1',
     winBySidedBlack: '0-1',
     winBySidedWhite: '0-0',
-    mirror: '0',
+    totalWithoutMirror: '0-1',
     total: '0-1'
   }
 ]
