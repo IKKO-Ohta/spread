@@ -8,9 +8,47 @@ interface Round {
   bw: Bw
 }
 
-export class PerformanceByDeckHelpr {
+export class PerformanceByDeckHelper {
+  static calcPerformanceByDeck(games: GameInfo[]): VTableRow[] {
+    const initialState: VTableRow[] = this.getAllDecks(games).map((deck) => {
+      return {
+        name: deck,
+        winByMain: '0-0',
+        winByMainBlack: '0-0',
+        winByMainWhite: '0-0',
+        winBySided: '0-0',
+        winBySidedBlack: '0-0',
+        winBySidedWhite: '0-0',
+        mirror: '0',
+        total: '0-0'
+      }
+    })
+
+    return this.applyGames(initialState, games)
+  }
+
+  static applyGames(state: VTableRow[], games: GameInfo[]): VTableRow[] {
+    let resultState = [...state]
+    for (const game of games) {
+      resultState = this.applyGame(resultState, game)
+    }
+    return resultState
+  }
+
   static applyGame(state: VTableRow[], game: GameInfo): VTableRow[] {
     let resultState = [...state]
+
+    // mirror
+    if (game.myDeck === game.oppDeck) {
+      resultState = resultState.map((row) => {
+        if (row.name === game.myDeck) {
+          return { ...row, mirror: (parseInt(row.mirror) + 1).toString() }
+        } else {
+          return row
+        }
+      })
+      return resultState
+    }
 
     // total
     const winSide = game.win === Result.win ? game.myDeck : game.oppDeck
@@ -80,5 +118,18 @@ export class PerformanceByDeckHelpr {
     } else {
       return `${win.toString()}-${(lose + 1).toString()}`
     }
+  }
+
+  static getAllDecks(games: GameInfo[]): string[] {
+    const allDecks: string[] = []
+    games.forEach((game) => {
+      allDecks.push(game.myDeck!)
+      allDecks.push(game.oppDeck!)
+    })
+    return allDecks.filter(this.distinct).sort()
+  }
+
+  private static distinct<T>(value: T, index: number, self: T[]): boolean {
+    return self.indexOf(value) === index
   }
 }
