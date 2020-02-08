@@ -3,7 +3,7 @@ import { GameInfo } from '@/models/@types/game'
 import { Result } from '~/models/const/enums'
 import { Matrix, Header, VTableRow, MatrixElem } from '@/models/@types/matrix'
 
-export class AnalyticsHelper {
+export class PerformanceMatrixHelper {
   static createMatrix(length: number): Matrix {
     return Array(length).fill(
       Array(length).fill({

@@ -1,9 +1,9 @@
-import { AnalyticsHelper } from '@/lib/analytics-helper'
+import { PerformanceMatrixHelper } from '~/lib/performance-matrix-helper'
 import { exampleGames, examplePerfomanceMatrix, AppliedOnce, miniAppliedOnce, miniVDataset, exampleVDataset } from '@/models/const/example-games'
 
-describe('AnalyticsHelper', () => {
+describe('PerformanceMatrixHelper', () => {
   describe('#createMatrix', () => {
-    const createMatrix = AnalyticsHelper.createMatrix
+    const createMatrix = PerformanceMatrixHelper.createMatrix
     test('should return an empty performanceMatrix', () => {
       const receivedMatrix = createMatrix(3)
       expect(receivedMatrix.length).toBe(3)
@@ -16,8 +16,8 @@ describe('AnalyticsHelper', () => {
   })
 
   describe('#applyWin', () => {
-    const applyWin = AnalyticsHelper.applyWin
-    const createMatrix = AnalyticsHelper.createMatrix
+    const applyWin = PerformanceMatrixHelper.applyWin
+    const createMatrix = PerformanceMatrixHelper.createMatrix
     describe('should count win correctly', () => {
       test('emptyMatrix 2x2', () => {
         const matrix = createMatrix(2)
@@ -45,8 +45,8 @@ describe('AnalyticsHelper', () => {
   })
 
   describe('#lose', () => {
-    const applyLose = AnalyticsHelper.applyLose
-    const createMatrix = AnalyticsHelper.createMatrix
+    const applyLose = PerformanceMatrixHelper.applyLose
+    const createMatrix = PerformanceMatrixHelper.createMatrix
     describe('should count lose correctly', () => {
       test('emptyMatrix 2x2', () => {
         const matrix = createMatrix(2)
@@ -74,12 +74,12 @@ describe('AnalyticsHelper', () => {
   })
 
   describe('#applyGame', () => {
-    const createMatrix = AnalyticsHelper.createMatrix
-    const decklist = AnalyticsHelper.getAllDecks(exampleGames)
+    const createMatrix = PerformanceMatrixHelper.createMatrix
+    const decklist = PerformanceMatrixHelper.getAllDecks(exampleGames)
     test('should apply a game record correctly', () => {
       const matrix = createMatrix(3)
       const firstGame = exampleGames[0]
-      expect(AnalyticsHelper.applyGame(matrix, firstGame, decklist)).toEqual(AppliedOnce)
+      expect(PerformanceMatrixHelper.applyGame(matrix, firstGame, decklist)).toEqual(AppliedOnce)
     })
   })
 
@@ -87,16 +87,16 @@ describe('AnalyticsHelper', () => {
     const games = exampleGames
     test('should return a complete perfomanceMatrix', () => {
       const expectedMatrix = examplePerfomanceMatrix
-      const receivedMatrix = AnalyticsHelper.extractData(games)
+      const receivedMatrix = PerformanceMatrixHelper.extractData(games)
       expect(receivedMatrix).toEqual(expectedMatrix)
     })
   })
 
   describe('#transformMatrixIntoVdataset', () => {
     test('should return dataset with v-table data format', () => {
-      const receivedMiniDataset = AnalyticsHelper.transformMatrixIntoVDataset(miniAppliedOnce, ['A', 'B'])
+      const receivedMiniDataset = PerformanceMatrixHelper.transformMatrixIntoVDataset(miniAppliedOnce, ['A', 'B'])
       expect(receivedMiniDataset).toEqual(miniVDataset)
-      const receivedMatrix = AnalyticsHelper.transformMatrixIntoVDataset(examplePerfomanceMatrix, ['A', 'B', 'C'])
+      const receivedMatrix = PerformanceMatrixHelper.transformMatrixIntoVDataset(examplePerfomanceMatrix, ['A', 'B', 'C'])
       expect(receivedMatrix).toEqual(exampleVDataset)
     })
   })
