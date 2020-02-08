@@ -4,13 +4,29 @@
       <v-card-title>デッキ パフォーマンス</v-card-title>
       <v-card-text>
         <v-data-table :headers="headers" :items="items">
-          <template v-slot:body="props">
+          <template v-if="isPC" v-slot:body="props">
             <tr v-for="(item, i) in props.items" :key="i">
               <td v-for="(header, j) in headers" :key="j">
                 <v-chip v-if="header.value !== 'name'" outlined :ripple="false" :color="getPerformanceColor(item[header.value])">{{ item[header.value] }}</v-chip>
                 <nav v-else>{{ item[header.value] }}</nav>
               </td>
             </tr>
+          </template>
+          <template v-else v-slot:body="props">
+            <thread></thread>
+            <tbody>
+              <tr v-for="(item, i) in props.items" :key="i" class="v-data-table__mobile-table-row">
+                <td v-for="(header, j) in headers" :key="j" class="v-data-table__mobile-row">
+                  <div class="v-data-table__mobile-row__header">
+                    {{ header.value === 'name' ? header.text : `vs. ${header.text}` }}
+                  </div>
+                  <div class="v-data-table__mobile-row__cell">
+                    <v-chip v-if="header.value !== 'name'" outlined :ripple="false" :color="getPerformanceColor(item[header.value])">{{ item[header.value] }}</v-chip>
+                    <nav v-else>{{ item[header.value] }}</nav>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           </template>
         </v-data-table>
       </v-card-text>
@@ -22,6 +38,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { GameInfo } from '@/models/@types/game'
 import { Header, VTableRow } from '@/models/@types/matrix'
+import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { PerformanceMatrixHelper } from '@/lib/performance-matrix-helper'
 import { TestHelper } from '@/lib/test-helper'
 
@@ -38,6 +55,10 @@ export default class PerformanceMatrix extends Vue {
 
   get headers(): Header[] {
     return PerformanceMatrixHelper.extractHeader(this.games)
+  }
+
+  get isPC(): boolean {
+    return window.innerWidth > MAX_SP_WIDTH
   }
 
   getPerformanceColor(item: string): string {

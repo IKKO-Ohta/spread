@@ -44,7 +44,7 @@ export const PerformanceByDeckHeader: Header[] = [
     value: 'total'
   },
   {
-    text: 'ミラー回数',
+    text: '除外されたミラー戦',
     value: 'mirror',
     sortable: false
   }
