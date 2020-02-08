@@ -63,6 +63,7 @@ export const exampleVDataset: VTableRow[] = [
     A: '1-1',
     B: '1-0',
     C: '2-0',
+    totalWithoutMirror: '3-0',
     total: '4-1'
   },
   {
@@ -70,6 +71,7 @@ export const exampleVDataset: VTableRow[] = [
     A: '0-1',
     B: '0-0',
     C: '1-0',
+    totalWithoutMirror: '1-1',
     total: '1-1'
   },
   {
@@ -77,6 +79,7 @@ export const exampleVDataset: VTableRow[] = [
     A: '0-2',
     B: '0-1',
     C: '0-0',
+    totalWithoutMirror: '0-3',
     total: '0-3'
   }
 ]
@@ -94,12 +97,14 @@ export const miniVDataset: VTableRow[] = [
     name: 'A',
     A: '0-0',
     B: '1-0',
+    totalWithoutMirror: '1-0',
     total: '1-0'
   },
   {
     name: 'B',
     A: '0-1',
     B: '0-0',
+    totalWithoutMirror: '0-1',
     total: '0-1'
   }
 ]

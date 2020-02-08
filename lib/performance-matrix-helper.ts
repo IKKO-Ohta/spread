@@ -82,7 +82,9 @@ export class PerformanceMatrixHelper {
   }
 
   static transformRowIntoVRow(row: MatrixElem[], decklist: string[], deckIndex: number): VTableRow {
-    const data: VTableRow = { name: decklist[deckIndex], total: this.sumPerformance(row) }
+    const total = this.sumPerformance(row)
+    const mirror = row[deckIndex].win
+    const data: VTableRow = { name: decklist[deckIndex], total, totalWithoutMirror: this.getTotalWithoutMirror(total, mirror) }
     for (let i = 0; i < decklist.length; i++) {
       const accessor = decklist[i]
       data[accessor] = this.convertMatrixElemToString(row[i])
@@ -104,19 +106,30 @@ export class PerformanceMatrixHelper {
     return `${win}-${lose}`
   }
 
+  private static getTotalWithoutMirror(total: string, mirror: number) {
+    const [win, lose] = total.split('-').map((elem) => parseInt(elem))
+    return `${win - mirror}-${lose - mirror}`
+  }
+
   static extractHeader(games: GameInfo[]): Header[] {
     const ans: Header[] = []
     const headerTitle: Header = {
       text: 'デッキ',
       align: 'left',
       value: 'name',
-      sortable: true
+      sortable: false
+    }
+    const headerTotalWithoutMirror: Header = {
+      text: 'ミラーを除く合計',
+      value: 'totalWithoutMirror',
+      sortable: false,
+      align: 'left'
     }
     const headerTail: Header = {
       text: '合計',
       align: 'left',
       value: 'total',
-      sortable: true
+      sortable: false
     }
 
     // get an extinct deck list
@@ -131,6 +144,7 @@ export class PerformanceMatrixHelper {
         sortable: false
       })
     })
+    ans.push(headerTotalWithoutMirror)
     ans.push(headerTail)
 
     return ans

@@ -38,14 +38,14 @@ export const PerformanceByDeckHeader: Header[] = [
     sortable: false
   },
   {
-    text: '合計',
+    text: 'ミラーを除く合計',
     align: 'left',
     sortable: true,
-    value: 'total'
+    value: 'totalWithoutMirror'
   },
   {
-    text: '除外されたミラー戦',
-    value: 'mirror',
+    text: '合計',
+    value: 'total',
     sortable: false
   }
 ]
