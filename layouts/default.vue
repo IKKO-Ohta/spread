@@ -85,7 +85,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
         this.items.push({
           icon: 'mdi-chart-bubble',
           title: sheet.sheetName,
-          to: `/records/${sheet.id}`
+          to: `/sheets/${sheet.id}`
         })
       })
     }
@@ -104,7 +104,7 @@ export default class DefaultLayout extends Mixins<PageMixin>(PageMixin) {
     }
     await this.stores.sheet.SET_SHEET(sheetInfo)
     await this.refreshSheetInfos()
-    this.$router.push(`/records/${id}`)
+    this.$router.push(`/sheets/${id}`)
   }
 }
 </script>

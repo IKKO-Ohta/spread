@@ -39,11 +39,11 @@ export default class SheetToolbar extends Vue {
   }
 
   goToAnalyticsPage(): void {
-    this.$router.push(`/records/${this.$route.params.slug}/analytics`)
+    this.$router.push(`/sheets/${this.$route.params.slug}/analytics`)
   }
 
   goToSheetPage(): void {
-    this.$router.push(`/records/${this.$route.params.slug}/`)
+    this.$router.push(`/sheets/${this.$route.params.slug}/`)
   }
 
   get sheetInfo(): SheetInfo | null {
