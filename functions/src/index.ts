@@ -19,10 +19,10 @@ exports.sendMail = functions.https.onCall((data, _context): void => {
   const email = {
     from: gmailEmail,
     to: data.destination,
-    subject: 'Welcome to spread!',
-    text: `You received an invitation to spread! Let's share game records with your team. Here is the sheet url: ${data.url}`
+    subject: 'spreadにようこそ！',
+    text: `こんにちは! <br/> あなたは対戦管理ツールspreadから招待を受け取っています。<br/> 招待を受け取っているspreadのURLは以下のとおりです。<br/>${data.url}<br/> *本メールに心当たりがない場合は開かないでください。`
   }
-  mailTransport.sendMail(email, (err: any, _info: any): void => {
+  mailTransport.sendMail(email, (err: Error, _info: any): void => {
     if (err) {
       console.log(err)
     } else {
