@@ -2,7 +2,9 @@
 
 ![banner](static/banner.png)
 
-`spread` improves your TCG/DCG team's performance.
+`spread` improves your TCG/DCG team's performance.  
+
+Hosting: https://spread-samayotta.com/
 
 ## screen shot
 <details>
