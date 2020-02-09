@@ -1,4 +1,5 @@
 import { Mixins, Mixin } from 'vue-mixin-decorator'
+import { NuxtConfigurationHead } from '@nuxt/types/config/head'
 import { PerformanceMatrixHelper } from '~/lib/performance-matrix-helper'
 import PageMixin from '@/mixins/page-mixins'
 import { FirestoreHelper } from '@/lib/firestore-helper'
@@ -16,6 +17,12 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
 
   created() {
     this.load()
+  }
+
+  head(): NuxtConfigurationHead {
+    return {
+      title: this.sheet ? `${this.sheet.sheetName} - spread` : 'spread'
+    }
   }
 
   async load() {
