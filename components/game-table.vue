@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :options.sync="option" :items="items" :items-per-page="5" class="elevation-1 table">
+  <v-data-table :headers="headers" :options.sync="option" :items="items" :items-per-page="10" class="elevation-1 table">
     <template v-slot:top>
       <v-dialog v-model="dialog" max-width="500px">
         <v-card>
