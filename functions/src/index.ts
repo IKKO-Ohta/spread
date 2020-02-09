@@ -20,7 +20,7 @@ exports.sendMail = functions.https.onCall((data, _context): void => {
     from: gmailEmail,
     to: data.destination,
     subject: 'spreadにようこそ！',
-    text: `こんにちは! <br/> あなたは対戦管理ツールspreadから招待を受け取っています。<br/> 招待を受け取っているspreadのURLは以下のとおりです。<br/>${data.url}<br/> *本メールに心当たりがない場合は開かないでください。`
+    html: `こんにちは! <br/> あなたは対戦管理ツールspreadから招待を受け取っています。<br/> 招待を受け取っているspreadのURLは以下のとおりです。<br/>${data.url}<br/> *本メールに心当たりがない場合は開かないでください。`
   }
   mailTransport.sendMail(email, (err: Error, _info: any): void => {
     if (err) {
