@@ -76,6 +76,7 @@ export default class SubmitGameForm extends Vue {
         this.submit({
           ...this.game,
           win: this.didYouWin(wins),
+          black: blacks[0],
           wins,
           blacks
         })
