@@ -40,7 +40,7 @@
 
     <template v-slot:item.win="props">
       <ul-tooltip :message="getWinColMessage(props.item)">
-        <v-icon dark>{{ getIconEmotion(props.item.win) }}</v-icon>
+        <v-icon>{{ getIconEmotion(props.item.win) }}</v-icon>
       </ul-tooltip>
     </template>
     <template v-slot:item.black="props">
@@ -50,11 +50,11 @@
     </template>
     <template v-slot:item.describe="props">
       <ul-tooltip v-if="hasDescribe(props.item.describe)" :message="props.item.describe">
-        <v-icon dark>mdi-file-document</v-icon>
+        <v-icon>mdi-file-document</v-icon>
       </ul-tooltip>
     </template>
     <template v-slot:item.property="props">
-      <v-icon dark @click="openEditDialog(props.item)"> mdi-dots-vertical </v-icon>
+      <v-icon @click="openEditDialog(props.item)"> mdi-dots-vertical </v-icon>
     </template>
     <v-data-footer />
   </v-data-table>

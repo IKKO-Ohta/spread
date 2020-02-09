@@ -1,7 +1,7 @@
 <template>
   <section>
     <ul-tooltip message="デッキ管理">
-      <v-icon dark @click="openDialog">mdi-cards-outline</v-icon>
+      <v-icon @click="openDialog">mdi-cards-outline</v-icon>
     </ul-tooltip>
     <!-- TODO: dialogを上に移し、v-modelで管理するようにし、ステートを減らす -->
     <v-dialog v-model="dialog" max-width="600px">
