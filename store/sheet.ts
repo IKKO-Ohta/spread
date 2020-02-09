@@ -2,6 +2,7 @@ import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import firebase from 'firebase/app'
 import { SheetInfo } from '~/models/@types/sheet-info'
 import { GameInfo } from '@/models/@types/game'
+import { BestOf } from '~/models/const/enums'
 
 @Module({ name: 'sheet', namespaced: true, stateFactory: true })
 export default class Sheet extends VuexModule {
@@ -112,5 +113,9 @@ export default class Sheet extends VuexModule {
   public get currentSheet(): SheetInfo | null {
     const sheet = this.currentSheetInfos.find((sheet) => sheet.id === this.currentSheetId)
     return sheet || null
+  }
+
+  public get currentSheetIsBo3(): boolean {
+    return this.currentSheet ? this.currentSheet.bestOf === BestOf.Bo3 : true
   }
 }
