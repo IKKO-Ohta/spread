@@ -66,10 +66,23 @@ export class PerformanceByDeckHelper {
 
     // if BO1, should return here
     if (!game.wins) {
-      return state
+      const myResult = {
+        deck: game.myDeck,
+        result: game.win,
+        bw: game.black
+      }
+      const oppResult = {
+        deck: game.oppDeck,
+        result: game.win === Result.win ? Result.lose : Result.win,
+        bw: game.black === Bw.black ? Bw.white : Bw.black
+      }
+
+      resultState = this.applyBo1Game(resultState, myResult)
+      resultState = this.applyBo1Game(resultState, oppResult)
+      return resultState
     }
 
-    // verbose
+    // BO3
     for (let i = 0; i < game.wins.length; i++) {
       const myResult = {
         deck: game.myDeck,
@@ -87,6 +100,22 @@ export class PerformanceByDeckHelper {
     }
 
     return resultState
+  }
+
+  private static applyBo1Game(state: VTableRow[], round: Round) {
+    return state.map((row) => {
+      if (row.name === round.deck) {
+        if (round.bw === Bw.black) {
+          return { ...row, winByMain: this.applyWinOrLose(row.winByMain, round.result), winByMainBlack: this.applyWinOrLose(row.winByMainBlack, round.result) }
+        } else if (round.bw === Bw.white) {
+          return { ...row, winByMain: this.applyWinOrLose(row.winByMain, round.result), winByMainWhite: this.applyWinOrLose(row.winByMainWhite, round.result) }
+        } else {
+          throw new Error('#applyBo1Game unexpected BO1 game data')
+        }
+      } else {
+        return row
+      }
+    })
   }
 
   private static applyRound(state: VTableRow[], round: Round, roundNumber: Number): VTableRow[] {

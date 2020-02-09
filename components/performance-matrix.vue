@@ -17,7 +17,7 @@
               <tr v-for="(item, i) in props.items" :key="i" class="v-data-table__mobile-table-row">
                 <td v-for="(header, j) in headers" :key="j" class="v-data-table__mobile-row">
                   <div class="v-data-table__mobile-row__header">
-                    {{ header.value === 'name' ? header.text : `vs. ${header.text}` }}
+                    {{ isOppDeck(header) ? `vs. ${header.text}` : header.text }}
                   </div>
                   <div class="v-data-table__mobile-row__cell">
                     <v-chip v-if="header.value !== 'name'" outlined :ripple="false" :color="getPerformanceColor(item[header.value])">{{ item[header.value] }}</v-chip>
@@ -58,6 +58,10 @@ export default class PerformanceMatrix extends Vue {
 
   get isPC(): boolean {
     return window.innerWidth > MAX_SP_WIDTH
+  }
+
+  isOppDeck(header: Header): boolean {
+    return header.value !== 'name' && header.value !== 'total' && header.value !== 'totalWithoutMirror'
   }
 
   getPerformanceColor(item: string): string {

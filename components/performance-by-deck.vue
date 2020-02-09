@@ -3,7 +3,7 @@
     <v-card class="form">
       <v-card-title>デッキ別 勝率集計</v-card-title>
       <v-card-text>
-        <v-data-table :headers="headers" :items="items" disable-sort>
+        <v-data-table :headers="headers" :items="items" disable-sort :hide-default-header="!isPC">
           <template v-if="isPC" v-slot:body="props">
             <tr v-for="(item, i) in props.items" :key="i">
               <td v-for="(header, j) in headers" :key="j">
@@ -40,24 +40,12 @@ import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
 import { TestHelper } from '@/lib/test-helper'
-import { PerformanceByDeckHeader } from '@/models/const/performance-by-deck-const'
+import { PerformanceByDeckHeader, PerformanceByDeckBo1Header } from '@/models/const/performance-by-deck-const'
 
 @Component({})
 export default class PerformanceByDeck extends Vue {
   @Prop({ required: true }) games!: GameInfo[]
-  isHiddenDraw = true
-
-  get items(): VTableRow[] {
-    return PerformanceByDeckHelper.calcPerformanceByDeck(this.games)
-  }
-
-  get headers(): Header[] {
-    return PerformanceByDeckHeader
-  }
-
-  get isPC(): boolean {
-    return window.innerWidth > MAX_SP_WIDTH
-  }
+  @Prop() isBo3!: boolean | undefined
 
   shouldColored(headerVal: string): boolean {
     return headerVal !== 'name' && headerVal !== 'mirror'
@@ -68,6 +56,18 @@ export default class PerformanceByDeck extends Vue {
     const X = parseInt(arr[0])
     const n = X + parseInt(arr[1])
     return TestHelper.execTest(X, n)
+  }
+
+  get items(): VTableRow[] {
+    return PerformanceByDeckHelper.calcPerformanceByDeck(this.games)
+  }
+
+  get headers(): Header[] {
+    return this.isBo3 ? PerformanceByDeckHeader : PerformanceByDeckBo1Header
+  }
+
+  get isPC(): boolean {
+    return window.innerWidth > MAX_SP_WIDTH
   }
 }
 </script>

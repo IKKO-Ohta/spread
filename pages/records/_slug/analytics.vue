@@ -2,7 +2,7 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
     <performance-matrix :games="games" />
-    <performance-by-deck :games="games" />
+    <performance-by-deck :games="games" :is-bo3="isBo3" />
   </section>
 </template>
 

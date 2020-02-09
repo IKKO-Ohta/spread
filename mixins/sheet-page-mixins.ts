@@ -5,6 +5,7 @@ import { FirestoreHelper } from '@/lib/firestore-helper'
 import { recordHeader } from '@/models/const/record-header'
 import { GameInfo } from '@/models/@types/game'
 import { SheetInfo } from '@/models/@types/sheet-info'
+import { BestOf } from '~/models/const/enums'
 
 @Mixin
 export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
@@ -44,5 +45,9 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
     })
     this.stores.snackbar.SET_MESSAGE('デッキを追加しました。')
     await this.load()
+  }
+
+  get isBo3(): boolean | undefined {
+    return this.sheet ? this.sheet.bestOf === BestOf.Bo3 : undefined
   }
 }

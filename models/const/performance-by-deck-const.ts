@@ -49,3 +49,33 @@ export const PerformanceByDeckHeader: Header[] = [
     sortable: false
   }
 ]
+
+export const PerformanceByDeckBo1Header: Header[] = [
+  {
+    text: 'デッキ',
+    align: 'left',
+    sortable: true,
+    value: 'name'
+  },
+  {
+    text: '先手',
+    value: 'winByMainBlack',
+    sortable: false
+  },
+  {
+    text: '後手',
+    value: 'winByMainWhite',
+    sortable: false
+  },
+  {
+    text: 'ミラーを除く合計',
+    align: 'left',
+    sortable: true,
+    value: 'totalWithoutMirror'
+  },
+  {
+    text: '合計',
+    value: 'total',
+    sortable: false
+  }
+]
