@@ -39,7 +39,8 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
       ...this.sheet!,
       members: newMemberList
     })
-    await FirestoreHelper.sendMail(mail, window.location.href)
+    const url = `https://${window.location.host}`
+    await FirestoreHelper.sendMail(mail, url)
     this.stores.snackbar.SET_MESSAGE('招待メールを送りました。')
     await this.load()
   }
