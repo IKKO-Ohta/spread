@@ -1,7 +1,7 @@
 <template>
   <section>
     <ul-tooltip message="メンバー管理">
-      <v-icon dark @click="openDialog">mdi-account-group-outline</v-icon>
+      <v-icon @click="openDialog">mdi-account-group-outline</v-icon>
     </ul-tooltip>
     <!-- TODO: dialogを上に移し、v-modelで管理するようにし、ステートを減らす -->
     <v-dialog v-model="dialog" max-width="600px">

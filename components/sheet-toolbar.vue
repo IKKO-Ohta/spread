@@ -4,10 +4,10 @@
       <v-toolbar-title>{{ sheetName }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <ul-tooltip message="対戦記録">
-        <v-icon dark @click="goToSheetPage">mdi-checkerboard</v-icon>
+        <v-icon @click="goToSheetPage">mdi-checkerboard</v-icon>
       </ul-tooltip>
       <ul-tooltip message="分析">
-        <v-icon dark @click="goToAnalyticsPage">mdi-chart-pie</v-icon>
+        <v-icon @click="goToAnalyticsPage">mdi-chart-pie</v-icon>
       </ul-tooltip>
       <edit-decks :sheet-info="sheetInfo" @submit="submit" />
       <edit-account-group :sheet-info="sheetInfo" @invite="invite" />
