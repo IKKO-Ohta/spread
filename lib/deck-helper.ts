@@ -12,10 +12,6 @@ export class DeckHelper {
         return defaultList.ocg
       case GameTitle.ws:
         return defaultList.ws
-      case GameTitle.hs:
-        return defaultList.hs
-      case GameTitle.sv:
-        return defaultList.sv
       default:
         return []
     }

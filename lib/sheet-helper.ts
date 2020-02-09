@@ -11,10 +11,6 @@ export class SheetHelper {
         return BestOf.Bo3
       case GameTitle.ws:
         return BestOf.Bo1
-      case GameTitle.hs:
-        return BestOf.Bo1
-      case GameTitle.sv:
-        return BestOf.Bo1
       case GameTitle.otherBo3:
         return BestOf.Bo3
       case GameTitle.otherBo1:

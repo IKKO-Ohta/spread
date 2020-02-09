@@ -12,13 +12,13 @@
       <v-card class="form">
         <v-card-title>新しいシートを作成する</v-card-title>
         <v-card-text>
-          <v-text-field v-model="sheetName" label="sheet name" required> </v-text-field>
-          <v-select v-model="selectedGameTitle" label="Game" :items="gameTitles" />
+          <v-text-field v-model="sheetName" label="シートの名前" required> </v-text-field>
+          <v-select v-model="selectedGameTitle" label="ゲームタイトル" :items="gameTitles" />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn depressed :disabled="!canSubmit" @click="submit">
-            Create
+            作成する
           </v-btn>
         </v-card-actions>
       </v-card>

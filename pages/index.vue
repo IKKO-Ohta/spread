@@ -4,11 +4,12 @@
       <v-card>
         <v-img class="white--text align-end" height="400px" src="banner.png"> </v-img>
         <v-card-text> {{ hello }}</v-card-text>
+        <v-card-text v-if="isLoggedIn"> 左上の <v-icon>mdi-menu</v-icon>から、対戦成績をつけ始められます。</v-card-text>
         <v-card-actions>
           <v-spacer />
           <div v-show="!isLoggedIn" id="firebaseui-auth-container" />
           <v-btn v-show="isLoggedIn" text small @click="signOut">
-            signOut
+            ログアウト
           </v-btn>
         </v-card-actions>
       </v-card>

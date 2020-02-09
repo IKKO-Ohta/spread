@@ -2,7 +2,7 @@
   <v-snackbar v-model="isOpenSnackbar" :color="color" :timeout="DURATION">
     <span class="white--text"> {{ snackbarText }} </span>
     <v-btn color="white" text @click="isOpenSnackbar = false">
-      Close
+      閉じる
     </v-btn>
   </v-snackbar>
 </template>

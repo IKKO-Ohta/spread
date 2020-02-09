@@ -14,14 +14,31 @@ export enum BestOf {
 }
 
 export enum GameTitle {
-  mtg = 'Magic: the Gathering',
-  pcg = 'Pokemon Card Game',
-  ocg = 'Yu-Gi-Oh! Official Card Game',
-  ws = 'Weiss Schwaltz',
-  hs = 'Harth Stone',
-  sv = 'Shadowverse',
-  otherBo1 = 'Other BO1',
-  otherBo3 = 'Other BO3'
+  ocg = '遊戯王 OCG',
+  dm = 'デュエル・マスターズ',
+  mtg = 'マジック・ザ・ギャザリング',
+  pcg = 'ポケモンカードゲーム',
+  ws = 'ヴァイスシュヴァルツ',
+  vg = 'カードファイト!! ヴァンガード',
+  bs = 'Battle Spirits',
+  bf = 'フューチャーカード バディファイト',
+  zx = 'Z/X',
+  wx = 'WIXOSS -ウィクロス-',
+  otherBo1 = 'BO1ゲーム',
+  otherBo3 = 'BO3ゲーム'
 }
 
-export const AllGameTitles = [GameTitle.mtg, GameTitle.pcg, GameTitle.ocg, GameTitle.ws, GameTitle.hs, GameTitle.sv, GameTitle.otherBo1, GameTitle.otherBo3]
+export const AllGameTitles = [
+  GameTitle.ocg,
+  GameTitle.dm,
+  GameTitle.mtg,
+  GameTitle.pcg,
+  GameTitle.ws,
+  GameTitle.vg,
+  GameTitle.bf,
+  GameTitle.bs,
+  GameTitle.zx,
+  GameTitle.wx,
+  GameTitle.otherBo1,
+  GameTitle.otherBo3
+]
