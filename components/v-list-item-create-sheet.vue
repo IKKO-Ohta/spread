@@ -10,7 +10,7 @@
     </v-list-item>
     <v-dialog v-model="dialog" max-width="600px">
       <v-card class="form">
-        <v-card-title> create a new record</v-card-title>
+        <v-card-title>新しいシートを作成する</v-card-title>
         <v-card-text>
           <v-text-field v-model="sheetName" label="sheet name" required> </v-text-field>
           <v-select v-model="selectedGameTitle" label="Game" :items="gameTitles" />
@@ -31,9 +31,9 @@ import { Vue, Component, Emit } from 'vue-property-decorator'
 import { AllGameTitles, GameTitle } from '~/models/const/enums'
 
 @Component({})
-export default class VlistItemCreateRecord extends Vue {
+export default class VlistItemCreateSheet extends Vue {
   readonly createButton = {
-    text: 'create a new record',
+    text: '新しいシートを作成する',
     icon: 'mdi-checkerboard-plus'
   }
 

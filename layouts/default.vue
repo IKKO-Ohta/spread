@@ -10,7 +10,7 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
-        <v-list-item-create-record @create-sheet="createSheet" />
+        <v-list-item-create-sheet @create-sheet="createSheet" />
       </v-list>
     </v-navigation-drawer>
 
@@ -32,7 +32,7 @@ import { Component } from 'vue-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
 import { GameTitle } from '@/models/const/enums'
 import PageMixin from '@/mixins/page-mixins'
-import VListItemCreateRecord from '@/components/v-list-item-create-record.vue'
+import VListItemCreateSheet from '@/components/v-list-item-create-sheet.vue'
 import UlSnackbar from '@/components/ul-snackbar.vue'
 import { SheetInfo } from '@/models/@types/sheet-info'
 import { DeckHelper } from '@/lib/deck-helper'
@@ -47,7 +47,7 @@ interface SidebarItems {
 
 @Component({
   components: {
-    VListItemCreateRecord,
+    VListItemCreateSheet,
     UlSnackbar
   }
 })
