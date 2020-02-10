@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { Wrapper, shallowMount } from '@vue/test-utils'
-import VListItemCreateRecord from '@/components/v-list-item-create-record.vue'
+import VListItemCreateSheet from '@/components/v-list-item-create-sheet.vue'
 
 Vue.use(Vuetify)
-describe('VListItemCreateRecord', () => {
+describe('VListItemCreateSheet', () => {
   test('snapshot', () => {
-    const wrapper: Wrapper<VListItemCreateRecord> = shallowMount(VListItemCreateRecord)
+    const wrapper: Wrapper<VListItemCreateSheet> = shallowMount(VListItemCreateSheet)
     expect(wrapper.html()).toMatchSnapshot()
   })
 })
