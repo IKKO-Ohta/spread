@@ -4,7 +4,7 @@
       <v-icon @click="openDialog">mdi-cards-outline</v-icon>
     </ul-tooltip>
     <!-- TODO: dialogを上に移し、v-modelで管理するようにし、ステートを減らす -->
-    <v-dialog v-model="dialog" max-width="600px">
+    <v-dialog v-model="dialog" hide-overlay max-width="600px">
       <v-card class="form">
         <v-card-title>デッキ管理</v-card-title>
         <v-card-text>
@@ -12,7 +12,7 @@
             <v-subheader>現在登録しているデッキ</v-subheader>
             <v-list-item v-for="(deck, i) in decks" :key="i">
               <v-list-item-content>
-                <span> {{ deck }}</span>
+                <span @click="openDeleteDialog(deck)"> {{ deck }}</span>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -30,6 +30,19 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+    </v-dialog>
+    <v-dialog v-model="deleteDialog" max-width="600px" class="form layer">
+      <v-card-title>デッキの削除</v-card-title>
+      <v-card-text>{{ targetDeck }}を本当に削除してもいいですか？ 削除しても対戦記録は消えません。</v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn depressed>
+          削除する
+        </v-btn>
+        <v-btn depressed>
+          削除しない
+        </v-btn>
+      </v-card-actions>
     </v-dialog>
   </section>
 </template>
@@ -49,6 +62,8 @@ export default class EditDecks extends Vue {
   decks: string[] = []
   newDeck = ''
   dialog = false
+  deleteDialog = false
+  targetDeck = ''
 
   openDialog() {
     this.decks = this.getDecks()
@@ -58,6 +73,15 @@ export default class EditDecks extends Vue {
   closeDialog() {
     this.dialog = false
     this.newDeck = ''
+  }
+
+  openDeleteDialog(targetDeck: string) {
+    this.deleteDialog = true
+    this.targetDeck = targetDeck
+  }
+
+  closeDeleteDialog() {
+    this.deleteDialog = false
   }
 
   submitDeck(): void {
@@ -75,3 +99,8 @@ export default class EditDecks extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.layer {
+}
+</style>
