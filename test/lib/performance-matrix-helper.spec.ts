@@ -75,11 +75,11 @@ describe('PerformanceMatrixHelper', () => {
 
   describe('#applyGame', () => {
     const createMatrix = PerformanceMatrixHelper.createMatrix
-    const decklist = PerformanceMatrixHelper.getAllDecks(exampleGames)
+    const decks = PerformanceMatrixHelper.getAllDecks(exampleGames)
     test('should apply a game record correctly', () => {
       const matrix = createMatrix(3)
       const firstGame = exampleGames[0]
-      expect(PerformanceMatrixHelper.applyGame(matrix, firstGame, decklist)).toEqual(AppliedOnce)
+      expect(PerformanceMatrixHelper.applyGame(matrix, firstGame, decks)).toEqual(AppliedOnce)
     })
   })
 

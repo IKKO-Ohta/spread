@@ -23,9 +23,9 @@ export class PerformanceMatrixHelper {
     return matrix
   }
 
-  static applyGame(matrix: Matrix, game: GameInfo, decklist: string[]): Matrix {
-    const myDeckIndex = decklist.indexOf(game.myDeck!)
-    const oppDeckIndex = decklist.indexOf(game.oppDeck!)
+  static applyGame(matrix: Matrix, game: GameInfo, decks: string[]): Matrix {
+    const myDeckIndex = decks.indexOf(game.myDeck!)
+    const oppDeckIndex = decks.indexOf(game.oppDeck!)
     const winSideIndex = game.win === Result.win ? myDeckIndex : oppDeckIndex
     const loseSideIndex = winSideIndex === myDeckIndex ? oppDeckIndex : myDeckIndex
 
@@ -77,16 +77,16 @@ export class PerformanceMatrixHelper {
     return newMatrix
   }
 
-  static transformMatrixIntoVDataset(matrix: Matrix, decklist: string[]): VTableRow[] {
-    return matrix.map((row, index, _arr) => this.transformRowIntoVRow(row, decklist, index))
+  static transformMatrixIntoVDataset(matrix: Matrix, decks: string[]): VTableRow[] {
+    return matrix.map((row, index, _arr) => this.transformRowIntoVRow(row, decks, index))
   }
 
-  static transformRowIntoVRow(row: MatrixElem[], decklist: string[], deckIndex: number): VTableRow {
+  static transformRowIntoVRow(row: MatrixElem[], decks: string[], deckIndex: number): VTableRow {
     const total = this.sumPerformance(row)
     const mirror = row[deckIndex].win
-    const data: VTableRow = { name: decklist[deckIndex], total, totalWithoutMirror: this.getTotalWithoutMirror(total, mirror) }
-    for (let i = 0; i < decklist.length; i++) {
-      const accessor = decklist[i]
+    const data: VTableRow = { name: decks[deckIndex], total, totalWithoutMirror: this.getTotalWithoutMirror(total, mirror) }
+    for (let i = 0; i < decks.length; i++) {
+      const accessor = decks[i]
       data[accessor] = this.convertMatrixElemToString(row[i])
     }
     return data

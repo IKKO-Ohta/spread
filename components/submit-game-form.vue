@@ -2,8 +2,8 @@
   <v-card class="form">
     <v-form>
       <v-card-text>
-        <v-select v-model="game.myDeck" :items="decklist" label="あなたのデッキ" />
-        <v-select v-model="game.oppDeck" :items="decklist" label="対戦相手のデッキ" />
+        <v-select v-model="game.myDeck" :items="decks" label="あなたのデッキ" />
+        <v-select v-model="game.oppDeck" :items="decks" label="対戦相手のデッキ" />
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
       <section v-if="isBestOf3">
@@ -54,7 +54,7 @@ import { baseGameObj, baseMatchObj } from '@/models/const/base-game-object'
 
 @Component({ components: { VChipsWins, VChipsBws } })
 export default class SubmitGameForm extends Vue {
-  @Prop({ required: true }) decklist!: string[]
+  @Prop({ required: true }) decks!: string[]
   @Prop() bestOf!: BestOf
   @Emit() submit(_game: GameInfo) {}
 

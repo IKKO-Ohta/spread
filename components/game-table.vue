@@ -7,8 +7,8 @@
             <span class="headline"> {{ editedItem.timestamp }} </span>
           </v-card-title>
           <v-card-text>
-            <v-select v-model="editedItem.myDeck" :items="decklist" label="あなたのデッキ" />
-            <v-select v-model="editedItem.oppDeck" :items="decklist" label="対戦相手のデッキ" />
+            <v-select v-model="editedItem.myDeck" :items="decks" label="あなたのデッキ" />
+            <v-select v-model="editedItem.oppDeck" :items="decks" label="対戦相手のデッキ" />
             <v-divider />
             <section v-if="isBestOf3(editedItem)">
               <v-card-subtitle>先後</v-card-subtitle>
@@ -75,7 +75,7 @@ import { Result, Bw } from '@/models/const/enums'
 export default class GameTable extends Vue {
   @Prop() items!: GameInfo[]
   @Prop() headers!: string[]
-  @Prop({ required: true }) decklist!: string[]
+  @Prop({ required: true }) decks!: string[]
   @Emit() updateGame(_game: GameInfo) {}
 
   text = ''

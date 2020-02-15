@@ -48,8 +48,8 @@ export default class PerformanceMatrix extends Vue {
 
   get items(): VTableRow[] {
     const matrix = PerformanceMatrixHelper.extractData(this.games)
-    const decklist = PerformanceMatrixHelper.getAllDecks(this.games)
-    return PerformanceMatrixHelper.transformMatrixIntoVDataset(matrix, decklist)
+    const decks = PerformanceMatrixHelper.getAllDecks(this.games)
+    return PerformanceMatrixHelper.transformMatrixIntoVDataset(matrix, decks)
   }
 
   get headers(): Header[] {

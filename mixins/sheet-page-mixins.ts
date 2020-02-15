@@ -46,10 +46,10 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
   }
 
   async submitDeck(deck: string): Promise<void> {
-    const newDeckList = [...this.sheet!.decks, deck]
+    const newDecks = [...this.sheet!.decks, deck]
     await this.stores.sheet.SET_SHEET({
       ...this.sheet!,
-      decks: newDeckList
+      decks: newDecks
     })
     this.stores.snackbar.SET_MESSAGE('デッキを追加しました。')
     await this.load()
