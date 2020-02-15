@@ -52,10 +52,10 @@ export default class Sheet extends VuexModule {
         .where('members', 'array-contains', email)
         .get()
       querySnapshot.forEach((doc) => {
-        const data = doc.data()
+        const data = doc.data() as SheetInfo
         this.ADD_SHEET({
           id: data.id,
-          members: data.member,
+          members: data.members,
           sheetName: data.sheetName,
           gameTitle: data.gameTitle,
           decks: data.decks,
