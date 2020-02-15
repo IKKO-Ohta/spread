@@ -4,7 +4,7 @@
       <v-icon @click="openDialog">mdi-cards-outline</v-icon>
     </ul-tooltip>
     <!-- TODO: dialogを上に移し、v-modelで管理するようにし、ステートを減らす -->
-    <v-dialog v-model="dialog" hide-overlay max-width="600px">
+    <v-dialog v-model="dialog" max-width="600px">
       <v-card class="form">
         <v-card-title>デッキ管理</v-card-title>
         <v-card-text>
@@ -12,7 +12,7 @@
             <v-subheader>現在登録しているデッキ</v-subheader>
             <v-list-item v-for="(deck, i) in decks" :key="i">
               <v-list-item-content>
-                <span @click="openDeleteDialog(deck)"> {{ deck }}</span>
+                <v-list-item-title @click="openProfileDialog(deck)"> {{ deck }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -31,18 +31,24 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="deleteDialog" max-width="600px" class="form layer">
-      <v-card-title>デッキの削除</v-card-title>
-      <v-card-text>{{ targetDeck }}を本当に削除してもいいですか？ 削除しても対戦記録は消えません。</v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn depressed>
-          削除する
-        </v-btn>
-        <v-btn depressed>
-          削除しない
-        </v-btn>
-      </v-card-actions>
+    <v-dialog v-model="profileDialog" max-width="600px" overlay-opacity="1" class="form layer">
+      <v-card>
+        <v-card-title>{{ targetDeck }}</v-card-title>
+        <v-spacer />
+        <v-card-subtitle> 記入 </v-card-subtitle>
+        <v-card-text>
+          <v-textarea v-model="textarea" auto-grow rows="3" outlined :placeholder="placeholderText"></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="closeProfileDialog">
+            一覧に戻る
+          </v-btn>
+          <v-btn color="secondary">
+            削除する
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
   </section>
 </template>
@@ -62,8 +68,9 @@ export default class EditDecks extends Vue {
   decks: string[] = []
   newDeck = ''
   dialog = false
-  deleteDialog = false
+  profileDialog = false
   targetDeck = ''
+  textarea = ''
 
   openDialog() {
     this.decks = this.getDecks()
@@ -75,13 +82,13 @@ export default class EditDecks extends Vue {
     this.newDeck = ''
   }
 
-  openDeleteDialog(targetDeck: string) {
-    this.deleteDialog = true
+  openProfileDialog(targetDeck: string) {
+    this.profileDialog = true
     this.targetDeck = targetDeck
   }
 
-  closeDeleteDialog() {
-    this.deleteDialog = false
+  closeProfileDialog() {
+    this.profileDialog = false
   }
 
   submitDeck(): void {
@@ -97,10 +104,9 @@ export default class EditDecks extends Vue {
   get canSubmit(): boolean {
     return this.newDeck !== ''
   }
+
+  get placeholderText(): string {
+    return 'デッキリストを記入できます'
+  }
 }
 </script>
-
-<style scoped>
-.layer {
-}
-</style>
