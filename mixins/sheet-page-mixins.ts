@@ -46,12 +46,45 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
   }
 
   async submitDeck(deck: string): Promise<void> {
-    const newDeckList = [...this.sheet!.decks, deck]
+    const newDecks = [...this.sheet!.decks, deck]
     await this.stores.sheet.SET_SHEET({
       ...this.sheet!,
-      decks: newDeckList
+      decks: newDecks
     })
     this.stores.snackbar.SET_MESSAGE('デッキを追加しました。')
+    await this.load()
+  }
+
+  async submitDecklist(deck: string, decklist: string): Promise<void> {
+    const decklists = this.sheet!.decklists || {}
+    decklists[deck] = decklist
+    await this.stores.sheet.SET_SHEET({
+      ...this.sheet!,
+      decklists
+    })
+    this.stores.snackbar.SET_MESSAGE('デッキリストを保存しました。')
+    await this.load()
+  }
+
+  async submitDelete(deletedDeck: string): Promise<void> {
+    const decks = this.sheet!.decks.filter((elem) => elem !== deletedDeck)
+    if (this.sheet!.decklists) {
+      const decklists = { ...this.sheet!.decklists! }
+      delete decklists[deletedDeck]
+
+      await this.stores.sheet.SET_SHEET({
+        ...this.sheet!,
+        decks,
+        decklists
+      })
+    } else {
+      await this.stores.sheet.SET_SHEET({
+        ...this.sheet!,
+        decks
+      })
+    }
+
+    this.stores.snackbar.SET_MESSAGE(`デッキ ${deletedDeck}を削除しました。`)
     await this.load()
   }
 

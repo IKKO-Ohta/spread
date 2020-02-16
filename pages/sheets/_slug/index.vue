@@ -1,8 +1,8 @@
 <template>
   <section>
-    <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
-    <submit-game-form :decklist="decklist" :best-of="bestOf" @submit="addGame" />
-    <game-table :headers="headers" :items="games" :decklist="decklist" @update-game="update" />
+    <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
+    <submit-game-form :decks="decks" :best-of="bestOf" @submit="addGame" />
+    <game-table :headers="headers" :items="games" :decks="decks" @update-game="update" />
   </section>
 </template>
 
@@ -25,7 +25,7 @@ import { BestOf } from '@/models/const/enums'
     GameTable
   }
 })
-export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
+export default class SheetPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
   option = {
     sortBy: ['timestamp'],
     sortDesc: [true]
@@ -48,7 +48,7 @@ export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
     await this.load()
   }
 
-  get decklist(): string[] {
+  get decks(): string[] {
     return this.sheet ? this.sheet.decks : []
   }
 

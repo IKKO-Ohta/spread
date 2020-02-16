@@ -12,7 +12,7 @@
             <v-subheader>現在登録しているデッキ</v-subheader>
             <v-list-item v-for="(deck, i) in decks" :key="i">
               <v-list-item-content>
-                <span> {{ deck }}</span>
+                <v-list-item-title @click="openProfileDialog(deck)"> {{ deck }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -22,11 +22,52 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn depressed :disabled="!canSubmit" @click="submitDeck">
+          <v-btn depressed :disabled="!canSubmit" @click="saveDeck">
             デッキを追加する
           </v-btn>
           <v-btn depressed @click="closeDialog">
             閉じる
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="profileDialog" max-width="600px" overlay-opacity="1" class="form">
+      <v-card>
+        <v-card-title>
+          <v-toolbar-title>{{ targetDeck }}</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-icon @click="openConfirmDeleteDialog">mdi-delete</v-icon>
+        </v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-subtitle>デッキリスト</v-card-subtitle>
+        <v-card-text>
+          <v-textarea v-model="targetDecklist" auto-grow rows="10" outlined :placeholder="placeholderText"></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="saveDecklist">
+            保存する
+          </v-btn>
+          <v-btn @click="closeProfileDialog">
+            戻る
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="confirmDeleteDialog" max-width="400px" overlay-opacity="1" class="form">
+      <v-card>
+        <v-card-title> {{ targetDeck }}を削除しますか？ </v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-text>
+          デッキを消去しても対戦記録は消去されません。 本当に削除しますか？
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red" @click="deleteDeck">
+            削除する
+          </v-btn>
+          <v-btn @click="closeConfirmDeleteDialog">
+            削除しない
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -44,11 +85,17 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 })
 export default class EditDecks extends Vue {
   @Prop() sheetInfo!: SheetInfo | null
-  @Emit() submit(_deck: string): void {}
+  @Emit() submitDeck(_deck: string): void {}
+  @Emit() submitDecklist(_deck: string, _decklist: string): void {}
+  @Emit() submitDelete(_deck: string): void {}
 
   decks: string[] = []
   newDeck = ''
   dialog = false
+  profileDialog = false
+  confirmDeleteDialog = false
+  targetDeck = ''
+  targetDecklist = ''
 
   openDialog() {
     this.decks = this.getDecks()
@@ -60,10 +107,46 @@ export default class EditDecks extends Vue {
     this.newDeck = ''
   }
 
-  submitDeck(): void {
+  openProfileDialog(targetDeck: string) {
+    this.targetDeck = targetDeck
+    const decklists = this.sheetInfo!.decklists
+    if (decklists && decklists[targetDeck]) {
+      this.targetDecklist = decklists[targetDeck]
+    } else {
+      this.targetDecklist = ''
+    }
+
+    this.profileDialog = true
+  }
+
+  closeProfileDialog() {
+    this.profileDialog = false
+  }
+
+  openConfirmDeleteDialog() {
+    this.confirmDeleteDialog = true
+  }
+
+  closeConfirmDeleteDialog() {
+    this.confirmDeleteDialog = false
+  }
+
+  saveDeck(): void {
     this.dialog = false
-    this.submit(this.newDeck)
+    this.submitDeck(this.newDeck)
     this.newDeck = ''
+  }
+
+  saveDecklist(): void {
+    this.submitDecklist(this.targetDeck, this.targetDecklist)
+    this.profileDialog = false
+  }
+
+  deleteDeck(): void {
+    this.dialog = false
+    this.profileDialog = false
+    this.confirmDeleteDialog = false
+    this.submitDelete(this.targetDeck)
   }
 
   getDecks(): string[] {
@@ -72,6 +155,10 @@ export default class EditDecks extends Vue {
 
   get canSubmit(): boolean {
     return this.newDeck !== ''
+  }
+
+  get placeholderText(): string {
+    return 'デッキリストを記入できます'
   }
 }
 </script>

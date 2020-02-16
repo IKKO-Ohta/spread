@@ -9,7 +9,7 @@
       <ul-tooltip message="分析">
         <v-icon @click="goToAnalyticsPage">mdi-chart-pie</v-icon>
       </ul-tooltip>
-      <edit-decks :sheet-info="sheetInfo" @submit="submit" />
+      <edit-decks :sheet-info="sheetInfo" @submit-deck="submit" @submit-decklist="submitDecklist" @submit-delete="submitDelete" />
       <edit-account-group :sheet-info="sheetInfo" @invite="invite" />
     </v-toolbar>
   </nav>
@@ -27,11 +27,21 @@ import { SheetInfo } from '@/models/@types/sheet-info'
 })
 export default class SheetToolbar extends Vue {
   @Prop() sheet!: SheetInfo
-  @Emit() submitDeck(_deck: string): void {}
   @Emit() sendMail(_mail: string): void {}
+  @Emit() emitSubmitDeck(_deck: string): void {}
+  @Emit() emitSubmitDecklist(_deck: string, _decklist: string): void {}
+  @Emit() emitSubmitDelete(_deck: string): void {}
 
   submit(deck: string) {
-    this.submitDeck(deck)
+    this.emitSubmitDeck(deck)
+  }
+
+  submitDecklist(deck: string, decklist: string) {
+    this.emitSubmitDecklist(deck, decklist)
+  }
+
+  submitDelete(deck: string) {
+    this.emitSubmitDelete(deck)
   }
 
   invite(mail: string): void {
