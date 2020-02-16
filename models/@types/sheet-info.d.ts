@@ -7,4 +7,5 @@ export interface SheetInfo {
   gameTitle: GameTitle
   decks: string[]
   bestOf: BestOf
+  decklists?: { [key: string]: string }
 }

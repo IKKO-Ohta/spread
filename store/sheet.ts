@@ -59,7 +59,8 @@ export default class Sheet extends VuexModule {
           sheetName: data.sheetName,
           gameTitle: data.gameTitle,
           decks: data.decks,
-          bestOf: data.bestOf
+          bestOf: data.bestOf,
+          decklists: data.decklists
         })
       })
     } catch {

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @submit-deck="submitDeck" />
+    <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" />
     <submit-game-form :decks="decks" :best-of="bestOf" @submit="addGame" />
     <game-table :headers="headers" :items="games" :decks="decks" @update-game="update" />
   </section>

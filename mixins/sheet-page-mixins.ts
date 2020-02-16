@@ -55,6 +55,17 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
     await this.load()
   }
 
+  async submitDecklist(deck: string, decklist: string): Promise<void> {
+    const decklists = this.sheet!.decklists || {}
+    decklists[deck] = decklist
+    await this.stores.sheet.SET_SHEET({
+      ...this.sheet!,
+      decklists
+    })
+    this.stores.snackbar.SET_MESSAGE('デッキリストを保存しました。')
+    await this.load()
+  }
+
   get isBo3(): boolean | undefined {
     return this.sheet ? this.sheet.bestOf === BestOf.Bo3 : undefined
   }
