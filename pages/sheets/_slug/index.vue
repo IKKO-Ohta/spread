@@ -25,7 +25,7 @@ import { BestOf } from '@/models/const/enums'
     GameTable
   }
 })
-export default class RecordPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
+export default class SheetPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
   option = {
     sortBy: ['timestamp'],
     sortDesc: [true]
