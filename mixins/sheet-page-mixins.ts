@@ -66,6 +66,28 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
     await this.load()
   }
 
+  async submitDelete(deletedDeck: string): Promise<void> {
+    const decks = this.sheet!.decks.filter((elem) => elem !== deletedDeck)
+    if (this.sheet!.decklists) {
+      const decklists = { ...this.sheet!.decklists! }
+      delete decklists[deletedDeck]
+
+      await this.stores.sheet.SET_SHEET({
+        ...this.sheet!,
+        decks,
+        decklists
+      })
+    } else {
+      await this.stores.sheet.SET_SHEET({
+        ...this.sheet!,
+        decks
+      })
+    }
+
+    this.stores.snackbar.SET_MESSAGE(`デッキ ${deletedDeck}を削除しました。`)
+    await this.load()
+  }
+
   get isBo3(): boolean | undefined {
     return this.sheet ? this.sheet.bestOf === BestOf.Bo3 : undefined
   }
