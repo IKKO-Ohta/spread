@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext", "esnext.asynciterable", "dom"],
@@ -15,7 +15,7 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@types/node", "@nuxt/types", "@types/jest", "@types/webpack","./plugins/plugin-types"]
+    "types": ["@types/node", "@nuxt/types", "@types/jest", "@types/webpack", "./plugins/plugin-types"]
   },
   "exclude": ["node_modules"]
 }
