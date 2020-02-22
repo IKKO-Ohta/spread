@@ -150,7 +150,7 @@ export default class EditDecks extends Vue {
   }
 
   getDecks(): string[] {
-    return this.sheetInfo ? this.sheetInfo.decks : []
+    return this.sheetInfo?.decks ?? []
   }
 
   get canSubmit(): boolean {

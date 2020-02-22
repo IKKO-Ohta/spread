@@ -45,7 +45,7 @@ import { PerformanceByDeckHeader, PerformanceByDeckBo1Header } from '@/models/co
 @Component({})
 export default class PerformanceByDeck extends Vue {
   @Prop({ required: true }) games!: GameInfo[]
-  @Prop() isBo3!: boolean | undefined
+  @Prop() isBo3!: boolean
 
   shouldColored(headerVal: string): boolean {
     return headerVal !== 'name' && headerVal !== 'mirror'

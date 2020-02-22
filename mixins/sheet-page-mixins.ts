@@ -88,7 +88,7 @@ export default class SheetPageMixin extends Mixins<PageMixin>(PageMixin) {
     await this.load()
   }
 
-  get isBo3(): boolean | undefined {
-    return this.sheet ? this.sheet.bestOf === BestOf.Bo3 : undefined
+  get isBo3(): boolean {
+    return this.sheet?.bestOf === BestOf.Bo3
   }
 }

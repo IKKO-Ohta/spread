@@ -49,11 +49,11 @@ export default class SheetPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
   }
 
   get decks(): string[] {
-    return this.sheet ? this.sheet.decks : []
+    return this.sheet?.decks ?? []
   }
 
   get bestOf(): BestOf {
-    return this.sheet ? this.sheet.bestOf : BestOf.Bo1
+    return this.sheet?.bestOf ?? BestOf.Bo1
   }
 }
 </script>

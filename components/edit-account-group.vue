@@ -71,7 +71,7 @@ export default class SettingAccountGroup extends Vue {
   }
 
   getSheetMember(): string[] {
-    return this.sheetInfo ? this.sheetInfo.members : []
+    return this.sheetInfo?.members ?? []
   }
 
   get canSubmit(): boolean {
