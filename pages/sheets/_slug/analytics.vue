@@ -1,7 +1,7 @@
 <template>
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
-    <performance-matrix :games="games" />
+    <performance-matrix :games="games" :config="performanceMatrixConfig" />
     <performance-by-deck :games="games" :is-bo3="isBo3" />
   </section>
 </template>
@@ -13,6 +13,7 @@ import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import PerformanceMatrix from '@/components/performance-matrix.vue'
 import PerformanceByDeck from '@/components/performance-by-deck.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
+import { PerformanceMatrixConfig } from '@/models/@types/display-config'
 
 @Component({
   components: {
@@ -21,7 +22,12 @@ import SheetToolbar from '@/components/sheet-toolbar.vue'
     SheetToolbar
   }
 })
-export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin) {}
+export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
+  performanceMatrixConfig: PerformanceMatrixConfig = {
+    onlyOurSide: false,
+    filterUser: []
+  }
+}
 </script>
 
 <style lang="scss">

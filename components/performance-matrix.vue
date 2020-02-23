@@ -1,7 +1,13 @@
 <template>
   <section>
     <v-card class="form">
-      <v-card-title>デッキ パフォーマンス</v-card-title>
+      <v-card-title>
+        デッキ パフォーマンス
+        <v-spacer></v-spacer>
+        <v-btn icon small>
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
+      </v-card-title>
       <v-card-text>
         <v-data-table :headers="headers" :items="items" disable-sort :hide-default-header="!isPC">
           <template v-if="isPC" v-slot:body="props">
@@ -29,6 +35,15 @@
           </template>
         </v-data-table>
       </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn icon>
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </section>
 </template>
@@ -40,10 +55,12 @@ import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { PerformanceMatrixHelper } from '@/lib/performance-matrix-helper'
 import { TestHelper } from '@/lib/test-helper'
+import { PerformanceMatrixConfig } from '@/models/@types/display-config'
 
 @Component({})
 export default class PerformanceMatrix extends Vue {
   @Prop({ required: true }) games!: GameInfo[]
+  @Prop({ required: true }) config!: PerformanceMatrixConfig
   isHiddenDraw = true
 
   get items(): VTableRow[] {
