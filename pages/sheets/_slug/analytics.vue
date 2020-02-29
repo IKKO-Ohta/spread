@@ -13,7 +13,8 @@ import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import PerformanceMatrix from '@/components/performance-matrix.vue'
 import PerformanceByDeck from '@/components/performance-by-deck.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
-import { PerformanceMatrixConfig } from '@/models/@types/display-config'
+import { DisplayConfig } from '@/models/@types/display-config'
+import { defaultDisplayConfig } from '@/models/const/default-display-config'
 
 @Component({
   components: {
@@ -23,10 +24,7 @@ import { PerformanceMatrixConfig } from '@/models/@types/display-config'
   }
 })
 export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
-  performanceMatrixConfig: PerformanceMatrixConfig = {
-    onlyOurSide: false,
-    filterUser: []
-  }
+  performanceMatrixConfig: DisplayConfig = defaultDisplayConfig
 }
 </script>
 

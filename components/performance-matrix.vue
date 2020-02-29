@@ -55,12 +55,12 @@ import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { PerformanceMatrixHelper } from '@/lib/performance-matrix-helper'
 import { TestHelper } from '@/lib/test-helper'
-import { PerformanceMatrixConfig } from '@/models/@types/display-config'
+import { DisplayConfig } from '@/models/@types/display-config'
 
 @Component({})
 export default class PerformanceMatrix extends Vue {
   @Prop({ required: true }) games!: GameInfo[]
-  @Prop({ required: true }) config!: PerformanceMatrixConfig
+  @Prop({ required: true }) config!: DisplayConfig
   isHiddenDraw = true
 
   get items(): VTableRow[] {

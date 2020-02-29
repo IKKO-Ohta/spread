@@ -34,18 +34,25 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { GameInfo } from '@/models/@types/game'
 import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
 import { TestHelper } from '@/lib/test-helper'
 import { PerformanceByDeckHeader, PerformanceByDeckBo1Header } from '@/models/const/performance-by-deck-const'
-
+import { DisplayConfig } from '@/models/@types/display-config'
+import { defaultDisplayConfig } from '@/models/const/default-display-config'
 @Component({})
 export default class PerformanceByDeck extends Vue {
   @Prop({ required: true }) games!: GameInfo[]
   @Prop() isBo3!: boolean
+  helper!: PerformanceByDeckHelper
+  config: DisplayConfig = defaultDisplayConfig
+
+  created(): void {
+    this.helper = new PerformanceByDeckHelper(this.config)
+  }
 
   shouldColored(headerVal: string): boolean {
     return headerVal !== 'name' && headerVal !== 'mirror'
@@ -58,8 +65,13 @@ export default class PerformanceByDeck extends Vue {
     return TestHelper.execTest(X, n)
   }
 
+  @Watch('config')
+  changedConfig(): void {
+    this.helper = new PerformanceByDeckHelper(this.config)
+  }
+
   get items(): VTableRow[] {
-    return PerformanceByDeckHelper.calcPerformanceByDeck(this.games)
+    return this.helper.calcPerformanceByDeck(this.games)
   }
 
   get headers(): Header[] {
