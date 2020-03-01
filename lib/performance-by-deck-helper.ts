@@ -7,33 +7,13 @@ export class PerformanceByDeckHelper extends PerformanceByDeckHelperBase {
   applyGame(state: VTableRow[], game: GameInfo): VTableRow[] {
     let resultState = [...state]
 
-    // mirror
     if (game.myDeck === game.oppDeck) {
-      resultState = resultState.map((row) => {
-        if (row.name === game.myDeck) {
-          const [totalWin, totalLose] = row.total.split('-').map((elem) => parseInt(elem))
-          return { ...row, total: `${totalWin + 1}-${totalLose + 1}` }
-        } else {
-          return row
-        }
-      })
-      return resultState
+      return this.config.countBothSide ? this.applyMirrorGame(resultState, game) : this.applyMirrorGameWithOnlyMyDeck(resultState, game)
     }
 
-    // total
-    const winSide = game.win === Result.win ? game.myDeck : game.oppDeck
-    const loseSide = game.win === Result.win ? game.oppDeck : game.myDeck
-    resultState = resultState.map((row) => {
-      if (row.name === winSide) {
-        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.win), total: this.applyWinOrLose(row.total, Result.win) }
-      } else if (row.name === loseSide) {
-        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.lose), total: this.applyWinOrLose(row.total, Result.lose) }
-      } else {
-        return row
-      }
-    })
+    resultState = this.config.countBothSide ? this.applyToTotal(resultState, game) : this.applyToTotalWithOnlyMyDeck(resultState, game)
 
-    // if BO1, should return here
+    // return here if BO1
     if (!game.wins) {
       const myResult = {
         deck: game.myDeck,
@@ -47,7 +27,9 @@ export class PerformanceByDeckHelper extends PerformanceByDeckHelperBase {
       }
 
       resultState = this.applyBo1Game(resultState, myResult)
-      resultState = this.applyBo1Game(resultState, oppResult)
+      if (this.config.countBothSide) {
+        resultState = this.applyBo1Game(resultState, oppResult)
+      }
       return resultState
     }
 
@@ -65,9 +47,56 @@ export class PerformanceByDeckHelper extends PerformanceByDeckHelperBase {
       }
 
       resultState = this.applyRound(resultState, myResult, i)
-      resultState = this.applyRound(resultState, oppResult, i)
+      if (this.config.countBothSide) {
+        resultState = this.applyRound(resultState, oppResult, i)
+      }
     }
 
     return resultState
+  }
+
+  private applyToTotal(state: VTableRow[], game: GameInfo): VTableRow[] {
+    const winSide = game.win === Result.win ? game.myDeck : game.oppDeck
+    const loseSide = game.win === Result.win ? game.oppDeck : game.myDeck
+    return state.map((row) => {
+      if (row.name === winSide) {
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.win), total: this.applyWinOrLose(row.total, Result.win) }
+      } else if (row.name === loseSide) {
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.lose), total: this.applyWinOrLose(row.total, Result.lose) }
+      } else {
+        return row
+      }
+    })
+  }
+
+  private applyToTotalWithOnlyMyDeck(state: VTableRow[], game: GameInfo): VTableRow[] {
+    return state.map((row) => {
+      if (row.name === game.myDeck) {
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, game.win), total: this.applyWinOrLose(row.total, game.win) }
+      } else {
+        return row
+      }
+    })
+  }
+
+  private applyMirrorGame(state: VTableRow[], game: GameInfo): VTableRow[] {
+    return state.map((row) => {
+      if (row.name === game.myDeck) {
+        const [totalWin, totalLose] = row.total.split('-').map((elem) => parseInt(elem))
+        return { ...row, total: `${totalWin + 1}-${totalLose + 1}` }
+      } else {
+        return row
+      }
+    })
+  }
+
+  private applyMirrorGameWithOnlyMyDeck(state: VTableRow[], game: GameInfo): VTableRow[] {
+    return state.map((row) => {
+      if (row.name === game.myDeck) {
+        return { ...row, total: this.applyWinOrLose(row.total, game.win) }
+      } else {
+        return row
+      }
+    })
   }
 }

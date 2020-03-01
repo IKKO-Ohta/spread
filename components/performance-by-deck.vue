@@ -1,7 +1,13 @@
 <template>
   <section>
     <v-card class="form">
-      <v-card-title>デッキ別 勝率集計</v-card-title>
+      <v-card-title>
+        デッキ別 勝率集計
+        <v-spacer></v-spacer>
+        <v-btn icon small>
+          <v-icon>mdi-settings</v-icon>
+        </v-btn>
+      </v-card-title>
       <v-card-text>
         <v-data-table :headers="headers" :items="items" disable-sort :hide-default-header="!isPC">
           <template v-if="isPC" v-slot:body="props">
@@ -34,25 +40,18 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { GameInfo } from '@/models/@types/game'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
-import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
 import { TestHelper } from '@/lib/test-helper'
 import { PerformanceByDeckHeader, PerformanceByDeckBo1Header } from '@/models/const/performance-by-deck-const'
 import { DisplayConfig } from '@/models/@types/display-config'
-import { defaultDisplayConfig } from '@/models/const/default-display-config'
+
 @Component({})
 export default class PerformanceByDeck extends Vue {
-  @Prop({ required: true }) games!: GameInfo[]
+  @Prop({ required: true }) items!: VTableRow[]
   @Prop() isBo3!: boolean
-  helper!: PerformanceByDeckHelper
-  config: DisplayConfig = defaultDisplayConfig
-
-  created(): void {
-    this.helper = new PerformanceByDeckHelper(this.config)
-  }
+  @Emit() changeConfig(_config: DisplayConfig): void {}
 
   shouldColored(headerVal: string): boolean {
     return headerVal !== 'name' && headerVal !== 'mirror'
@@ -63,15 +62,6 @@ export default class PerformanceByDeck extends Vue {
     const X = parseInt(arr[0])
     const n = X + parseInt(arr[1])
     return TestHelper.execTest(X, n)
-  }
-
-  @Watch('config')
-  changedConfig(): void {
-    this.helper = new PerformanceByDeckHelper(this.config)
-  }
-
-  get items(): VTableRow[] {
-    return this.helper.calcPerformanceByDeck(this.games)
   }
 
   get headers(): Header[] {

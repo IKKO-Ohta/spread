@@ -2,19 +2,21 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
     <performance-matrix :games="games" :config="performanceMatrixConfig" />
-    <performance-by-deck :games="games" :is-bo3="isBo3" />
+    <performance-by-deck :items="performanceByDeckItems" :is-bo3="isBo3" @change-config="setPerformanceByDeckConfig" />
   </section>
 </template>
 
 <script lang="ts">
-import { Component } from 'nuxt-property-decorator'
+import { Component, Watch } from 'nuxt-property-decorator'
 import { Mixins } from 'vue-mixin-decorator'
 import SheetPageMixin from '@/mixins/sheet-page-mixins'
 import PerformanceMatrix from '@/components/performance-matrix.vue'
 import PerformanceByDeck from '@/components/performance-by-deck.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
 import { DisplayConfig } from '@/models/@types/display-config'
+import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
 import { defaultDisplayConfig } from '@/models/const/default-display-config'
+import { VTableRow } from '@/models/@types/matrix'
 
 @Component({
   components: {
@@ -24,7 +26,26 @@ import { defaultDisplayConfig } from '@/models/const/default-display-config'
   }
 })
 export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
-  performanceMatrixConfig: DisplayConfig = defaultDisplayConfig
+  performanceMatrixConfig: DisplayConfig = { ...defaultDisplayConfig }
+  performanceByDeckConfig: DisplayConfig = { ...defaultDisplayConfig }
+  performanceByDeckHelper!: PerformanceByDeckHelper
+
+  created(): void {
+    this.performanceByDeckHelper = new PerformanceByDeckHelper(this.performanceByDeckConfig)
+  }
+
+  setPerformanceByDeckConfig(config: DisplayConfig) {
+    this.performanceByDeckConfig = config
+  }
+
+  @Watch('performanceByDeckConfig')
+  changedPerformanceByDeckConfig(): void {
+    this.performanceByDeckHelper = new PerformanceByDeckHelper(this.performanceByDeckConfig)
+  }
+
+  get performanceByDeckItems(): VTableRow[] {
+    return this.performanceByDeckHelper.calcPerformanceByDeck(this.games)
+  }
 }
 </script>
 

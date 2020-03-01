@@ -1,5 +1,5 @@
 export interface DisplayConfig {
-  onlyOurSide: boolean
+  countBothSide: boolean
   filterUser: string[]
   onlyYourPerformance: boolean
 }

@@ -1,7 +1,7 @@
 import { DisplayConfig } from '@/models/@types/display-config'
 
 export const defaultDisplayConfig: DisplayConfig = {
-  onlyOurSide: false,
+  countBothSide: true,
   filterUser: [],
   onlyYourPerformance: false
 }
