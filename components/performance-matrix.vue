@@ -35,15 +35,6 @@
           </template>
         </v-data-table>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer />
-        <v-btn icon>
-          <v-icon>mdi-settings</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-filter</v-icon>
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </section>
 </template>

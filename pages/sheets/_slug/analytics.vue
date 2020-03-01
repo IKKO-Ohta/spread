@@ -2,7 +2,7 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
     <performance-matrix :games="games" :config="performanceMatrixConfig" />
-    <performance-by-deck :items="performanceByDeckItems" :is-bo3="isBo3" @change-config="setPerformanceByDeckConfig" />
+    <performance-by-deck :items="getPerformanceByDeckItems()" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
   </section>
 </template>
 
@@ -36,14 +36,11 @@ export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin
 
   setPerformanceByDeckConfig(config: DisplayConfig) {
     this.performanceByDeckConfig = config
-  }
-
-  @Watch('performanceByDeckConfig')
-  changedPerformanceByDeckConfig(): void {
     this.performanceByDeckHelper = new PerformanceByDeckHelper(this.performanceByDeckConfig)
   }
 
-  get performanceByDeckItems(): VTableRow[] {
+  @Watch('performanceByDeckConfig')
+  getPerformanceByDeckItems(): VTableRow[] {
     return this.performanceByDeckHelper.calcPerformanceByDeck(this.games)
   }
 }

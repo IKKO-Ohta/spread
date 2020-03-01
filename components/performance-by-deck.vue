@@ -5,7 +5,7 @@
         デッキ別 勝率集計
         <v-spacer></v-spacer>
         <v-btn icon small>
-          <v-icon>mdi-settings</v-icon>
+          <v-icon @click="handleDialog">mdi-settings</v-icon>
         </v-btn>
       </v-card-title>
       <v-card-text>
@@ -36,11 +36,30 @@
         </v-data-table>
       </v-card-text>
     </v-card>
+    <v-dialog v-model="dialog" max-width="400px" overlay-opacity="1" class="form">
+      <v-card>
+        <v-card-title> デッキ別勝率集計の設定 </v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-text>
+          表示設定を変更します。
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red" @click="set">
+            変更する
+          </v-btn>
+          <v-btn @click="handleDialog">
+            閉じる
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+import { defaultDisplayConfig } from '../models/const/default-display-config'
 import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { TestHelper } from '@/lib/test-helper'
@@ -50,8 +69,10 @@ import { DisplayConfig } from '@/models/@types/display-config'
 @Component({})
 export default class PerformanceByDeck extends Vue {
   @Prop({ required: true }) items!: VTableRow[]
-  @Prop() isBo3!: boolean
-  @Emit() changeConfig(_config: DisplayConfig): void {}
+  @Prop({ required: true }) isBo3!: boolean
+  @Emit() setConfig(_config: DisplayConfig): void {}
+
+  dialog: boolean = false
 
   shouldColored(headerVal: string): boolean {
     return headerVal !== 'name' && headerVal !== 'mirror'
@@ -62,6 +83,18 @@ export default class PerformanceByDeck extends Vue {
     const X = parseInt(arr[0])
     const n = X + parseInt(arr[1])
     return TestHelper.execTest(X, n)
+  }
+
+  handleDialog(): void {
+    this.dialog = !this.dialog
+  }
+
+  set(): void {
+    this.dialog = false
+    this.setConfig({
+      ...defaultDisplayConfig,
+      countBothSide: false
+    })
   }
 
   get headers(): Header[] {
