@@ -2,7 +2,7 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
     <performance-matrix :games="games" :config="performanceMatrixConfig" />
-    <performance-by-deck :items="getPerformanceByDeckItems()" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
+    <performance-by-deck :items="performanceByDeckItems" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
   </section>
 </template>
 
@@ -14,8 +14,9 @@ import PerformanceMatrix from '@/components/performance-matrix.vue'
 import PerformanceByDeck from '@/components/performance-by-deck.vue'
 import SheetToolbar from '@/components/sheet-toolbar.vue'
 import { DisplayConfig } from '@/models/@types/display-config'
-import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
 import { defaultDisplayConfig } from '@/models/const/default-display-config'
+import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
+
 import { VTableRow } from '@/models/@types/matrix'
 
 @Component({
@@ -29,6 +30,7 @@ export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin
   performanceMatrixConfig: DisplayConfig = { ...defaultDisplayConfig }
   performanceByDeckConfig: DisplayConfig = { ...defaultDisplayConfig }
   performanceByDeckHelper!: PerformanceByDeckHelper
+  performanceByDeckItems: VTableRow[] = []
 
   created(): void {
     this.performanceByDeckHelper = new PerformanceByDeckHelper(this.performanceByDeckConfig)
@@ -37,11 +39,12 @@ export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin
   setPerformanceByDeckConfig(config: DisplayConfig) {
     this.performanceByDeckConfig = config
     this.performanceByDeckHelper = new PerformanceByDeckHelper(this.performanceByDeckConfig)
+    this.performanceByDeckItems = [...this.performanceByDeckHelper.calcPerformanceByDeck(this.games)]
   }
 
-  @Watch('performanceByDeckConfig')
-  getPerformanceByDeckItems(): VTableRow[] {
-    return this.performanceByDeckHelper.calcPerformanceByDeck(this.games)
+  @Watch('games')
+  setPerformanceByDeckItems(): void {
+    this.performanceByDeckItems = [...this.performanceByDeckHelper.calcPerformanceByDeck(this.games)]
   }
 }
 </script>

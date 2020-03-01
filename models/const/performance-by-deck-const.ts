@@ -58,12 +58,12 @@ export const PerformanceByDeckBo1Header: Header[] = [
     value: 'name'
   },
   {
-    text: '先手',
+    text: 'ミラーを除く先手',
     value: 'winByMainBlack',
     sortable: false
   },
   {
-    text: '後手',
+    text: 'ミラーを除く後手',
     value: 'winByMainWhite',
     sortable: false
   },

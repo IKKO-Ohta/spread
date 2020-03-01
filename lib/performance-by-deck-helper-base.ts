@@ -41,7 +41,6 @@ export abstract class PerformanceByDeckHelperBase {
         total: '0-0'
       }
     })
-
     return this.applyGames(initialState, games)
   }
 
