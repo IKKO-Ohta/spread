@@ -2,7 +2,7 @@
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
     <performance-matrix :games="games" :config="performanceMatrixConfig" />
-    <performance-by-deck :items="performanceByDeckItems" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
+    <performance-by-deck :items="performanceByDeckItems" :config="performanceMatrixConfig" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
   </section>
 </template>
 

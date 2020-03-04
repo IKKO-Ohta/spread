@@ -40,9 +40,7 @@
       <v-card>
         <v-card-title> デッキ別勝率集計の設定 </v-card-title>
         <v-spacer></v-spacer>
-        <v-card-text>
-          表示設定を変更します。
-        </v-card-text>
+        <v-card-text> 現在の設定 {{ cardTitle }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red" @click="set">
@@ -59,7 +57,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
-import { defaultDisplayConfig } from '../models/const/default-display-config'
 import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { TestHelper } from '@/lib/test-helper'
@@ -70,6 +67,7 @@ import { DisplayConfig } from '@/models/@types/display-config'
 export default class PerformanceByDeck extends Vue {
   @Prop({ required: true }) items!: VTableRow[]
   @Prop({ required: true }) isBo3!: boolean
+  @Prop({ required: true }) config!: DisplayConfig
   @Emit() setConfig(_config: DisplayConfig): void {}
 
   dialog: boolean = false
@@ -92,8 +90,8 @@ export default class PerformanceByDeck extends Vue {
   set(): void {
     this.dialog = false
     this.setConfig({
-      ...defaultDisplayConfig,
-      countBothSide: false
+      ...this.config,
+      countBothSide: !this.config.countBothSide
     })
   }
 
@@ -103,6 +101,10 @@ export default class PerformanceByDeck extends Vue {
 
   get isPC(): boolean {
     return window.innerWidth > MAX_SP_WIDTH
+  }
+
+  get countBothSideString(): string {
+    return this.config.countBothSide ? '対戦相手の結果を含んで集計' : 'あなたのデッキ視点のみ集計'
   }
 }
 </script>
