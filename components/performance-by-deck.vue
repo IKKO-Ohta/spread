@@ -38,9 +38,19 @@
     </v-card>
     <v-dialog v-model="dialog" max-width="400px" overlay-opacity="1" class="form">
       <v-card>
-        <v-card-title> デッキ別勝率集計の設定 </v-card-title>
+        <v-card-title> 設定 </v-card-title>
         <v-spacer></v-spacer>
-        <v-card-text> 現在の設定 {{ cardTitle }}</v-card-text>
+        <v-card-text>
+          <b>
+            {{ countBothSideString }}
+          </b>
+          しています。
+          <br />
+          <b>
+            {{ notCountBothSideString }}
+          </b>
+          しますか?
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red" @click="set">
@@ -104,7 +114,11 @@ export default class PerformanceByDeck extends Vue {
   }
 
   get countBothSideString(): string {
-    return this.config.countBothSide ? '対戦相手の結果を含んで集計' : 'あなたのデッキ視点のみ集計'
+    return this.config.countBothSide ? '対戦相手の結果を含んで集計' : '使用デッキ視点のみを集計'
+  }
+
+  get notCountBothSideString(): string {
+    return this.config.countBothSide ? '使用デッキ視点のみを集計' : '対戦相手の結果を含んで集計'
   }
 }
 </script>

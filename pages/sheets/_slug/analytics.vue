@@ -1,8 +1,8 @@
 <template>
   <section>
     <sheet-toolbar :sheet="sheet" @send-mail="sendMail" @emit-submit-deck="submitDeck" @emit-submit-decklist="submitDecklist" @emit-submit-delete="submitDelete" />
-    <performance-matrix :games="games" :config="performanceMatrixConfig" />
-    <performance-by-deck :items="performanceByDeckItems" :config="performanceMatrixConfig" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
+    <performance-matrix :games="games" />
+    <performance-by-deck :items="performanceByDeckItems" :config="performanceByDeckConfig" :is-bo3="isBo3" @set-config="setPerformanceByDeckConfig" />
   </section>
 </template>
 
@@ -27,7 +27,6 @@ import { VTableRow } from '@/models/@types/matrix'
   }
 })
 export default class AnalyticsPage extends Mixins<SheetPageMixin>(SheetPageMixin) {
-  performanceMatrixConfig: DisplayConfig = { ...defaultDisplayConfig }
   performanceByDeckConfig: DisplayConfig = { ...defaultDisplayConfig }
   performanceByDeckHelper!: PerformanceByDeckHelper
   performanceByDeckItems: VTableRow[] = []

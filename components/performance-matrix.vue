@@ -3,10 +3,6 @@
     <v-card class="form">
       <v-card-title>
         デッキ パフォーマンス
-        <v-spacer></v-spacer>
-        <v-btn icon small>
-          <v-icon>mdi-settings</v-icon>
-        </v-btn>
       </v-card-title>
       <v-card-text>
         <v-data-table :headers="headers" :items="items" disable-sort :hide-default-header="!isPC">
@@ -46,12 +42,10 @@ import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
 import { PerformanceMatrixHelper } from '@/lib/performance-matrix-helper'
 import { TestHelper } from '@/lib/test-helper'
-import { DisplayConfig } from '@/models/@types/display-config'
 
 @Component({})
 export default class PerformanceMatrix extends Vue {
   @Prop({ required: true }) games!: GameInfo[]
-  @Prop({ required: true }) config!: DisplayConfig
   isHiddenDraw = true
 
   get items(): VTableRow[] {
