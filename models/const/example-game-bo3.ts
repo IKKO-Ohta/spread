@@ -96,3 +96,28 @@ export const appliedOnce: VTableRow[] = [
     total: '0-1'
   }
 ]
+
+export const notCountBothSideAppliedOnce: VTableRow[] = [
+  {
+    name: 'A',
+    winByMain: '1-0',
+    winByMainBlack: '1-0',
+    winByMainWhite: '0-0',
+    winBySided: '1-0',
+    winBySidedBlack: '0-0',
+    winBySidedWhite: '1-0',
+    totalWithoutMirror: '1-0',
+    total: '1-0'
+  },
+  {
+    name: 'B',
+    winByMain: '0-0',
+    winByMainBlack: '0-0',
+    winByMainWhite: '0-0',
+    winBySided: '0-0',
+    winBySidedBlack: '0-0',
+    winBySidedWhite: '0-0',
+    totalWithoutMirror: '0-0',
+    total: '0-0'
+  }
+]

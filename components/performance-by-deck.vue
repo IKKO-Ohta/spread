@@ -1,7 +1,13 @@
 <template>
   <section>
     <v-card class="form">
-      <v-card-title>デッキ別 勝率集計</v-card-title>
+      <v-card-title>
+        デッキ別 勝率集計
+        <v-spacer></v-spacer>
+        <v-btn icon small>
+          <v-icon @click="handleDialog">mdi-settings</v-icon>
+        </v-btn>
+      </v-card-title>
       <v-card-text>
         <v-data-table :headers="headers" :items="items" disable-sort :hide-default-header="!isPC">
           <template v-if="isPC" v-slot:body="props">
@@ -30,22 +36,51 @@
         </v-data-table>
       </v-card-text>
     </v-card>
+    <v-dialog v-model="dialog" max-width="400px" overlay-opacity="1" class="form">
+      <v-card>
+        <v-card-title> 設定 </v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-text>
+          <b>
+            {{ countBothSideString }}
+          </b>
+          しています。
+          <br />
+          <b>
+            {{ notCountBothSideString }}
+          </b>
+          しますか?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red" @click="set">
+            変更する
+          </v-btn>
+          <v-btn @click="handleDialog">
+            閉じる
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { GameInfo } from '@/models/@types/game'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import { Header, VTableRow } from '@/models/@types/matrix'
 import { MAX_SP_WIDTH } from '@/models/const/designs'
-import { PerformanceByDeckHelper } from '@/lib/performance-by-deck-helper'
 import { TestHelper } from '@/lib/test-helper'
 import { PerformanceByDeckHeader, PerformanceByDeckBo1Header } from '@/models/const/performance-by-deck-const'
+import { DisplayConfig } from '@/models/@types/display-config'
 
 @Component({})
 export default class PerformanceByDeck extends Vue {
-  @Prop({ required: true }) games!: GameInfo[]
-  @Prop() isBo3!: boolean
+  @Prop({ required: true }) items!: VTableRow[]
+  @Prop({ required: true }) isBo3!: boolean
+  @Prop({ required: true }) config!: DisplayConfig
+  @Emit() setConfig(_config: DisplayConfig): void {}
+
+  dialog: boolean = false
 
   shouldColored(headerVal: string): boolean {
     return headerVal !== 'name' && headerVal !== 'mirror'
@@ -58,8 +93,16 @@ export default class PerformanceByDeck extends Vue {
     return TestHelper.execTest(X, n)
   }
 
-  get items(): VTableRow[] {
-    return PerformanceByDeckHelper.calcPerformanceByDeck(this.games)
+  handleDialog(): void {
+    this.dialog = !this.dialog
+  }
+
+  set(): void {
+    this.dialog = false
+    this.setConfig({
+      ...this.config,
+      countBothSide: !this.config.countBothSide
+    })
   }
 
   get headers(): Header[] {
@@ -68,6 +111,14 @@ export default class PerformanceByDeck extends Vue {
 
   get isPC(): boolean {
     return window.innerWidth > MAX_SP_WIDTH
+  }
+
+  get countBothSideString(): string {
+    return this.config.countBothSide ? '対戦相手の結果を含んで集計' : '使用デッキ視点のみを集計'
+  }
+
+  get notCountBothSideString(): string {
+    return this.config.countBothSide ? '使用デッキ視点のみを集計' : '対戦相手の結果を含んで集計'
   }
 }
 </script>

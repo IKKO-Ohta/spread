@@ -1,7 +1,9 @@
 <template>
   <section>
     <v-card class="form">
-      <v-card-title>デッキ パフォーマンス</v-card-title>
+      <v-card-title>
+        デッキ パフォーマンス
+      </v-card-title>
       <v-card-text>
         <v-data-table :headers="headers" :items="items" disable-sort :hide-default-header="!isPC">
           <template v-if="isPC" v-slot:body="props">

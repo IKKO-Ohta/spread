@@ -48,7 +48,7 @@ $ yarn generate
 
 ## Dependency
 
-Node.js 12.13.1
+Node.js 12.14.1
 
 ## License
 MIT

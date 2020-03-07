@@ -1,15 +1,30 @@
 import { GameInfo } from '@/models/@types/game'
 import { VTableRow } from '@/models/@types/matrix'
 import { Result, Bw } from '~/models/const/enums'
+import { DisplayConfig } from '@/models/@types/display-config'
 
-interface Round {
+export interface Round {
   deck: string | null
   result: Result
   bw: Bw
 }
-
 export class PerformanceByDeckHelper {
-  static calcPerformanceByDeck(games: GameInfo[]): VTableRow[] {
+  config: DisplayConfig
+
+  constructor(displayConfig: DisplayConfig) {
+    this.config = displayConfig
+  }
+
+  getAllDecks(games: GameInfo[]): string[] {
+    const allDecks: string[] = []
+    games.forEach((game) => {
+      allDecks.push(game.myDeck!)
+      allDecks.push(game.oppDeck!)
+    })
+    return allDecks.filter(this.distinct).sort()
+  }
+
+  calcPerformanceByDeck(games: GameInfo[]): VTableRow[] {
     const initialState: VTableRow[] = this.getAllDecks(games).map((deck) => {
       return {
         name: deck,
@@ -23,11 +38,10 @@ export class PerformanceByDeckHelper {
         total: '0-0'
       }
     })
-
     return this.applyGames(initialState, games)
   }
 
-  static applyGames(state: VTableRow[], games: GameInfo[]): VTableRow[] {
+  applyGames(state: VTableRow[], games: GameInfo[]): VTableRow[] {
     let resultState = [...state]
     for (const game of games) {
       resultState = this.applyGame(resultState, game)
@@ -35,36 +49,16 @@ export class PerformanceByDeckHelper {
     return resultState
   }
 
-  static applyGame(state: VTableRow[], game: GameInfo): VTableRow[] {
+  applyGame(state: VTableRow[], game: GameInfo): VTableRow[] {
     let resultState = [...state]
 
-    // mirror
     if (game.myDeck === game.oppDeck) {
-      resultState = resultState.map((row) => {
-        if (row.name === game.myDeck) {
-          const [totalWin, totalLose] = row.total.split('-').map((elem) => parseInt(elem))
-          return { ...row, total: `${totalWin + 1}-${totalLose + 1}` }
-        } else {
-          return row
-        }
-      })
-      return resultState
+      return this.config.countBothSide ? this.applyMirrorGame(resultState, game) : this.applyMirrorGameWithOnlyMyDeck(resultState, game)
     }
 
-    // total
-    const winSide = game.win === Result.win ? game.myDeck : game.oppDeck
-    const loseSide = game.win === Result.win ? game.oppDeck : game.myDeck
-    resultState = resultState.map((row) => {
-      if (row.name === winSide) {
-        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.win), total: this.applyWinOrLose(row.total, Result.win) }
-      } else if (row.name === loseSide) {
-        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.lose), total: this.applyWinOrLose(row.total, Result.lose) }
-      } else {
-        return row
-      }
-    })
+    resultState = this.config.countBothSide ? this.applyToTotal(resultState, game) : this.applyToTotalWithOnlyMyDeck(resultState, game)
 
-    // if BO1, should return here
+    // return here if BO1
     if (!game.wins) {
       const myResult = {
         deck: game.myDeck,
@@ -78,7 +72,9 @@ export class PerformanceByDeckHelper {
       }
 
       resultState = this.applyBo1Game(resultState, myResult)
-      resultState = this.applyBo1Game(resultState, oppResult)
+      if (this.config.countBothSide) {
+        resultState = this.applyBo1Game(resultState, oppResult)
+      }
       return resultState
     }
 
@@ -96,13 +92,15 @@ export class PerformanceByDeckHelper {
       }
 
       resultState = this.applyRound(resultState, myResult, i)
-      resultState = this.applyRound(resultState, oppResult, i)
+      if (this.config.countBothSide) {
+        resultState = this.applyRound(resultState, oppResult, i)
+      }
     }
 
     return resultState
   }
 
-  private static applyBo1Game(state: VTableRow[], round: Round) {
+  applyBo1Game(state: VTableRow[], round: Round) {
     return state.map((row) => {
       if (row.name === round.deck) {
         if (round.bw === Bw.black) {
@@ -118,7 +116,7 @@ export class PerformanceByDeckHelper {
     })
   }
 
-  private static applyRound(state: VTableRow[], round: Round, roundNumber: Number): VTableRow[] {
+  private applyRound(state: VTableRow[], round: Round, roundNumber: Number): VTableRow[] {
     return state.map((row) => {
       // メインサイド後、先手後手、勝敗の３要素を場合分けする
       if (row.name === round.deck) {
@@ -139,7 +137,7 @@ export class PerformanceByDeckHelper {
     })
   }
 
-  private static applyWinOrLose(str: string, result: Result) {
+  private applyWinOrLose(str: string, result: Result) {
     const arr = str.split('-')
     const win = parseInt(arr[0])
     const lose = parseInt(arr[1])
@@ -150,16 +148,52 @@ export class PerformanceByDeckHelper {
     }
   }
 
-  static getAllDecks(games: GameInfo[]): string[] {
-    const allDecks: string[] = []
-    games.forEach((game) => {
-      allDecks.push(game.myDeck!)
-      allDecks.push(game.oppDeck!)
-    })
-    return allDecks.filter(this.distinct).sort()
+  private distinct<T>(value: T, index: number, self: T[]): boolean {
+    return self.indexOf(value) === index
   }
 
-  private static distinct<T>(value: T, index: number, self: T[]): boolean {
-    return self.indexOf(value) === index
+  private applyToTotal(state: VTableRow[], game: GameInfo): VTableRow[] {
+    const winSide = game.win === Result.win ? game.myDeck : game.oppDeck
+    const loseSide = game.win === Result.win ? game.oppDeck : game.myDeck
+    return state.map((row) => {
+      if (row.name === winSide) {
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.win), total: this.applyWinOrLose(row.total, Result.win) }
+      } else if (row.name === loseSide) {
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, Result.lose), total: this.applyWinOrLose(row.total, Result.lose) }
+      } else {
+        return row
+      }
+    })
+  }
+
+  private applyToTotalWithOnlyMyDeck(state: VTableRow[], game: GameInfo): VTableRow[] {
+    return state.map((row) => {
+      if (row.name === game.myDeck) {
+        return { ...row, totalWithoutMirror: this.applyWinOrLose(row.totalWithoutMirror, game.win), total: this.applyWinOrLose(row.total, game.win) }
+      } else {
+        return row
+      }
+    })
+  }
+
+  private applyMirrorGame(state: VTableRow[], game: GameInfo): VTableRow[] {
+    return state.map((row) => {
+      if (row.name === game.myDeck) {
+        const [totalWin, totalLose] = row.total.split('-').map((elem) => parseInt(elem))
+        return { ...row, total: `${totalWin + 1}-${totalLose + 1}` }
+      } else {
+        return row
+      }
+    })
+  }
+
+  private applyMirrorGameWithOnlyMyDeck(state: VTableRow[], game: GameInfo): VTableRow[] {
+    return state.map((row) => {
+      if (row.name === game.myDeck) {
+        return { ...row, total: this.applyWinOrLose(row.total, game.win) }
+      } else {
+        return row
+      }
+    })
   }
 }
