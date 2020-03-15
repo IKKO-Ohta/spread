@@ -8,7 +8,7 @@
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "generate": "nuxt-ts generate",
-    "generate:ci": "cross-env ci=true nuxt-ts generate",
+    "generate:ci": "cross-env CI=true nuxt-ts generate",
     "start": "nuxt-ts start",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest"
