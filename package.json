@@ -8,13 +8,14 @@
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "generate": "nuxt-ts generate",
+    "generate:ci": "cross-env ci=true nuxt-ts generate",
     "start": "nuxt-ts start",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^0.1.5",
-    "cross-env": "^5.2.0",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.1.0",
     "express": "^4.16.4",
     "firebase": "^7.0.0",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.5.1",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/vuetify": "^1.9.0",
     "@types/jest": "^24.0.25",
