@@ -1,7 +1,7 @@
 import { Configuration } from '@nuxt/types'
 
 const colors = require('vuetify/es5/util/colors').default
-const setupFirebase = process.env.CI === 'ci' ? '~/plugins/setup-firestore-on-ci.js' : '~/plugins/setup-firestore.js'
+const setupFirebase = process.env.CI === 'true' ? '~/plugins/setup-firestore-on-ci.js' : '~/plugins/setup-firestore.js'
 const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
