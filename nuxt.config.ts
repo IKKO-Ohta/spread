@@ -1,7 +1,7 @@
 import { Configuration } from '@nuxt/types'
 
 const colors = require('vuetify/es5/util/colors').default
-const setupFirebase = process.env.CI === 'true' ? '~/plugins/setup-firestore-on-ci.js' : '~/plugins/setup-firestore.js'
+
 const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
@@ -37,14 +37,15 @@ const nuxtConfig: Configuration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [setupFirebase],
+  plugins: ['~/plugins/setup-firestore.js'],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/vuetify',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/dotenv'
   ],
   /*
    ** Nuxt.js modules
