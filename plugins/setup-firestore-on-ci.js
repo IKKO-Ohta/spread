@@ -2,8 +2,8 @@ import Vue from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
-import firebasekey from '~/credentials/firebasekey'
+import firebasekeyFromEnvVariable from '~/credentials/firebasekey-from-env-variable'
 
-firebase.initializeApp(firebasekey)
+firebase.initializeApp(firebasekeyFromEnvVariable)
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 Vue.prototype.$firestore = firebase.firestore()

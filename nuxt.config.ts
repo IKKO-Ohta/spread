@@ -1,6 +1,7 @@
 import { Configuration } from '@nuxt/types'
 
 const colors = require('vuetify/es5/util/colors').default
+const setupFirebase = process.env.CI === 'ci' ? '~/plugins/setup-firestore-on-ci.js' : '~/plugins/setup-firestore.js'
 const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
@@ -36,7 +37,7 @@ const nuxtConfig: Configuration = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/setup-firestore.js'],
+  plugins: [setupFirebase],
   /*
    ** Nuxt.js dev-modules
    */
@@ -79,7 +80,10 @@ const nuxtConfig: Configuration = {
      */
     extend(_config, _ctx) {},
     babel: {
-      plugins: [['@babel/plugin-proposal-decorators', { legacy: true }], ['@babel/plugin-proposal-class-properties', { loose: true }]]
+      plugins: [
+        ['@babel/plugin-proposal-decorators', { legacy: true }],
+        ['@babel/plugin-proposal-class-properties', { loose: true }]
+      ]
     }
   }
 }

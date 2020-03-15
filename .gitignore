@@ -101,4 +101,4 @@ firestore.*
 firebasekey.json
 
 # credentials
-credentials/*.*
+credentials/firebasekey.ts
