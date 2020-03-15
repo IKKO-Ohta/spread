@@ -96,9 +96,6 @@ sw.*
 # firebase
 .firebase
 .firebaserc
-firebase.json
-firestore.*
-firebasekey.json
 
 # credentials
 credentials/firebasekey.ts
