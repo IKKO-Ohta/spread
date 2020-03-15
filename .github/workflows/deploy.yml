@@ -1,4 +1,4 @@
-name: CI
+name: deploy
 
 on:
   push:
@@ -23,11 +23,30 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: yarn install --frozen-lockfile
-      - run: yarn generate
+
+      - name: Add env
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" > .env
+          echo "AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}" >> .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "PROJECT_ID=${{ secrets.PROJECT_ID }}" >> .env
+          echo "STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }}" >> .env
+          echo "MESSAGING_SENDER_ID=${{ secrets.MESSAGING_SENDER_ID }}" >> .env
+          echo "APP_ID=${{ secrets.APP_ID }}" >> .env
+          echo "MEASUREMENT_ID=${{ secrets.MEASUREMENT_ID }}" >> .env
+  
+      - run: |
+         yarn install --frozen-lockfile
+         cd ./functions
+         npm install
+         cd ..
+    
+      - run: yarn generate:ci
 
       - uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+

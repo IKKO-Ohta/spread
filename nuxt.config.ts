@@ -1,6 +1,7 @@
 import { Configuration } from '@nuxt/types'
 
 const colors = require('vuetify/es5/util/colors').default
+
 const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
@@ -43,7 +44,8 @@ const nuxtConfig: Configuration = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/vuetify',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/dotenv'
   ],
   /*
    ** Nuxt.js modules
@@ -79,7 +81,10 @@ const nuxtConfig: Configuration = {
      */
     extend(_config, _ctx) {},
     babel: {
-      plugins: [['@babel/plugin-proposal-decorators', { legacy: true }], ['@babel/plugin-proposal-class-properties', { loose: true }]]
+      plugins: [
+        ['@babel/plugin-proposal-decorators', { legacy: true }],
+        ['@babel/plugin-proposal-class-properties', { loose: true }]
+      ]
     }
   }
 }
