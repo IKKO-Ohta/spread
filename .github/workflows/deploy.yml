@@ -33,7 +33,12 @@ jobs:
           echo "APP_ID=${{ secrets.APP_ID }}" >> .env
           echo "MEASUREMENT_ID=${{ secrets.MEASUREMENT_ID }}" >> .env
   
-      - run: yarn install --frozen-lockfile
+      - run: |
+         yarn install --frozen-lockfile
+         cd ./functions
+         npm install
+         cd ..
+    
       - run: yarn generate:ci
 
       - uses: w9jds/firebase-action@master
