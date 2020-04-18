@@ -2,10 +2,10 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
       <v-card>
-        <v-img class="white--text align-end" height="400px" src="banner.png"> </v-img>
         <v-card-title> {{ hello }}</v-card-title>
         <v-spacer />
-        <v-card-text v-if="isLoggedIn" class="body-1"> 左上の <v-icon>mdi-menu</v-icon>から、対戦成績をつけ始められます。</v-card-text>
+        <v-card-text v-if="isLoggedIn" class="body-2"> 左上の <v-icon>mdi-menu</v-icon>から、対戦成績をつけ始められます。</v-card-text>
+        <v-card-text v-else class="body-2"> Googleアカウントで利用できます。</v-card-text>
 
         <v-card-subtitle class="headline"> 使い方 </v-card-subtitle>
         <v-card-text>
@@ -61,7 +61,7 @@ export default class IndexPage extends Mixins<PageMixin>(PageMixin) {
     if (this.stores.user.currentUserInfo !== null) {
       return `こんにちは ${this.stores.user.currentUserInfo.displayName} !`
     } else {
-      return `Spreadへようこそ！ 使用するにはまずGMailでログインしてください。`
+      return `Spreadへようこそ！`
     }
   }
 }
