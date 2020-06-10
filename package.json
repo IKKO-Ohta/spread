@@ -25,7 +25,7 @@
     "nuxt-property-decorator": "2.5.1",
     "ts-node": "8.6.2",
     "typescript": "3.7.5",
-    "vue-meta": "2.3.2",
+    "vue-meta": "2.4.0",
     "vue-mixin-decorator": "1.2.0",
     "vuex": "3.1.2",
     "vuex-module-decorators": "0.10.1"
