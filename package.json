@@ -50,7 +50,7 @@
     "nodemon": "1.19.4",
     "prettier": "1.19.1",
     "ts-jest": "24.3.0",
-    "vue-eslint-parser": "7.0.0",
+    "vue-eslint-parser": "7.1.1",
     "vue-jest": "4.0.0-beta.2"
   }
 }
