@@ -16,7 +16,7 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "0.1.7",
     "cross-env": "7.0.2",
-    "date-fns": "2.9.0",
+    "date-fns": "2.16.1",
     "express": "4.17.1",
     "firebase": "7.8.2",
     "firebaseui": "4.4.0",
