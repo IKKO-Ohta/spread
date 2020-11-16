@@ -5151,10 +5151,10 @@ firebaseui-ja@1.0.0:
   dependencies:
     dialog-polyfill "^0.4.7"
 
-firebaseui@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/firebaseui/-/firebaseui-4.4.0.tgz#6b024f331e382c9fa342fe9b5e707b3d1fc2c766"
-  integrity sha512-dKnuKZx8RiEdGO9QcvkJh+J/QJjUG48wUZr+1fty7dxDv7tOBMQyFDbnGWrCy/fKd7S92bMItp1oy3TEP5HEuQ==
+firebaseui@4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/firebaseui/-/firebaseui-4.7.1.tgz#8e0303d9f733e16b0bfbfa24001ab8bd4bc98038"
+  integrity sha512-wDdo3LLnh9sV1dDKyNgn4M7cKecILosvqvtQE1SUum/R+eXLdN1q1ZRKZ2Lp6ZyP0XDAHrotssS4vJNh4OdwuQ==
   dependencies:
     dialog-polyfill "^0.4.7"
     material-design-lite "^1.2.0"
