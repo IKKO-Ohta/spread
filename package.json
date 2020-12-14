@@ -27,7 +27,7 @@
     "typescript": "3.7.5",
     "vue-meta": "2.3.2",
     "vue-mixin-decorator": "1.2.0",
-    "vuex": "3.1.2",
+    "vuex": "3.6.0",
     "vuex-module-decorators": "0.10.1"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "@nuxtjs/vuetify": "1.11.2",
     "@types/jest": "24.9.1",
     "@typescript-eslint/parser": "2.34.0",
-    "@vue/test-utils": "1.0.0-beta.31",
+    "@vue/test-utils": "1.1.2",
     "babel-jest": "24.9.0",
     "core-js": "2.6.11",
     "eslint": "6.8.0",
@@ -50,7 +50,7 @@
     "nodemon": "1.19.4",
     "prettier": "1.19.1",
     "ts-jest": "24.3.0",
-    "vue-eslint-parser": "7.1.1",
-    "vue-jest": "4.0.0-beta.2"
+    "vue-eslint-parser": "7.3.0",
+    "vue-jest": "4.0.0-rc.1"
   }
 }
