@@ -22,7 +22,7 @@
     "firebaseui": "4.4.0",
     "firebaseui-ja": "1.0.0",
     "nuxt": "2.11.0",
-    "nuxt-property-decorator": "2.8.8",
+    "nuxt-property-decorator": "2.9.1",
     "ts-node": "8.6.2",
     "typescript": "3.7.5",
     "vue-meta": "2.3.2",
